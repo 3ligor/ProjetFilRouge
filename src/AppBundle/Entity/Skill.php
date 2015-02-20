@@ -143,4 +143,27 @@ class Skill
     {
         return $this->childs;
     }
+
+    /**
+     * Set userSkills
+     *
+     * @param \AppBundle\Entity\UserSkill $userSkills
+     * @return Skill
+     */
+    public function setUserSkills(\AppBundle\Entity\UserSkill $userSkills = null)
+    {
+        $this->userSkills = $userSkills;
+
+        return $this;
+    }
+
+    /**
+     * Get userSkills
+     *
+     * @return \AppBundle\Entity\UserSkill 
+     */
+    public function getUserSkills()
+    {
+        return $this->userSkills;
+    }
 }
