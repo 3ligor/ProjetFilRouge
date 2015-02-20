@@ -45,9 +45,9 @@ class User
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="birtdate", type="datetime")
+     * @ORM\Column(name="birthdate", type="datetime")
      */
-    private $birtdate;
+    private $birthdate;
 
     /**
      * @var integer
