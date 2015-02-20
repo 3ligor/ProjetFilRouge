@@ -1,1 +1,78 @@
-{# empty Twig template #}
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block content %}
+    
+    <h3>List des projets</h3>
+    <form class="form-inline">
+        <div class="form-control">
+            <div class="row">
+            <div class="col-lg-3">
+            <select>
+                <option>Type</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+            </div>
+            <div class="col-lg-3">
+            <select>
+                <option>Compétences</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+            </div>
+            <div class="col-lg-3">
+            <select>
+                <option>Statut du projet</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+            </div>
+            <div class="col-lg-2">
+            <select>
+                <option>Nbr de personne</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+            </div>
+            <div class="col-lg-1">
+            <input type="submit" value="Valider">
+            </div>
+            </div>
+        </div>
+    </form>
+    
+    <div class="row">
+        
+            <table class="table table-hover">
+                <thead>
+                    <th>Type</th>
+                    <th>Intitulé du projet</th>
+                    <th>Avancement</th>
+                    <th>Lancement</th>
+                    <th>Fin</th>
+                    <th>Nombre</th>
+                    <th>..</th>
+                </thead>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+       
+    </div>
+    
+{% endblock content %}
+

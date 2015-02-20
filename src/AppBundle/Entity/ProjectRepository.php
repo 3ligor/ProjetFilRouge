@@ -12,4 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProjectRepository extends EntityRepository
 {
+    public function findProjectsEager(){
+        $query = $this->createQueryBuilder('a')
+                ->leftJoin('a.user', 'u')
+                ->addSelect('u');
+                
+        return $query->getQuery()->getResult();
+    } 
 }

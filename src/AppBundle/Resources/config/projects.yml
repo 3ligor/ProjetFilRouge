@@ -1,0 +1,12 @@
+project_list:
+    path: /list/{page}
+    defaults: { _controller: AppBundle:Project:list }
+    requirements: 
+         page: \d+
+
+
+project_mesProjets:
+    path: /MesProjet/{page}
+    defaults: { _controller: AppBundle:Project:mesProjets }
+    requirements: 
+         page: \d+

@@ -32,7 +32,7 @@ class Project
     /**
      * @var string
      *
-     * @ORM\Column(name="SmallDescription", type="string", length=255)
+     * @ORM\Column(name="smallDescription", type="string", length=255)
      */
     private $smallDescription;
 
@@ -320,5 +320,102 @@ class Project
     public function getCategory()
     {
         return $this->category;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->members = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add categories
+     *
+     * @param \AppBundle\Entity\Category $categories
+     * @return Project
+     */
+    public function addCategory(\AppBundle\Entity\Category $categories)
+    {
+        $this->categories[] = $categories;
+
+        return $this;
+    }
+
+    /**
+     * Remove categories
+     *
+     * @param \AppBundle\Entity\Category $categories
+     */
+    public function removeCategory(\AppBundle\Entity\Category $categories)
+    {
+        $this->categories->removeElement($categories);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * Add members
+     *
+     * @param \AppBundle\Entity\User $members
+     * @return Project
+     */
+    public function addMember(\AppBundle\Entity\User $members)
+    {
+        $this->members[] = $members;
+
+        return $this;
+    }
+
+    /**
+     * Remove members
+     *
+     * @param \AppBundle\Entity\User $members
+     */
+    public function removeMember(\AppBundle\Entity\User $members)
+    {
+        $this->members->removeElement($members);
+    }
+
+    /**
+     * Get members
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMembers()
+    {
+        return $this->members;
+    }
+
+    /**
+     * Set leader
+     *
+     * @param \AppBundle\Entity\User $leader
+     * @return Project
+     */
+    public function setLeader(\AppBundle\Entity\User $leader = null)
+    {
+        $this->leader = $leader;
+
+        return $this;
+    }
+
+    /**
+     * Get leader
+     *
+     * @return \AppBundle\Entity\User 
+     */
+    public function getLeader()
+    {
+        return $this->leader;
     }
 }

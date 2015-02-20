@@ -2,7 +2,35 @@
 {% block title %}{{ parent() }} - Bienvenue{% endblock title %}
 
 {% block content %}
-
-	<h1>Salut monde</h1>
-	
+    <div class="row">
+         <div class="col-lg-12">
+             <table class="table table-bordered">
+                <tr>
+                    <td><span class="glyphicon glyphicon-user"></span></td>
+                    <td>Progression</td>
+                    <td><strong>Intitulé du projet</strong></td>
+                <tr>
+            </table>
+         </div>
+    </div>
+    <div class="row">	
+        <div class="col-lg-6">
+            <h4>Les nouveaux projets</h4>
+            <table class="table table-bordered">
+                <tr>
+                    <td>Date</td>
+                    <td>Intitulé du projet</td>
+                <tr>
+            </table>
+        </div>
+        <div class="col-lg-6">
+            <h4>Il ne manque plus que vous</h4>
+            <table class="table table-bordered">
+                <tr>
+                    <td>Date</td>
+                    <td>Intitulé du projet</td>
+                <tr>
+            </table>
+        </div>
+    </div>
 {% endblock content %}

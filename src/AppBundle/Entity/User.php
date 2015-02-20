@@ -136,7 +136,7 @@ class User
 	/**
 	 * @var Promo
 	 * 
-	 * @ORM\ManyToOne(targetEntity="Promo", inversedBy="users")
+	 * @ORM\ManyToMany(targetEntity="Promo", inversedBy="users")
 	 */
 	private $promo;
 	
@@ -146,6 +146,13 @@ class User
 	 * @ORM\OneToOne(targetEntity="Image", orphanRemoval=true)
 	 */
 	private $image;
+	
+	/**
+	 * @var UserSkill
+	 * 
+	 * @ORM\ManyToOne(targetEntity="UserSkill", inversedBy="user")
+	 */
+	private $userSkills;
 	
     /**
      * Get id
@@ -477,5 +484,182 @@ class User
     public function getAvailable()
     {
         return $this->available;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->projects = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->leadProjects = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->promo = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set birthdate
+     *
+     * @param \DateTime $birthdate
+     * @return User
+     */
+    public function setBirthdate($birthdate)
+    {
+        $this->birthdate = $birthdate;
+
+        return $this;
+    }
+
+    /**
+     * Get birthdate
+     *
+     * @return \DateTime 
+     */
+    public function getBirthdate()
+    {
+        return $this->birthdate;
+    }
+
+    /**
+     * Add projects
+     *
+     * @param \AppBundle\Entity\Project $projects
+     * @return User
+     */
+    public function addProject(\AppBundle\Entity\Project $projects)
+    {
+        $this->projects[] = $projects;
+
+        return $this;
+    }
+
+    /**
+     * Remove projects
+     *
+     * @param \AppBundle\Entity\Project $projects
+     */
+    public function removeProject(\AppBundle\Entity\Project $projects)
+    {
+        $this->projects->removeElement($projects);
+    }
+
+    /**
+     * Get projects
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProjects()
+    {
+        return $this->projects;
+    }
+
+    /**
+     * Add leadProjects
+     *
+     * @param \AppBundle\Entity\Project $leadProjects
+     * @return User
+     */
+    public function addLeadProject(\AppBundle\Entity\Project $leadProjects)
+    {
+        $this->leadProjects[] = $leadProjects;
+
+        return $this;
+    }
+
+    /**
+     * Remove leadProjects
+     *
+     * @param \AppBundle\Entity\Project $leadProjects
+     */
+    public function removeLeadProject(\AppBundle\Entity\Project $leadProjects)
+    {
+        $this->leadProjects->removeElement($leadProjects);
+    }
+
+    /**
+     * Get leadProjects
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLeadProjects()
+    {
+        return $this->leadProjects;
+    }
+
+    /**
+     * Add promo
+     *
+     * @param \AppBundle\Entity\Promo $promo
+     * @return User
+     */
+    public function addPromo(\AppBundle\Entity\Promo $promo)
+    {
+        $this->promo[] = $promo;
+
+        return $this;
+    }
+
+    /**
+     * Remove promo
+     *
+     * @param \AppBundle\Entity\Promo $promo
+     */
+    public function removePromo(\AppBundle\Entity\Promo $promo)
+    {
+        $this->promo->removeElement($promo);
+    }
+
+    /**
+     * Get promo
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPromo()
+    {
+        return $this->promo;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \AppBundle\Entity\Image $image
+     * @return User
+     */
+    public function setImage(\AppBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \AppBundle\Entity\Image 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set userSkills
+     *
+     * @param \AppBundle\Entity\UserSkill $userSkills
+     * @return User
+     */
+    public function setUserSkills(\AppBundle\Entity\UserSkill $userSkills = null)
+    {
+        $this->userSkills = $userSkills;
+
+        return $this;
+    }
+
+    /**
+     * Get userSkills
+     *
+     * @return \AppBundle\Entity\UserSkill 
+     */
+    public function getUserSkills()
+    {
+        return $this->userSkills;
     }
 }
