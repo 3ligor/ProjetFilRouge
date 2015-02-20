@@ -159,8 +159,7 @@ class User
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -170,10 +169,8 @@ class User
      * @param string $pseudo
      * @return User
      */
-    public function setPseudo($pseudo)
-    {
+    public function setPseudo($pseudo) {
         $this->pseudo = $pseudo;
-
         return $this;
     }
 
@@ -182,8 +179,7 @@ class User
      *
      * @return string 
      */
-    public function getPseudo()
-    {
+    public function getPseudo() {
         return $this->pseudo;
     }
 
@@ -193,10 +189,8 @@ class User
      * @param string $firstname
      * @return User
      */
-    public function setFirstname($firstname)
-    {
+    public function setFirstname($firstname) {
         $this->firstname = $firstname;
-
         return $this;
     }
 
@@ -205,8 +199,7 @@ class User
      *
      * @return string 
      */
-    public function getFirstname()
-    {
+    public function getFirstname() {
         return $this->firstname;
     }
 
@@ -216,10 +209,8 @@ class User
      * @param string $lastname
      * @return User
      */
-    public function setLastname($lastname)
-    {
+    public function setLastname($lastname) {
         $this->lastname = $lastname;
-
         return $this;
     }
 
@@ -228,8 +219,7 @@ class User
      *
      * @return string 
      */
-    public function getLastname()
-    {
+    public function getLastname() {
         return $this->lastname;
     }
 
@@ -239,10 +229,8 @@ class User
      * @param \DateTime $birtdate
      * @return User
      */
-    public function setBirtdate($birtdate)
-    {
+    public function setBirtdate($birtdate) {
         $this->birtdate = $birtdate;
-
         return $this;
     }
 
@@ -251,8 +239,7 @@ class User
      *
      * @return \DateTime 
      */
-    public function getBirtdate()
-    {
+    public function getBirtdate() {
         return $this->birtdate;
     }
 
@@ -262,8 +249,7 @@ class User
      * @param integer $tel
      * @return User
      */
-    public function setTel($tel)
-    {
+    public function setTel($tel) {
         $this->tel = $tel;
 
         return $this;
@@ -274,8 +260,7 @@ class User
      *
      * @return integer 
      */
-    public function getTel()
-    {
+    public function getTel() {
         return $this->tel;
     }
 
@@ -285,10 +270,8 @@ class User
      * @param string $email
      * @return User
      */
-    public function setEmail($email)
-    {
+    public function setEmail($email) {
         $this->email = $email;
-
         return $this;
     }
 
@@ -297,8 +280,7 @@ class User
      *
      * @return string 
      */
-    public function getEmail()
-    {
+    public function getEmail() {
         return $this->email;
     }
 
@@ -308,10 +290,8 @@ class User
      * @param string $city
      * @return User
      */
-    public function setCity($city)
-    {
+    public function setCity($city) {
         $this->city = $city;
-
         return $this;
     }
 
@@ -320,8 +300,7 @@ class User
      *
      * @return string 
      */
-    public function getCity()
-    {
+    public function getCity() {
         return $this->city;
     }
 
@@ -331,10 +310,8 @@ class User
      * @param boolean $publicMail
      * @return User
      */
-    public function setPublicMail($publicMail)
-    {
+    public function setPublicMail($publicMail) {
         $this->publicMail = $publicMail;
-
         return $this;
     }
 
@@ -343,8 +320,7 @@ class User
      *
      * @return boolean 
      */
-    public function getPublicMail()
-    {
+    public function getPublicMail() {
         return $this->publicMail;
     }
 
@@ -354,8 +330,7 @@ class User
      * @param boolean $publicCity
      * @return User
      */
-    public function setPublicCity($publicCity)
-    {
+    public function setPublicCity($publicCity) {
         $this->publicCity = $publicCity;
 
         return $this;
@@ -366,8 +341,7 @@ class User
      *
      * @return boolean 
      */
-    public function getPublicCity()
-    {
+    public function getPublicCity() {
         return $this->publicCity;
     }
 
@@ -377,10 +351,8 @@ class User
      * @param boolean $publicTel
      * @return User
      */
-    public function setPublicTel($publicTel)
-    {
+    public function setPublicTel($publicTel) {
         $this->publicTel = $publicTel;
-
         return $this;
     }
 
@@ -389,8 +361,7 @@ class User
      *
      * @return boolean 
      */
-    public function getPublicTel()
-    {
+    public function getPublicTel() {
         return $this->publicTel;
     }
 
@@ -400,10 +371,8 @@ class User
      * @param boolean $publicBirthdate
      * @return User
      */
-    public function setPublicBirthdate($publicBirthdate)
-    {
+    public function setPublicBirthdate($publicBirthdate) {
         $this->publicBirthdate = $publicBirthdate;
-
         return $this;
     }
 
@@ -412,8 +381,7 @@ class User
      *
      * @return boolean 
      */
-    public function getPublicBirthdate()
-    {
+    public function getPublicBirthdate() {
         return $this->publicBirthdate;
     }
 
@@ -423,10 +391,8 @@ class User
      * @param string $password
      * @return User
      */
-    public function setPassword($password)
-    {
+    public function setPassword($password) {
         $this->password = $password;
-
         return $this;
     }
 
@@ -435,8 +401,7 @@ class User
      *
      * @return string 
      */
-    public function getPassword()
-    {
+    public function getPassword() {
         return $this->password;
     }
 
@@ -446,10 +411,8 @@ class User
      * @param boolean $active
      * @return User
      */
-    public function setActive($active)
-    {
+    public function setActive($active) {
         $this->active = $active;
-
         return $this;
     }
 
@@ -458,8 +421,7 @@ class User
      *
      * @return boolean 
      */
-    public function getActive()
-    {
+    public function getActive() {
         return $this->active;
     }
 
@@ -469,10 +431,8 @@ class User
      * @param string $available
      * @return User
      */
-    public function setAvailable($available)
-    {
+    public function setAvailable($available) {
         $this->available = $available;
-
         return $this;
     }
 
@@ -481,15 +441,13 @@ class User
      *
      * @return string 
      */
-    public function getAvailable()
-    {
+    public function getAvailable() {
         return $this->available;
     }
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->projects = new \Doctrine\Common\Collections\ArrayCollection();
         $this->leadProjects = new \Doctrine\Common\Collections\ArrayCollection();
         $this->promo = new \Doctrine\Common\Collections\ArrayCollection();
@@ -501,10 +459,8 @@ class User
      * @param \DateTime $birthdate
      * @return User
      */
-    public function setBirthdate($birthdate)
-    {
+    public function setBirthdate($birthdate) {
         $this->birthdate = $birthdate;
-
         return $this;
     }
 
@@ -513,8 +469,7 @@ class User
      *
      * @return \DateTime 
      */
-    public function getBirthdate()
-    {
+    public function getBirthdate()    {
         return $this->birthdate;
     }
 
@@ -524,10 +479,8 @@ class User
      * @param \AppBundle\Entity\Project $projects
      * @return User
      */
-    public function addProject(\AppBundle\Entity\Project $projects)
-    {
+    public function addProject(\AppBundle\Entity\Project $projects) {
         $this->projects[] = $projects;
-
         return $this;
     }
 
@@ -536,8 +489,7 @@ class User
      *
      * @param \AppBundle\Entity\Project $projects
      */
-    public function removeProject(\AppBundle\Entity\Project $projects)
-    {
+    public function removeProject(\AppBundle\Entity\Project $projects) {
         $this->projects->removeElement($projects);
     }
 
@@ -546,8 +498,7 @@ class User
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getProjects()
-    {
+    public function getProjects() {
         return $this->projects;
     }
 
@@ -557,10 +508,8 @@ class User
      * @param \AppBundle\Entity\Project $leadProjects
      * @return User
      */
-    public function addLeadProject(\AppBundle\Entity\Project $leadProjects)
-    {
+    public function addLeadProject(\AppBundle\Entity\Project $leadProjects) {
         $this->leadProjects[] = $leadProjects;
-
         return $this;
     }
 
@@ -569,8 +518,7 @@ class User
      *
      * @param \AppBundle\Entity\Project $leadProjects
      */
-    public function removeLeadProject(\AppBundle\Entity\Project $leadProjects)
-    {
+    public function removeLeadProject(\AppBundle\Entity\Project $leadProjects)    {
         $this->leadProjects->removeElement($leadProjects);
     }
 
@@ -579,8 +527,7 @@ class User
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getLeadProjects()
-    {
+    public function getLeadProjects()    {
         return $this->leadProjects;
     }
 
@@ -590,10 +537,8 @@ class User
      * @param \AppBundle\Entity\Promo $promo
      * @return User
      */
-    public function addPromo(\AppBundle\Entity\Promo $promo)
-    {
+    public function addPromo(\AppBundle\Entity\Promo $promo) {
         $this->promo[] = $promo;
-
         return $this;
     }
 
@@ -602,8 +547,7 @@ class User
      *
      * @param \AppBundle\Entity\Promo $promo
      */
-    public function removePromo(\AppBundle\Entity\Promo $promo)
-    {
+    public function removePromo(\AppBundle\Entity\Promo $promo) {
         $this->promo->removeElement($promo);
     }
 
@@ -612,8 +556,7 @@ class User
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getPromo()
-    {
+    public function getPromo() {
         return $this->promo;
     }
 
@@ -623,10 +566,8 @@ class User
      * @param \AppBundle\Entity\Image $image
      * @return User
      */
-    public function setImage(\AppBundle\Entity\Image $image = null)
-    {
+    public function setImage(\AppBundle\Entity\Image $image = null) {
         $this->image = $image;
-
         return $this;
     }
 
@@ -635,8 +576,7 @@ class User
      *
      * @return \AppBundle\Entity\Image 
      */
-    public function getImage()
-    {
+    public function getImage() {
         return $this->image;
     }
 
@@ -646,10 +586,8 @@ class User
      * @param \AppBundle\Entity\UserSkill $userSkills
      * @return User
      */
-    public function setUserSkills(\AppBundle\Entity\UserSkill $userSkills = null)
-    {
+    public function setUserSkills(\AppBundle\Entity\UserSkill $userSkills = null) {
         $this->userSkills = $userSkills;
-
         return $this;
     }
 
@@ -658,8 +596,7 @@ class User
      *
      * @return \AppBundle\Entity\UserSkill 
      */
-    public function getUserSkills()
-    {
+    public function getUserSkills() {
         return $this->userSkills;
     }
 }
