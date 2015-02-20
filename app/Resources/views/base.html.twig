@@ -2,12 +2,19 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <title>{% block title %}Blog{% endblock %}</title>
+        {% block stylesheets %}
+			<link rel="stylesheet" href="{{ asset('bundles/app/css/bootstrap.min.css') }}">
+		{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('faviconcoca.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+		<div class='container'>
+			{% block body %}
+			{% endblock %}
+		</div>
+		{% block javascripts %}
+			<script	src='{{ asset('bundles/app/js/bootstrap.min.js') }}'></script>
+		{% endblock %}
+	</body>
 </html>
