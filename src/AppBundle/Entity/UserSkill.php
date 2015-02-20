@@ -10,8 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity
  */
-class userSkill
-{
+class UserSkill {
     /**
      * @var integer
      *
@@ -34,7 +33,7 @@ class userSkill
 	 * @ORM\OneToMany(targetEntity="User", mappedBy="userSkills")
 	 */
 	private $user;
-	
+
 	/**
 	 * @var Skill
 	 * 
