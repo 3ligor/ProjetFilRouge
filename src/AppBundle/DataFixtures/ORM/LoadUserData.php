@@ -2,7 +2,7 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use BlogBundle\Entity\User;
+use AppBundle\Entity\User;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -115,24 +115,24 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface {
 		->setImage($this->getReference('image5'));
 
 	
-	$manager->persist($project1);
-	$manager->persist($project2);
-	$manager->persist($project3);
-	$manager->persist($project4);
-	$manager->persist($project5);
+	$manager->persist($user1);
+	$manager->persist($user2);
+	$manager->persist($user3);
+	$manager->persist($user4);
+	$manager->persist($user5);
 	
 	$manager->flush();
 
-	$this->addReference('project1', $project1);
-	$this->addReference('project2', $project2);
-	$this->addReference('project3', $project3);
-	$this->addReference('project4', $project4);
-	$this->addReference('project5', $project5);
+	$this->addReference('user1', $user1);
+	$this->addReference('user2', $user2);
+	$this->addReference('user3', $user3);
+	$this->addReference('user4', $user4);
+	$this->addReference('user5', $user5);
 	
     }
 
     public function getOrder() {
-	return 7;
+	return 6;
     }
 
 }
