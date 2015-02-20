@@ -4,7 +4,10 @@
 	<nav role='navigation'>
 		<ul class='nav nav-tabs'>
 			{% block menu %}
-				<li role='presentation'><a href=''><span class="glyphicon glyphicon-home"></span></a></li>
+				<li role='presentation'><a href='{{ path('home') }}'><span class="glyphicon glyphicon-home"></span></a></li>
+                                <li role='presentation'><a href='{{ path('project_list',  {'page':1}) }}'>Liste des projets</a></li>
+                                <li role='presentation'><a href='{{ path('project_list',  {'page':1}) }}'>Liste des utilisateurs</a></li>
+                                <li role='presentation'><a href='{{ path('project_mesProjets',  {'page':1}) }}'>Mes projets</a></li>
 				<div class="col-sm-3 col-md-3 pull-right">
 					<form class="navbar-form" role="search" action='#' method='POST'>
 						<div class="input-group">
@@ -21,7 +24,7 @@
 		</ul>
 	</nav>
 	<div class='page-header'><h1>PFR</h1></div>
-	<div class='col-md-9 col-sm-12'>
+	<div class='col-md-12 col-sm-12'>
 		{% block content %}
 		{% endblock content %}
 	</div>
