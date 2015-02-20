@@ -50,9 +50,9 @@ class User
     private $birthdate;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="tel", type="integer")
+     * @ORM\Column(name="tel", type="string", length=14)
      */
     private $tel;
 
