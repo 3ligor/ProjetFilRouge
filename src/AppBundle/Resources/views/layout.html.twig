@@ -1,0 +1,28 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+	<nav role='navigation'>
+		<ul class='nav nav-tabs'>
+			{% block menu %}
+				<li role='presentation'><a href=''><span class="glyphicon glyphicon-home"></span></a></li>
+				<div class="col-sm-3 col-md-3 pull-right">
+					<form class="navbar-form" role="search" action='#' method='POST'>
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Recherche" name="search">
+							<div class="input-group-btn">
+								<button class="btn btn-default" type="submit">
+									<span class="glyphicon glyphicon-search"></span>
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			{% endblock %}
+		</ul>
+	</nav>
+	<div class='page-header'><h1>PFR</h1></div>
+	<div class='col-md-9 col-sm-12'>
+		{% block content %}
+		{% endblock content %}
+	</div>
+{% endblock body %}

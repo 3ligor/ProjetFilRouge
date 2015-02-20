@@ -1,3 +1,15 @@
-app:
-    resource: @AppBundle/Controller/
-    type:     annotation
+home:
+    path: /
+    defaults: { _controller: AppBundle:Default:index }
+    
+projects:
+    resource: "@AppBundle/Resources/config/projects.yml"
+    prefix:   /projects
+    
+users:
+    resource: "@AppBundle/Resources/config/users.yml"
+    prefix:   /users
+    
+admin:
+    resource: "@AppBundle/Resources/config/admin.yml"
+    prefix:   /admin

@@ -1,1 +1,8 @@
-{# empty Twig template #}
+{% extends "AppBundle::layout.html.twig" %}
+{% block title %}{{ parent() }} - Bienvenue{% endblock title %}
+
+{% block content %}
+
+	<h1>Salut monde</h1>
+	
+{% endblock content %}
