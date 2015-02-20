@@ -2,13 +2,14 @@
 
 namespace AppBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Project
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\ProjectRepository")
+ * @ORM\Entity(repositoryClass="ProjectRepository")
  */
 class Project
 {
@@ -43,21 +44,21 @@ class Project
     private $longDescription;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="startDate", type="datetime")
      */
     private $startDate;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="endDate", type="datetime")
      */
     private $endDate;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="creationDate", type="datetime")
      */
@@ -78,12 +79,31 @@ class Project
     private $status;
 
     /**
-     * @var string
+     * @var array
      *
-     * @ORM\Column(name="Category", type="string", length=255)
+     * @ORM\ManyToMany(targetEntity="Category", inversedBy="projects")
      */
-    private $category;
+    private $categories;
 
+	/**
+	 * @var User
+	 * @ORM\ManyToMany(targetEntity="User", mappedBy="projects")
+	 */
+	private $members;
+
+	/**
+	 * @var User
+	 * 
+	 * @ORM\ManyToOne(targetEntity="User", inversedBy="leadProjects")
+	 */
+	private $leader;
+
+	/**
+	 * @var array
+	 * 
+	 * ORM\OneToMany(targetEntity="Stage", mappedBy="project", orphanRemoval=true)
+	 */
+	private $stages;
 
     /**
      * Get id
@@ -167,7 +187,7 @@ class Project
     /**
      * Set startDate
      *
-     * @param \DateTime $startDate
+     * @param DateTime $startDate
      * @return Project
      */
     public function setStartDate($startDate)
@@ -180,7 +200,7 @@ class Project
     /**
      * Get startDate
      *
-     * @return \DateTime 
+     * @return DateTime 
      */
     public function getStartDate()
     {
@@ -190,7 +210,7 @@ class Project
     /**
      * Set endDate
      *
-     * @param \DateTime $endDate
+     * @param DateTime $endDate
      * @return Project
      */
     public function setEndDate($endDate)
@@ -203,7 +223,7 @@ class Project
     /**
      * Get endDate
      *
-     * @return \DateTime 
+     * @return DateTime 
      */
     public function getEndDate()
     {
@@ -213,7 +233,7 @@ class Project
     /**
      * Set creationDate
      *
-     * @param \DateTime $creationDate
+     * @param DateTime $creationDate
      * @return Project
      */
     public function setCreationDate($creationDate)
@@ -226,7 +246,7 @@ class Project
     /**
      * Get creationDate
      *
-     * @return \DateTime 
+     * @return DateTime 
      */
     public function getCreationDate()
     {

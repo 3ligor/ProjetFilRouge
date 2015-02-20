@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Skill
+ * Category
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\SkillRepository")
+ * @ORM\Entity
  */
-class Skill
+class Category
 {
     /**
      * @var integer
@@ -29,17 +29,10 @@ class Skill
     private $title;
 	
 	/**
-	 * @var Skill
-	 * 
-	 * @ORM\ManyToOne(targetEntity="Skill", inversedBy="childs")
+	 * @var Project
+	 * @ORM\ManyToMany(targetEntity="Project", mappedBy="categories")
 	 */
-	private $parent;
-	
-	/**
-	 * @var array
-	 * @ORM\OneToMany(targetEntity="Skill", mappedBy="parent")
-	 */
-	private $childs;
+	private $projects;
 
 
     /**
@@ -56,7 +49,7 @@ class Skill
      * Set title
      *
      * @param string $title
-     * @return Skill
+     * @return Category
      */
     public function setTitle($title)
     {

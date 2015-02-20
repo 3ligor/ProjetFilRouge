@@ -20,7 +20,7 @@ class User
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
+ 
     /**
      * @var string
      *
@@ -118,8 +118,35 @@ class User
      * @ORM\Column(name="available", type="boolean")
      */
     private $available;
-
-
+	
+	/**
+	 * @var array
+	 * 
+	 * @ORM\ManyToMany(targetEntity="Project", inversedBy="members")
+	 */
+	private $projects;
+	
+	/**
+	 * @var array
+	 * 
+	 * @ORM\OneToMany(targetEntity="Project", mappedBy="leader")
+	 */
+	private $leadProjects;
+	
+	/**
+	 * @var Promo
+	 * 
+	 * @ORM\ManyToOne(targetEntity="Promo", inversedBy="users")
+	 */
+	private $promo;
+	
+	/**
+	 * @var Image
+	 * 
+	 * @ORM\OneToOne(targetEntity="Image", orphanRemoval=true)
+	 */
+	private $image;
+	
     /**
      * Get id
      *

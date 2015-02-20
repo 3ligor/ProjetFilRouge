@@ -27,6 +27,13 @@ class Promo
      * @ORM\Column(name="Title", type="string", length=255)
      */
     private $title;
+	
+	/**
+	 * @var array
+	 * 
+	 * @ORM\OneToMany(targetEntity="User", mappedBy="promo")
+	 */
+	private $users;
 
 
     /**

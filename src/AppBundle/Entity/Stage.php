@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * stage
+ * Stage
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\stageRepository")
+ * @ORM\Entity
  */
-class stage
+class Stage
 {
     /**
      * @var integer
@@ -34,7 +34,13 @@ class stage
      * @ORM\Column(name="volume", type="integer")
      */
     private $volume;
-
+	
+	/**
+	 *
+	 * @var project
+	 * @ORM\ManyToOne(targetEntity="Project", inversedBy="stages")
+	 */
+	private $project;
 
     /**
      * Get id
