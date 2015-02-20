@@ -34,7 +34,7 @@ class Stage
      * @ORM\Column(name="volume", type="integer")
      */
     private $volume;
-	
+
 	/**
 	 *
 	 * @var project
@@ -96,5 +96,28 @@ class Stage
     public function getVolume()
     {
         return $this->volume;
+    }
+
+    /**
+     * Set project
+     *
+     * @param \AppBundle\Entity\Project $project
+     * @return Stage
+     */
+    public function setProject(\AppBundle\Entity\Project $project = null)
+    {
+        $this->project = $project;
+
+        return $this;
+    }
+
+    /**
+     * Get project
+     *
+     * @return \AppBundle\Entity\Project 
+     */
+    public function getProject()
+    {
+        return $this->project;
     }
 }
