@@ -1,78 +1,78 @@
 {% extends "AppBundle::layout.html.twig" %}
 
 {% block content %}
-    
+
     <h3>List des projets</h3>
-    <form class="form-inline">
-        <div class="form-control">
-            <div class="row">
-            <div class="col-lg-3">
-            <select>
-                <option>Type</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-            </div>
-            <div class="col-lg-3">
-            <select>
-                <option>Compétences</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-            </div>
-            <div class="col-lg-3">
-            <select>
-                <option>Statut du projet</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-            </div>
-            <div class="col-lg-2">
-            <select>
-                <option>Nbr de personne</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-            </div>
-            <div class="col-lg-1">
-            <input type="submit" value="Valider">
-            </div>
-            </div>
-        </div>
-    </form>
-    
-    <div class="row">
-        
-            <table class="table table-hover">
-                <thead>
-                    <th>Type</th>
-                    <th>Intitulé du projet</th>
-                    <th>Avancement</th>
-                    <th>Lancement</th>
-                    <th>Fin</th>
-                    <th>Nombre</th>
-                    <th>..</th>
-                </thead>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
-       
-    </div>
-    
+	<div class="row">
+		<div class="col-sm-3 col-xs-6">
+			<label for='typeProjet'>Type de projet</label>
+			<select id='typeProjet' class='form-control' multiple='true'>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5</option>
+			</select>
+		</div>
+		<div class="col-sm-3 col-xs-6">
+			<label for='competenceProjet'>Compétences recherchées</label>
+			<select id='competenceProjet' class='form-control' multiple='true'>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5</option>
+			</select>
+		</div>
+		<div class="col-sm-3 col-xs-6">
+			<label for='statutProjet'>Statut du projet</label>
+			<select id='statutProjet' class='form-control' multiple='true'>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5</option>
+			</select>
+		</div>
+		<div class="col-sm-3 col-xs-6">
+			<label for='effectifProjet'>Effectif</label>
+			<select id='effectifProjet' class='form-control' multiple='true'>
+				<option>0-5 personnes</option>
+				<option>5-10 personnes</option>
+				<option>10+ personnes</option>
+			</select>
+		</div>
+		<div class='col-xs-12 text-right'>
+			<button type="submit" class="btn btn-default">Filtrer</button>
+		</div>
+	</div>
+
+	<div class="row">
+		<table class="table table-hover">
+			<thead>
+			<th>Catégorie</th>
+			<th>Nom</th>
+			<th>Avancement</th>
+			<th>Lancement</th>
+			<th>Fin</th>
+			<th>Nombre</th>
+			</thead>
+			<tbody>
+				{% for project in projects %}
+					<tr>
+						<td>
+							{% for category in project.categories %} 
+								{{ category.title }}
+							{% endfor %}
+						</td>
+						<td>
+							<a href='{{ path('project_detail', { id: project.id }) }}'>{{ project.title }}</a>
+						<td></td>
+						<td>{{ project.startDate.format('d-m-Y') }}</td>
+						<td>{{ project.endDate.format('d-m-Y') }}</td>
+						<td>{{ project.members | length + 1 }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
 {% endblock content %}
 
