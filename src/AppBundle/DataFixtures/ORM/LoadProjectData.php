@@ -28,11 +28,11 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 		->setMaxMembers(5)
 		->setStatus(-1)
 		->addCategory($this->getReference('category1'))
-                ->setProject($this->getReference('stage11'))
-                ->setProject($this->getReference('stage12'))
-                ->setProject($this->getReference('stage13'))
-                ->setProject($this->getReference('stage14'))
-		->setLeader($this->getReference('User1'));
+                ->addStage($this->getReference('stage11'))
+                ->addStage($this->getReference('stage12'))
+                ->addStage($this->getReference('stage13'))
+                ->addStage($this->getReference('stage14'))
+		->setLeader($this->getReference('user1'));
 
 	$project2 = new Project();
 	$project2->setTitle('Liste de contacts en Javascript')
@@ -44,12 +44,12 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 		->setMaxMembers(10)
 		->setStatus(0)
 		->addCategory($this->getReference('category2'))
-                ->setProject($this->getReference('stage21'))
-                ->setProject($this->getReference('stage22'))
-                ->setProject($this->getReference('stage23'))
-                ->setProject($this->getReference('stage24'))
-                ->setProject($this->getReference('stage25'))
-		->setLeader($this->getReference('User2'));
+                ->addStage($this->getReference('stage21'))
+                ->addStage($this->getReference('stage22'))
+                ->addStage($this->getReference('stage23'))
+                ->addStage($this->getReference('stage24'))
+                ->addStage($this->getReference('stage25'))
+		->setLeader($this->getReference('user2'));
 
 	$project3 = new Project();
 	$project3->setTitle('Liste de contacts en HTML-CSS')
@@ -61,15 +61,15 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 		->setMaxMembers(3)
 		->setStatus(1)
 		->addCategory($this->getReference('category3'))
-                ->setProject($this->getReference('stage31'))
-                ->setProject($this->getReference('stage32'))
-                ->setProject($this->getReference('stage33'))
-                ->setProject($this->getReference('stage34'))
-                ->setProject($this->getReference('stage35'))
-                ->setProject($this->getReference('stage36'))
-                ->setProject($this->getReference('stage37'))
-		->setLeader($this->getReference('User1'))
-		->addMember($this->getReference('User2'));
+                ->addStage($this->getReference('stage31'))
+                ->addStage($this->getReference('stage32'))
+                ->addStage($this->getReference('stage33'))
+                ->addStage($this->getReference('stage34'))
+                ->addStage($this->getReference('stage35'))
+                ->addStage($this->getReference('stage36'))
+                ->addStage($this->getReference('stage37'))
+		->setLeader($this->getReference('user1'))
+		->addMember($this->getReference('user2'));
 
 	$project4 = new Project();
 	$project4->setTitle('Liste de contacts en Java J2EE')
@@ -81,13 +81,13 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 		->setMaxMembers(7)
 		->setStatus(2)
 		->addCategory($this->getReference('category1'))
-                ->setProject($this->getReference('stage41'))
-                ->setProject($this->getReference('stage42'))
-                ->setProject($this->getReference('stage43'))
-                ->setProject($this->getReference('stage44'))
-		->setLeader($this->getReference('User3'))
-		->addMember($this->getReference('User4'))
-		->addMember($this->getReference('User1'));
+                ->addStage($this->getReference('stage41'))
+                ->addStage($this->getReference('stage42'))
+                ->addStage($this->getReference('stage43'))
+                ->addStage($this->getReference('stage44'))
+		->setLeader($this->getReference('user3'))
+		->addMember($this->getReference('user4'))
+		->addMember($this->getReference('user1'));
 
 	$project5 = new Project();
 	$project5->setTitle('Liste de contacts C++')
@@ -99,15 +99,15 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 		->setMaxMembers(13)
 		->setStatus(3)
 		->addCategory($this->getReference('category2'))
-                ->setProject($this->getReference('stage51'))
-                ->setProject($this->getReference('stage52'))
-                ->setProject($this->getReference('stage53'))
-                ->setProject($this->getReference('stage54'))
-                ->setProject($this->getReference('stage55'))
-                ->setProject($this->getReference('stage56'))
-		->setLeader($this->getReference('User5'))
-		->addMember($this->getReference('User2'))
-		->addMember($this->getReference('User3'));
+                ->addStage($this->getReference('stage51'))
+                ->addStage($this->getReference('stage52'))
+                ->addStage($this->getReference('stage53'))
+                ->addStage($this->getReference('stage54'))
+                ->addStage($this->getReference('stage55'))
+                ->addStage($this->getReference('stage56'))
+		->setLeader($this->getReference('user5'))
+		->addMember($this->getReference('user2'))
+		->addMember($this->getReference('user3'));
 
 	$project6 = new Project();
 	$project6->setTitle('Liste de contacts en PHP et HTML-CSS')
@@ -119,18 +119,18 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 		->setMaxMembers(3)
 		->setStatus(4)
 		->addCategory($this->getReference('category3'))
-                ->setProject($this->getReference('stage61'))
-                ->setProject($this->getReference('stage62'))
-                ->setProject($this->getReference('stage63'))
-                ->setProject($this->getReference('stage64'))
-                ->setProject($this->getReference('stage65'))
-                ->setProject($this->getReference('stage66'))
-                ->setProject($this->getReference('stage67'))
-                ->setProject($this->getReference('stage68'))
-                ->setProject($this->getReference('stage69'))
-		->setLeader($this->getReference('User2'))
-		->addMember($this->getReference('User5'))
-		->addMember($this->getReference('User3'));
+                ->addStage($this->getReference('stage61'))
+                ->addStage($this->getReference('stage62'))
+                ->addStage($this->getReference('stage63'))
+                ->addStage($this->getReference('stage64'))
+                ->addStage($this->getReference('stage65'))
+                ->addStage($this->getReference('stage66'))
+                ->addStage($this->getReference('stage67'))
+                ->addStage($this->getReference('stage68'))
+                ->addStage($this->getReference('stage69'))
+		->setLeader($this->getReference('user2'))
+		->addMember($this->getReference('user5'))
+		->addMember($this->getReference('user3'));
 
 	$project7 = new Project();
 	$project7->setTitle('Liste de contacts en Javascript et HTML')
@@ -143,14 +143,14 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 		->setStatus(5)
 		->addCategory($this->getReference('category1'))
 		->addCategory($this->getReference('category2'))
-                ->setProject($this->getReference('stage71'))
-                ->setProject($this->getReference('stage72'))
-                ->setProject($this->getReference('stage73'))
-                ->setProject($this->getReference('stage74'))
-		->setLeader($this->getReference('User1'))
-		->addMember($this->getReference('User4'))
-		->addMember($this->getReference('User3'))
-		->addMember($this->getReference('User2'));
+                ->addStage($this->getReference('stage71'))
+                ->addStage($this->getReference('stage72'))
+                ->addStage($this->getReference('stage73'))
+                ->addStage($this->getReference('stage74'))
+		->setLeader($this->getReference('user1'))
+		->addMember($this->getReference('user4'))
+		->addMember($this->getReference('user3'))
+		->addMember($this->getReference('user2'));
 	
 	$project8 = new Project();
 	$project8->setTitle('Liste de contacts en JAVA et PHP')
@@ -163,14 +163,14 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 		->setStatus(6)
 		->addCategory($this->getReference('category1'))
 		->addCategory($this->getReference('category3'))
-                ->setProject($this->getReference('stage81'))
-                ->setProject($this->getReference('stage82'))
-                ->setProject($this->getReference('stage83'))
-                ->setProject($this->getReference('stage84'))
-		->setLeader($this->getReference('User4'))
-		->addMember($this->getReference('User5'))
-		->addMember($this->getReference('User1'))
-		->addMember($this->getReference('User3'));
+                ->addStage($this->getReference('stage81'))
+                ->addStage($this->getReference('stage82'))
+                ->addStage($this->getReference('stage83'))
+                ->addStage($this->getReference('stage84'))
+		->setLeader($this->getReference('user4'))
+		->addMember($this->getReference('user5'))
+		->addMember($this->getReference('user1'))
+		->addMember($this->getReference('user3'));
 	
 	$project9 = new Project();
 	$project9->setTitle('Liste de contacts en C++ et JAVA')
@@ -183,15 +183,15 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 		->setStatus(7)
 		->addCategory($this->getReference('category2'))
 		->addCategory($this->getReference('category3'))
-                ->setProject($this->getReference('stage91'))
-                ->setProject($this->getReference('stage92'))
-                ->setProject($this->getReference('stage93'))
-                ->setProject($this->getReference('stage94'))
-                ->setProject($this->getReference('stage95'))
-		->setLeader($this->getReference('User3'))
-		->addMember($this->getReference('User1'))
-		->addMember($this->getReference('User5'))
-		->addMember($this->getReference('User4'));
+                ->addStage($this->getReference('stage91'))
+                ->addStage($this->getReference('stage92'))
+                ->addStage($this->getReference('stage93'))
+                ->addStage($this->getReference('stage94'))
+                ->addStage($this->getReference('stage95'))
+		->setLeader($this->getReference('user3'))
+		->addMember($this->getReference('user1'))
+		->addMember($this->getReference('user5'))
+		->addMember($this->getReference('user4'));
 
 	$manager->persist($project1);
 	$manager->persist($project2);

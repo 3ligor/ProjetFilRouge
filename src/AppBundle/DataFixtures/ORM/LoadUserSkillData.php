@@ -21,20 +21,20 @@ class LoadUserSkillData extends AbstractFixture implements OrderedFixtureInterfa
 	$userSkill5 = new UserSkill();
 	
 	$userSkill1->setValue('5')
-		    ->setSkill('skill1')
-		    ->setUser('user1');
+		    ->setSkill($this->getReference('skill1'))
+		    ->setUser($this->getReference('user1'));
 	$userSkill2->setValue('4')
-		    ->setSkill('skill2')
-		    ->setUser('user1');
+		    ->setSkill($this->getReference('skill2'))
+		    ->setUser($this->getReference('user1'));
 	$userSkill3->setValue('4')
-		    ->setSkill('skill1')
-		    ->setUser('user2');
+		    ->setSkill($this->getReference('skill1'))
+		    ->setUser($this->getReference('user2'));
 	$userSkill4->setValue('3')
-		    ->setSkill('skill3')
-		    ->setUser('user3');
+		    ->setSkill($this->getReference('skill3'))
+		    ->setUser($this->getReference('user3'));
 	$userSkill5->setValue('2')
-		    ->setSkill('skill8')
-		    ->setUser('user4');
+		    ->setSkill($this->getReference('skill8'))
+		    ->setUser($this->getReference('user4'));
 	        
 	$manager->persist($userSkill1);
         $manager->persist($userSkill2);

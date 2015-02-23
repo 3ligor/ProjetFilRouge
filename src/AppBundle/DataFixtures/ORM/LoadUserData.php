@@ -14,7 +14,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface {
      */
     public function load(ObjectManager $manager) {
 
-	$user1 = new Project();
+	$user1 = new User();
 	$user1->setPseudo('Shru')
 		->setFirstname('Julien')
 		->setLastname('Sanselme')
@@ -33,7 +33,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface {
 		->addPromo($this->getReference('promo5'))
 		->setImage($this->getReference('image1'));
 	
-	$user2 = new Project();
+	$user2 = new User();
 	$user2->setPseudo('Eligor')
 		->setFirstname('Alexandre')
 		->setLastname('Defebvre')
@@ -51,7 +51,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface {
 		->addPromo($this->getReference('promo2'))
 		->setImage($this->getReference('image2'));
 
-	$user3 = new Project();
+	$user3 = new User();
 	$user3->setPseudo('Miss XXII')
 		->setFirstname('Mickaël')
 		->setLastname('Broussard')
@@ -69,7 +69,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface {
 		->addPromo($this->getReference('promo3'))
 		->setImage($this->getReference('image3'));
 	
-	$user4 = new Project();
+	$user4 = new User();
 	$user4->setPseudo('Dirty')
 		->setFirstname('Lynsie')
 		->setLastname("N'guyen")
@@ -87,7 +87,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface {
 		->addPromo($this->getReference('promo4'))
 		->setImage($this->getReference('image4'));
 
-	$user5 = new Project();
+	$user5 = new User();
 	$user5->setPseudo('Tag')
 		->setFirstname('Jeremy')
 		->setLastname('Cheron')

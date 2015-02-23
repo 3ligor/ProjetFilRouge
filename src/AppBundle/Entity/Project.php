@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -109,9 +111,9 @@ class Project
      * Constructor
      */
     public function __construct() {
-        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->members = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->stages = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->members = new ArrayCollection();
+		$this->stages = new ArrayCollection();
     }
 
     /**
@@ -286,10 +288,10 @@ class Project
     /**
      * Add categories
      *
-     * @param \AppBundle\Entity\Category $categories
+     * @param Category $categories
      * @return Project
      */
-    public function addCategory(\AppBundle\Entity\Category $categories) {
+    public function addCategory(Category $categories) {
         $this->categories[] = $categories;
 		$categories->addProject($this);
         return $this;
@@ -298,16 +300,16 @@ class Project
     /**
      * Remove categories
      *
-     * @param \AppBundle\Entity\Category $categories
+     * @param Category $categories
      */
-    public function removeCategory(\AppBundle\Entity\Category $categories) {
+    public function removeCategory(Category $categories) {
         $this->categories->removeElement($categories);
     }
 
     /**
      * Get categories
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection 
      */
     public function getCategories() {
         return $this->categories;
@@ -316,10 +318,10 @@ class Project
     /**
      * Add members
      *
-     * @param \AppBundle\Entity\User $members
+     * @param User $members
      * @return Project
      */
-    public function addMember(\AppBundle\Entity\User $members) {
+    public function addMember(User $members) {
         $this->members[] = $members;
 		$members->addProject($this);
         return $this;
@@ -328,16 +330,16 @@ class Project
     /**
      * Remove members
      *
-     * @param \AppBundle\Entity\User $members
+     * @param User $members
      */
-    public function removeMember(\AppBundle\Entity\User $members) {
+    public function removeMember(User $members) {
         $this->members->removeElement($members);
     }
 
     /**
      * Get members
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection 
      */
     public function getMembers() {
         return $this->members;
@@ -346,10 +348,10 @@ class Project
     /**
      * Set leader
      *
-     * @param \AppBundle\Entity\User $leader
+     * @param User $leader
      * @return Project
      */
-    public function setLeader(\AppBundle\Entity\User $leader = null) {
+    public function setLeader(User $leader = null) {
         $this->leader = $leader;
 		$leader->addLeadProject($this);
         return $this;
@@ -358,7 +360,7 @@ class Project
     /**
      * Get leader
      *
-     * @return \AppBundle\Entity\User 
+     * @return User 
      */
     public function getLeader() {
         return $this->leader;
@@ -367,11 +369,11 @@ class Project
     /**
      * Add stage
      *
-     * @param \AppBundle\Entity\Category $stage
+     * @param Stage $stage
      * @return Project
      */
-    public function addStage(\AppBundle\Entity\Category $stage) {
-        $this->categories[] = $stage;
+    public function addStage(Stage $stage) {
+        $this->stages[] = $stage;
 		$stage->setProject($this);
         return $this;
     }
@@ -379,16 +381,16 @@ class Project
     /**
      * Removes stage
      *
-     * @param \AppBundle\Entity\Category $stage
+     * @param Stage $stage
      */
-    public function removeStage(\AppBundle\Entity\Category $stage) {
+    public function removeStage(Stage $stage) {
         $this->categories->removeElement($stage);
     }
 
     /**
      * Get stage
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection 
      */
     public function getStages() {
         return $this->categories;

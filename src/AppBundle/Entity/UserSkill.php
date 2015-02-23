@@ -78,10 +78,10 @@ class UserSkill {
     /**
      * Set user
      *
-     * @param \AppBundle\Entity\User $user
+     * @param User $user
      * @return UserSkill
      */
-    public function setUser(\AppBundle\Entity\User $user = null) {
+    public function setUser(User $user = null) {
         $this->user = $user;
 		$user->addUserSkill($this);
         return $this;
@@ -90,7 +90,7 @@ class UserSkill {
     /**
      * Get user
      *
-     * @return \AppBundle\Entity\User 
+     * @return User 
      */
     public function getUser() {
         return $this->user;
@@ -99,10 +99,10 @@ class UserSkill {
     /**
      * Set skill
      *
-     * @param \AppBundle\Entity\Skill $skill
+     * @param Skill $skill
      * @return UserSkill
      */
-    public function setSkill(\AppBundle\Entity\Skill $skill = null) {
+    public function setSkill(Skill $skill = null) {
         $this->skill = $skill;
 		$skill->addUserSkill($this);
         return $this;
@@ -112,7 +112,7 @@ class UserSkill {
 	 *  
      * Get skill
      *
-     * @return \AppBundle\Entity\Skill 
+     * @return Skill 
      */
     public function getSkill() {
         return $this->skill;

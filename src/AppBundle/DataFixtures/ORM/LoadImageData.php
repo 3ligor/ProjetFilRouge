@@ -2,12 +2,12 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\Promo;
+use AppBundle\Entity\Image;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadPromoData extends AbstractFixture implements OrderedFixtureInterface {
+class LoadImageData extends AbstractFixture implements OrderedFixtureInterface {
 
     /**
      * {@inheritDoc}
