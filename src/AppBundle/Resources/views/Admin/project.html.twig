@@ -1,0 +1,43 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block content %}
+	<table class="table table-condensed table-hover">
+		<th>Type</th>
+		<th>Intitulé</th>
+		<th class="text-center">Date de création</th>
+		<th class="text-center">Date de début</th>
+		<th class="text-center">Date de fin</th>
+		<th class="text-center">Validation</th>
+			{% for project in projects %}
+			<tr>
+				<td>
+					{% for categorie in project.categories %}
+						{{ loop.last ? categorie.title : categorie.title~' - ' }}
+					{% endfor %}
+				</td>
+				<td>
+					{{project.title}}
+				</td>
+				<td class="text-center">
+					{{project.creationDate|date('d-m-Y')}}
+				</td>
+				<td class="text-center">
+					{{project.startDate|date('d-m-Y')}}
+				</td>
+				<td class="text-center">
+					{{project.endDate|date('d-m-Y')}}
+				</td>
+				<td class="text-center">
+					{% if project.status == 0 %}
+						<span class="glyphicon glyphicon-check text-success"></span>
+						<span class="glyphicon glyphicon-remove-circle text-danger"></span>
+					{% elseif project.status == 4%}
+							<span class="glyphicon glyphicon-ok text-success"></span>
+							<span class="glyphicon glyphicon-remove-circle text-muted"></span>
+					{% endif %}
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+{% endblock content %}
+
