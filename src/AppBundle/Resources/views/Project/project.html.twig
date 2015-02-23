@@ -1,20 +1,35 @@
 {% extends "AppBundle::layout.html.twig" %}
-
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('bundles/app/css/bootstrap-progressbar-3.3.0.min.css') }}">
+{% endblock %}
 {% block content %}
 	<div class='row'>
 		<div class='col-sm-3'>
 			<div class='panel panel-default'>
 				<div class='panel-heading'>
-				</div>		
+					Avancement
+				</div>
 				<div class='panel-body'>
-
+					<div class="progress vertical bottom">
+						<div id='stageBar' class="progress-bar" role="progressbar" data-transitiongoal="75"></div>
+					</div>
 				</div>
 			</div>
 			<div class='panel panel-default'>
 				<div class='panel-heading'>
+					Effectif
 				</div>
 				<div class='panel-body'>
-
+					<span class="glyphicon glyphicon-star"></span>
+					{{ project.leader.firstname }}
+					"{{ project.leader.pseudo }}"
+					{{ project.leader.lastname }}<br />
+					{% for member in project.members %}
+						{{ member.firstname }}
+						"{{ member.pseudo }}"
+						{{ member.lastname }}<br />
+					{% endfor %}
 				</div>
 			</div>
 		</div>
@@ -24,7 +39,10 @@
 					{{ project.title }}
 				</div>
 				<div class='panel-body'>
-
+					{{ project.smallDescription }}
+					<div class='panel-body'>
+					</div>
+					{{ project.longDescription }}
 				</div>
 				<div class='panel-footer'>
 
@@ -32,8 +50,14 @@
 			</div>
 		</div>	
 	</div>
-
-
-
 {% endblock content %}
-
+{% block javascripts %}
+	<script src='{{ asset('bundles/app/js/jquery-2.1.1.min.js') }}'></script>
+	{{ parent() }}
+	<script	src='{{ asset('bundles/app/js/bootstrap-progressbar.min.js') }}'></script>
+	<script>
+		$(document).ready(function ($) {
+			$('#stageBar').progressbar();
+		});
+	</script>
+{% endblock %}
