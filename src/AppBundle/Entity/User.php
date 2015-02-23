@@ -151,7 +151,7 @@ class User {
 	private $image;
 
 	/**
-	 * @var UserSkill
+	 * @var array
 	 * 
 	 * @ORM\OneToMany(targetEntity="UserSkill", mappedBy="user")
 	 */
@@ -469,6 +469,7 @@ class User {
 		$this->projects = new ArrayCollection();
 		$this->leadProjects = new ArrayCollection();
 		$this->promo = new ArrayCollection();
+		$this->userSkills = new ArrayCollection();
 	}
 
 	/**

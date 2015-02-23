@@ -29,7 +29,7 @@ class Skill
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
-	
+
 	/**
 	 * @var Skill
 	 * 
@@ -42,7 +42,7 @@ class Skill
 	 * @ORM\OneToMany(targetEntity="Skill", mappedBy="parent")
 	 */
 	private $childs;
-	
+
 	/**
 	 * @var UserSkill
 	 * 
