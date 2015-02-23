@@ -31,6 +31,7 @@ class LoadStageData extends AbstractFixture implements OrderedFixtureInterface {
 		$stage14->setTitle('Etape 4')
 				->setVolume('15');
 
+		
 		// Stage for project 2
 		$stage21 = new Stage();
 		$stage21->setTitle('Etape 1')
@@ -52,6 +53,7 @@ class LoadStageData extends AbstractFixture implements OrderedFixtureInterface {
 		$stage25->setTitle('Etape 5')
 				->setVolume('10');
 
+		
 		//Stage for project 3
 		$stage31 = new Stage();
 		$stage31->setTitle('Etape 1')
@@ -81,7 +83,7 @@ class LoadStageData extends AbstractFixture implements OrderedFixtureInterface {
 		$stage37->setTitle('Etape 7')
 				->setVolume('5');
 
-
+		
 		// Stage for project 4
 		$stage41 = new Stage();
 		$stage41->setTitle('Etape 1')
@@ -99,6 +101,7 @@ class LoadStageData extends AbstractFixture implements OrderedFixtureInterface {
 		$stage44->setTitle('Etape 4')
 				->setVolume('15');
 
+		
 		// Stage for project 5
 		$stage51 = new Stage();
 		$stage51->setTitle('Etape 1')
@@ -124,6 +127,7 @@ class LoadStageData extends AbstractFixture implements OrderedFixtureInterface {
 		$stage56->setTitle('Etape 6')
 				->setVolume('5');
 
+		
 		// Stage for project 6
 		$stage61 = new Stage();
 		$stage61->setTitle('Etape 1')
@@ -161,6 +165,7 @@ class LoadStageData extends AbstractFixture implements OrderedFixtureInterface {
 		$stage69->setTitle('Etape 9')
 				->setVolume('5');
 
+		
 		// Stage for project 7
 		$stage71 = new Stage();
 		$stage71->setTitle('Etape 1')
@@ -178,6 +183,7 @@ class LoadStageData extends AbstractFixture implements OrderedFixtureInterface {
 		$stage74->setTitle('Etape 4')
 				->setVolume('20');
 
+		
 		// Stage fpr project 8
 		$stage81 = new Stage();
 		$stage81->setTitle('Etape 1')
@@ -195,6 +201,7 @@ class LoadStageData extends AbstractFixture implements OrderedFixtureInterface {
 		$stage84->setTitle('Etape 4')
 				->setVolume('10');
 
+		
 		// Stage for project 9
 		$stage91 = new Stage();
 		$stage91->setTitle('Etape 1')

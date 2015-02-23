@@ -44,6 +44,7 @@ class LoadSkillData extends AbstractFixture implements OrderedFixtureInterface {
 		$manager->persist($skill7);
 		$manager->persist($skill8);
 
+		
 		$manager->flush();
 
 		$this->addReference('skill1', $skill1);
