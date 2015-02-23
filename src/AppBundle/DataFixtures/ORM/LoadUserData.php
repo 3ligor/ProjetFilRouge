@@ -30,6 +30,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface {
 		->setActive(true)
 		->setAvailable(true)
 		->addPromo($this->getReference('promo1'))
+		->addPromo($this->getReference('promo5'))
 		->setImage($this->getReference('image1'));
 	
 	$user2 = new Project();
@@ -83,7 +84,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface {
 		->setPassword('1234')
 		->setActive(false)
 		->setAvailable(false)
-		->addPromo($this->getReference('promo1'))
+		->addPromo($this->getReference('promo4'))
 		->setImage($this->getReference('image4'));
 
 	$user5 = new Project();
