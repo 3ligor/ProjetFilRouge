@@ -121,6 +121,7 @@ class LoadStageData extends AbstractFixture implements OrderedFixtureInterface {
                 ->setVolume('15');
 		
         
+        
         // Stage for project 5
         
         $stage51 = new Stage();

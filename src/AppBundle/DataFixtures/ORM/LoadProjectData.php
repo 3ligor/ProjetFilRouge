@@ -17,6 +17,7 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 		. "nostra, per inceptos himenaeos volutpat.";
 	$longDesc = "Aenean vitae hendrerit orci, fringilla vestibulum nulla. Ut iaculis diam a enim porttitor, nec sagittis est blandit. Etiam vestibulum vel ex nec bibendum. Vivamus dignissim pellentesque sem id sagittis. Nam lobortis rhoncus ante, et luctus sapien scelerisque a. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla faucibus diam sem, id malesuada augue eleifend id. Donec sit amet eleifend lorem. Aenean suscipit tellus elementum lacus fermentum, ut faucibus turpis commodo. Mauris viverra ante in lobortis hendrerit. Integer facilisis elit fermentum turpis egestas ullamcorper. Sed sagittis dolor ut velit facilisis euismod. Suspendisse potenti. Vestibulum eget pharetra augue, id molestie eros. Donec aliquet efficitur quam vitae ullamcorper.";
 
+        
 	$project1 = new Project();
 	$project1->setTitle('Liste de contacts en PHP')
 		->setSmallDescription($smallDesc)
