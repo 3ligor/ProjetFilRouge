@@ -1,0 +1,13 @@
+user_list:
+    path: /
+    defaults: { _controller: AppBundle:User:index }
+    
+user_profile:
+    path: /{id}
+    defaults: { _controller: AppBundle:User:profile, id: -1 }
+    requirements :
+        id: \d+
+        
+user_update:
+    path: /update/{id}
+    defaults: { _controller: AppBundle:User:update, id: -1 }

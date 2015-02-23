@@ -109,6 +109,7 @@ class UserSkill {
     }
 
     /**
+	 *  
      * Get skill
      *
      * @return \AppBundle\Entity\Skill 

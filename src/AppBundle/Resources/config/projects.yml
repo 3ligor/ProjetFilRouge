@@ -1,12 +1,23 @@
 project_list:
     path: /list/{page}
-    defaults: { _controller: AppBundle:Project:list }
-    requirements: 
-         page: \d+
+    defaults: { _controller: AppBundle:Project:list, page: 1 }
+    requirements:
+        id: \d+
 
+project_myProjects:
+    path: /MesProjet
+    defaults: { _controller: AppBundle:Project:myProjects}
 
-project_mesProjets:
-    path: /MesProjet/{page}
-    defaults: { _controller: AppBundle:Project:mesProjets }
-    requirements: 
-         page: \d+
+project_detail:
+    path: /{id}
+    defaults: { _controller: AppBundle:Project:detail, id: -1}
+    requirements:
+        id: \d+
+
+project_add:
+    path: /add
+    defaults : { _controller: AppBundle:Project:add }
+    
+project_update:
+    path: /update/{id}
+    defaults : { _controller: AppBundle:Project:udpate, id: -1}

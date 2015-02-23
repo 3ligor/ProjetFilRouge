@@ -1,0 +1,19 @@
+admin_home:
+    path: /
+    defaults: { _controller: AppBundle:Admin:index }
+    
+admin_project:
+    path: /project
+    defaults: { _controller: AppBundle:Admin:project }
+    
+admin_user:
+    path: /user
+    defaults: { _controller: AppBundle:Admin:user }
+    
+admin_import:
+    path: /import
+    defaults: { _controller: AppBundle:Admin:import }
+    
+admin_skill:
+    path: /skill
+    defaults: { _controller: AppBundle:Admin:skill }

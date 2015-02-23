@@ -5,9 +5,9 @@
 		<ul class='nav nav-tabs'>
 			{% block menu %}
 				<li role='presentation'><a href='{{ path('home') }}'><span class="glyphicon glyphicon-home"></span></a></li>
-                                <li role='presentation'><a href='{{ path('project_list',  {'page':1}) }}'>Liste des projets</a></li>
-                                <li role='presentation'><a href='{{ path('project_list',  {'page':1}) }}'>Liste des utilisateurs</a></li>
-                                <li role='presentation'><a href='{{ path('project_mesProjets',  {'page':1}) }}'>Mes projets</a></li>
+                                <li role='presentation'><a href='{{ path('project_list') }}'>Projets</a></li>
+                                <li role='presentation'><a href='{{ path('user_list') }}'>Utilisateurs</a></li>
+                                <li role='presentation'><a href='{{ path('project_myProjects') }}'>Mes projets</a></li>
 				<div class="col-sm-3 col-md-3 pull-right">
 					<form class="navbar-form" role="search" action='#' method='POST'>
 						<div class="input-group">

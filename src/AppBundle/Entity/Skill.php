@@ -34,7 +34,7 @@ class Skill
 	 * @ORM\ManyToOne(targetEntity="Skill", inversedBy="childs")
 	 */
 	private $parent;
-	
+
 	/**
 	 * @var array
 	 * @ORM\OneToMany(targetEntity="Skill", mappedBy="parent")
@@ -94,10 +94,9 @@ class Skill
      * @param \AppBundle\Entity\Skill $parent
      * @return Skill
      */
-    public function setParent(\AppBundle\Entity\Skill $parent = null)
-    {
+    public function setParent(\AppBundle\Entity\Skill $parent = null) {
         $this->parent = $parent;
-
+		$parent->addChild($this);
         return $this;
     }
 
@@ -106,8 +105,7 @@ class Skill
      *
      * @return \AppBundle\Entity\Skill 
      */
-    public function getParent()
-    {
+    public function getParent() {
         return $this->parent;
     }
 
@@ -117,10 +115,9 @@ class Skill
      * @param \AppBundle\Entity\Skill $childs
      * @return Skill
      */
-    public function addChild(\AppBundle\Entity\Skill $childs)
-    {
+    public function addChild(\AppBundle\Entity\Skill $childs) {
         $this->childs[] = $childs;
-
+		
         return $this;
     }
 
@@ -129,8 +126,7 @@ class Skill
      *
      * @param \AppBundle\Entity\Skill $childs
      */
-    public function removeChild(\AppBundle\Entity\Skill $childs)
-    {
+    public function removeChild(\AppBundle\Entity\Skill $childs) {
         $this->childs->removeElement($childs);
     }
 
@@ -139,8 +135,7 @@ class Skill
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getChilds()
-    {
+    public function getChilds() {
         return $this->childs;
     }
 
@@ -149,8 +144,7 @@ class Skill
      *
      * @return \AppBundle\Entity\UserSkill 
      */
-    public function getUserSkills()
-    {
+    public function getUserSkills() {
         return $this->userSkills;
     }
 
@@ -160,10 +154,8 @@ class Skill
      * @param \AppBundle\Entity\UserSkill $userSkills
      * @return Skill
      */
-    public function addUserSkill(\AppBundle\Entity\UserSkill $userSkills)
-    {
+    public function addUserSkill(\AppBundle\Entity\UserSkill $userSkills) {
         $this->userSkills[] = $userSkills;
-
         return $this;
     }
 
@@ -172,8 +164,7 @@ class Skill
      *
      * @param \AppBundle\Entity\UserSkill $userSkills
      */
-    public function removeUserSkill(\AppBundle\Entity\UserSkill $userSkills)
-    {
+    public function removeUserSkill(\AppBundle\Entity\UserSkill $userSkills) {
         $this->userSkills->removeElement($userSkills);
     }
 }
