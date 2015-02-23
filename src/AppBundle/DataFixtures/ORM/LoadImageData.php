@@ -49,7 +49,7 @@ class LoadPromoData extends AbstractFixture implements OrderedFixtureInterface {
         }
 
     public function getOrder() {
-	return 1;
+	return 4;
     }
 
 }

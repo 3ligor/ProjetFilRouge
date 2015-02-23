@@ -80,7 +80,7 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 		->setCreationDate(new \DateTime())
 		->setMaxMembers(7)
 		->setStatus(2)
-		->addCategory($this->getReference('category4'))
+		->addCategory($this->getReference('category1'))
                 ->setProject($this->getReference('stage41'))
                 ->setProject($this->getReference('stage42'))
                 ->setProject($this->getReference('stage43'))
@@ -98,7 +98,7 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 		->setCreationDate(new \DateTime())
 		->setMaxMembers(13)
 		->setStatus(3)
-		->addCategory($this->getReference('category5'))
+		->addCategory($this->getReference('category2'))
                 ->setProject($this->getReference('stage51'))
                 ->setProject($this->getReference('stage52'))
                 ->setProject($this->getReference('stage53'))
@@ -118,7 +118,6 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 		->setCreationDate(new \DateTime())
 		->setMaxMembers(3)
 		->setStatus(4)
-		->addCategory($this->getReference('category1'))
 		->addCategory($this->getReference('category3'))
                 ->setProject($this->getReference('stage61'))
                 ->setProject($this->getReference('stage62'))
@@ -142,8 +141,8 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 		->setCreationDate(new \DateTime())
 		->setMaxMembers(8)
 		->setStatus(5)
+		->addCategory($this->getReference('category1'))
 		->addCategory($this->getReference('category2'))
-		->addCategory($this->getReference('category3'))
                 ->setProject($this->getReference('stage71'))
                 ->setProject($this->getReference('stage72'))
                 ->setProject($this->getReference('stage73'))
@@ -162,8 +161,8 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 		->setCreationDate(new \DateTime())
 		->setMaxMembers(12)
 		->setStatus(6)
-		->addCategory($this->getReference('category4'))
 		->addCategory($this->getReference('category1'))
+		->addCategory($this->getReference('category3'))
                 ->setProject($this->getReference('stage81'))
                 ->setProject($this->getReference('stage82'))
                 ->setProject($this->getReference('stage83'))
@@ -182,8 +181,8 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 		->setCreationDate(new \DateTime())
 		->setMaxMembers(6)
 		->setStatus(7)
-		->addCategory($this->getReference('category5'))
-		->addCategory($this->getReference('category4'))
+		->addCategory($this->getReference('category2'))
+		->addCategory($this->getReference('category3'))
                 ->setProject($this->getReference('stage91'))
                 ->setProject($this->getReference('stage92'))
                 ->setProject($this->getReference('stage93'))
@@ -219,7 +218,7 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
     }
 
     public function getOrder() {
-	return 7;
+	return 8;
     }
 
 }
