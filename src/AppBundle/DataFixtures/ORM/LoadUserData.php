@@ -2,7 +2,7 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use BlogBundle\Entity\User;
+use AppBundle\Entity\User;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -29,9 +29,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface {
 		->setPassword('1234')
 		->setActive(true)
 		->setAvailable(true)
-		->addProjects($this->getReference('project1'))
-		->addLeadProjects($this->getReference('project2'))
 		->addPromo($this->getReference('promo1'))
+		->addPromo($this->getReference('promo5'))
 		->setImage($this->getReference('image1'));
 	
 	$user2 = new Project();
@@ -49,8 +48,6 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface {
 		->setPassword('1234')
 		->setActive(true)
 		->setAvailable(false)
-		->addProjects($this->getReference('project2'))
-		->addLeadProjects($this->getReference('project3'))
 		->addPromo($this->getReference('promo2'))
 		->setImage($this->getReference('image2'));
 
@@ -69,8 +66,6 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface {
 		->setPassword('1234')
 		->setActive(false)
 		->setAvailable(true)
-		->addProjects($this->getReference('project3'))
-		->addLeadProjects($this->getReference('project4'))
 		->addPromo($this->getReference('promo3'))
 		->setImage($this->getReference('image3'));
 	
@@ -89,9 +84,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface {
 		->setPassword('1234')
 		->setActive(false)
 		->setAvailable(false)
-		->addProjects($this->getReference('project4'))
-		->addLeadProjects($this->getReference('project5'))
-		->addPromo($this->getReference('promo1'))
+		->addPromo($this->getReference('promo4'))
 		->setImage($this->getReference('image4'));
 
 	$user5 = new Project();
@@ -109,30 +102,28 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface {
 		->setPassword('1234')
 		->setActive(true)
 		->setAvailable(false)
-		->addProjects($this->getReference('project5'))
-		->addLeadProjects($this->getReference('project6'))
 		->addPromo($this->getReference('promo2'))
 		->setImage($this->getReference('image5'));
 
 	
-	$manager->persist($project1);
-	$manager->persist($project2);
-	$manager->persist($project3);
-	$manager->persist($project4);
-	$manager->persist($project5);
+	$manager->persist($user1);
+	$manager->persist($user2);
+	$manager->persist($user3);
+	$manager->persist($user4);
+	$manager->persist($user5);
 	
 	$manager->flush();
 
-	$this->addReference('project1', $project1);
-	$this->addReference('project2', $project2);
-	$this->addReference('project3', $project3);
-	$this->addReference('project4', $project4);
-	$this->addReference('project5', $project5);
+	$this->addReference('user1', $user1);
+	$this->addReference('user2', $user2);
+	$this->addReference('user3', $user3);
+	$this->addReference('user4', $user4);
+	$this->addReference('user5', $user5);
 	
     }
 
     public function getOrder() {
-	return 7;
+	return 6;
     }
 
 }
