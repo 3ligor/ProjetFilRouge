@@ -104,14 +104,22 @@ class Project
 	 * ORM\OneToMany(targetEntity="Stage", mappedBy="project", orphanRemoval=true)
 	 */
 	private $stages;
+	
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->members = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->stages = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -121,10 +129,8 @@ class Project
      * @param string $title
      * @return Project
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
-
         return $this;
     }
 
@@ -133,8 +139,7 @@ class Project
      *
      * @return string 
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -144,10 +149,8 @@ class Project
      * @param string $smallDescription
      * @return Project
      */
-    public function setSmallDescription($smallDescription)
-    {
+    public function setSmallDescription($smallDescription) {
         $this->smallDescription = $smallDescription;
-
         return $this;
     }
 
@@ -156,8 +159,7 @@ class Project
      *
      * @return string 
      */
-    public function getSmallDescription()
-    {
+    public function getSmallDescription() {
         return $this->smallDescription;
     }
 
@@ -167,10 +169,8 @@ class Project
      * @param string $longDescription
      * @return Project
      */
-    public function setLongDescription($longDescription)
-    {
+    public function setLongDescription($longDescription) {
         $this->longDescription = $longDescription;
-
         return $this;
     }
 
@@ -179,8 +179,7 @@ class Project
      *
      * @return string 
      */
-    public function getLongDescription()
-    {
+    public function getLongDescription() {
         return $this->longDescription;
     }
 
@@ -190,10 +189,8 @@ class Project
      * @param DateTime $startDate
      * @return Project
      */
-    public function setStartDate($startDate)
-    {
+    public function setStartDate($startDate) {
         $this->startDate = $startDate;
-
         return $this;
     }
 
@@ -202,8 +199,7 @@ class Project
      *
      * @return DateTime 
      */
-    public function getStartDate()
-    {
+    public function getStartDate() {
         return $this->startDate;
     }
 
@@ -213,10 +209,8 @@ class Project
      * @param DateTime $endDate
      * @return Project
      */
-    public function setEndDate($endDate)
-    {
+    public function setEndDate($endDate) {
         $this->endDate = $endDate;
-
         return $this;
     }
 
@@ -225,8 +219,7 @@ class Project
      *
      * @return DateTime 
      */
-    public function getEndDate()
-    {
+    public function getEndDate() {
         return $this->endDate;
     }
 
@@ -236,10 +229,8 @@ class Project
      * @param DateTime $creationDate
      * @return Project
      */
-    public function setCreationDate($creationDate)
-    {
+    public function setCreationDate($creationDate) {
         $this->creationDate = $creationDate;
-
         return $this;
     }
 
@@ -248,8 +239,7 @@ class Project
      *
      * @return DateTime 
      */
-    public function getCreationDate()
-    {
+    public function getCreationDate() {
         return $this->creationDate;
     }
 
@@ -259,10 +249,8 @@ class Project
      * @param integer $maxMembers
      * @return Project
      */
-    public function setMaxMembers($maxMembers)
-    {
+    public function setMaxMembers($maxMembers) {
         $this->maxMembers = $maxMembers;
-
         return $this;
     }
 
@@ -271,8 +259,7 @@ class Project
      *
      * @return integer 
      */
-    public function getMaxMembers()
-    {
+    public function getMaxMembers() {
         return $this->maxMembers;
     }
 
@@ -282,10 +269,8 @@ class Project
      * @param integer $status
      * @return Project
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->status = $status;
-
         return $this;
     }
 
@@ -294,40 +279,8 @@ class Project
      *
      * @return integer 
      */
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->status;
-    }
-
-    /**
-     * Set category
-     *
-     * @param string $category
-     * @return Project
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return string 
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->members = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -336,10 +289,9 @@ class Project
      * @param \AppBundle\Entity\Category $categories
      * @return Project
      */
-    public function addCategory(\AppBundle\Entity\Category $categories)
-    {
+    public function addCategory(\AppBundle\Entity\Category $categories) {
         $this->categories[] = $categories;
-
+		$categories->addProject($this);
         return $this;
     }
 
@@ -348,8 +300,7 @@ class Project
      *
      * @param \AppBundle\Entity\Category $categories
      */
-    public function removeCategory(\AppBundle\Entity\Category $categories)
-    {
+    public function removeCategory(\AppBundle\Entity\Category $categories) {
         $this->categories->removeElement($categories);
     }
 
@@ -358,8 +309,7 @@ class Project
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getCategories()
-    {
+    public function getCategories() {
         return $this->categories;
     }
 
@@ -369,10 +319,9 @@ class Project
      * @param \AppBundle\Entity\User $members
      * @return Project
      */
-    public function addMember(\AppBundle\Entity\User $members)
-    {
+    public function addMember(\AppBundle\Entity\User $members) {
         $this->members[] = $members;
-
+		$members->addProject($this);
         return $this;
     }
 
@@ -381,8 +330,7 @@ class Project
      *
      * @param \AppBundle\Entity\User $members
      */
-    public function removeMember(\AppBundle\Entity\User $members)
-    {
+    public function removeMember(\AppBundle\Entity\User $members) {
         $this->members->removeElement($members);
     }
 
@@ -391,8 +339,7 @@ class Project
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getMembers()
-    {
+    public function getMembers() {
         return $this->members;
     }
 
@@ -402,10 +349,9 @@ class Project
      * @param \AppBundle\Entity\User $leader
      * @return Project
      */
-    public function setLeader(\AppBundle\Entity\User $leader = null)
-    {
+    public function setLeader(\AppBundle\Entity\User $leader = null) {
         $this->leader = $leader;
-
+		$leader->addLeadProject($this);
         return $this;
     }
 
@@ -414,8 +360,38 @@ class Project
      *
      * @return \AppBundle\Entity\User 
      */
-    public function getLeader()
-    {
+    public function getLeader() {
         return $this->leader;
     }
+	
+    /**
+     * Add stage
+     *
+     * @param \AppBundle\Entity\Category $stage
+     * @return Project
+     */
+    public function addStage(\AppBundle\Entity\Category $stage) {
+        $this->categories[] = $stage;
+		$stage->setProject($this);
+        return $this;
+    }
+
+    /**
+     * Removes stage
+     *
+     * @param \AppBundle\Entity\Category $stage
+     */
+    public function removeStage(\AppBundle\Entity\Category $stage) {
+        $this->categories->removeElement($stage);
+    }
+
+    /**
+     * Get stage
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStages() {
+        return $this->categories;
+    }
+	
 }

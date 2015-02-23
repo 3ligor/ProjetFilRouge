@@ -82,10 +82,8 @@ class Promo
      * @param \AppBundle\Entity\User $users
      * @return Promo
      */
-    public function addUser(\AppBundle\Entity\User $users)
-    {
+    public function addUser(\AppBundle\Entity\User $users) {
         $this->users[] = $users;
-
         return $this;
     }
 

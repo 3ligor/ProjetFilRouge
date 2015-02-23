@@ -139,21 +139,21 @@ class User
 	 * @ORM\ManyToMany(targetEntity="Promo", inversedBy="users")
 	 */
 	private $promo;
-	
+
 	/**
 	 * @var Image
 	 * 
 	 * @ORM\OneToOne(targetEntity="Image", orphanRemoval=true)
 	 */
 	private $image;
-	
+
 	/**
 	 * @var UserSkill
 	 * 
-	 * @ORM\ManyToOne(targetEntity="UserSkill", inversedBy="user")
+	 * @ORM\OneToMany(targetEntity="UserSkill", mappedBy="user")
 	 */
 	private $userSkills;
-	
+
     /**
      * Get id
      *
@@ -539,6 +539,7 @@ class User
      */
     public function addPromo(\AppBundle\Entity\Promo $promo) {
         $this->promo[] = $promo;
+		$promo->addUser($this);
         return $this;
     }
 
@@ -581,22 +582,33 @@ class User
     }
 
     /**
-     * Set userSkills
+     * Add userSkills
      *
      * @param \AppBundle\Entity\UserSkill $userSkills
      * @return User
      */
-    public function setUserSkills(\AppBundle\Entity\UserSkill $userSkills = null) {
-        $this->userSkills = $userSkills;
+    public function addUserSkill(\AppBundle\Entity\UserSkill $userSkills) {
+        $this->userSkills[] = $userSkills;
+		$userSkills->addUser($this);
         return $this;
+    }
+
+    /**
+     * Remove userSkills
+     *
+     * @param \AppBundle\Entity\UserSkill $userSkills
+     */
+    public function removeUserSkill(\AppBundle\Entity\UserSkill $userSkills) {
+        $this->userSkills->removeElement($userSkills);
     }
 
     /**
      * Get userSkills
      *
-     * @return \AppBundle\Entity\UserSkill 
+     * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getUserSkills() {
+    public function getUserSkills()
+    {
         return $this->userSkills;
     }
 }

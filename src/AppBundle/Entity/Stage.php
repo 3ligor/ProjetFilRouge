@@ -104,10 +104,8 @@ class Stage
      * @param \AppBundle\Entity\Project $project
      * @return Stage
      */
-    public function setProject(\AppBundle\Entity\Project $project = null)
-    {
+    public function setProject(\AppBundle\Entity\Project $project = null) {
         $this->project = $project;
-
         return $this;
     }
 
@@ -116,8 +114,7 @@ class Stage
      *
      * @return \AppBundle\Entity\Project 
      */
-    public function getProject()
-    {
+    public function getProject() {
         return $this->project;
     }
 }

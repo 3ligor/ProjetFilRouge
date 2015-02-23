@@ -44,7 +44,7 @@ class Skill
 	/**
 	 * @var UserSkill
 	 * 
-	 * @ORM\ManyToOne(targetEntity="UserSkill", inversedBy="skill")
+	 * @ORM\OneToMany(targetEntity="UserSkill", mappedBy="skill")
 	 */
 	private $userSkills;
 
@@ -145,19 +145,6 @@ class Skill
     }
 
     /**
-     * Set userSkills
-     *
-     * @param \AppBundle\Entity\UserSkill $userSkills
-     * @return Skill
-     */
-    public function setUserSkills(\AppBundle\Entity\UserSkill $userSkills = null)
-    {
-        $this->userSkills = $userSkills;
-
-        return $this;
-    }
-
-    /**
      * Get userSkills
      *
      * @return \AppBundle\Entity\UserSkill 
@@ -165,5 +152,28 @@ class Skill
     public function getUserSkills()
     {
         return $this->userSkills;
+    }
+
+    /**
+     * Add userSkills
+     *
+     * @param \AppBundle\Entity\UserSkill $userSkills
+     * @return Skill
+     */
+    public function addUserSkill(\AppBundle\Entity\UserSkill $userSkills)
+    {
+        $this->userSkills[] = $userSkills;
+
+        return $this;
+    }
+
+    /**
+     * Remove userSkills
+     *
+     * @param \AppBundle\Entity\UserSkill $userSkills
+     */
+    public function removeUserSkill(\AppBundle\Entity\UserSkill $userSkills)
+    {
+        $this->userSkills->removeElement($userSkills);
     }
 }

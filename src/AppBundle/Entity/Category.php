@@ -34,7 +34,6 @@ class Category
 	 */
 	private $projects;
 
-
     /**
      * Get id
      *

@@ -30,14 +30,14 @@ class UserSkill {
 		/**
 	 * @var User
 	 * 
-	 * @ORM\OneToMany(targetEntity="User", mappedBy="userSkills")
+	 * @ORM\ManyToOne(targetEntity="User", inversedBy="userSkills")
 	 */
 	private $user;
 
 	/**
 	 * @var Skill
 	 * 
-	 * @ORM\OneToMany(targetEntity="Skill", mappedBy="userSkills")
+	 * @ORM\ManyToOne(targetEntity="Skill", inversedBy="userSkills")
 	 */
 	private $skill;
 
@@ -56,7 +56,7 @@ class UserSkill {
      * Set value
      *
      * @param integer $value
-     * @return userSkill
+     * @return UserSkill
      */
     public function setValue($value)
     {
@@ -73,5 +73,47 @@ class UserSkill {
     public function getValue()
     {
         return $this->value;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     * @return UserSkill
+     */
+    public function setUser(\AppBundle\Entity\User $user = null) {
+        $this->user = $user;
+		$user->addUserSkill($this);
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User 
+     */
+    public function getUser() {
+        return $this->user;
+    }
+
+    /**
+     * Set skill
+     *
+     * @param \AppBundle\Entity\Skill $skill
+     * @return UserSkill
+     */
+    public function setSkill(\AppBundle\Entity\Skill $skill = null) {
+        $this->skill = $skill;
+		$skill->addUserSkill($this);
+        return $this;
+    }
+
+    /**
+     * Get skill
+     *
+     * @return \AppBundle\Entity\Skill 
+     */
+    public function getSkill() {
+        return $this->skill;
     }
 }
