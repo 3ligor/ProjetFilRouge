@@ -1,11 +1,11 @@
 project_list:
     path: /list/{page}
-    defaults: { _controller: AppBundle:Project:list, page: 1 }
+    defaults: { _controller: AppBundle:Project:list, page:1 }
     requirements:
-        id: \d+
+        page: \d+
 
 project_myProjects:
-    path: /MesProjet
+    path: /MesProjets
     defaults: { _controller: AppBundle:Project:myProjects}
 
 project_detail:

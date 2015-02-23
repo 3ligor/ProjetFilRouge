@@ -2,20 +2,17 @@
 
 namespace AppBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ProjectController extends Controller {
-
-	public function indexAction() {
-		return $this->render('AppBundle:Project:index.html.twig');
-	}
 
 	public function listAction($page) {
 		return $this->render('AppBundle:Project:list.html.twig');
 	}
 
 	public function myProjectsAction() {
-		return $this->render('AppBundle:Project:mesProjets.html.twig');
+		return $this->render('AppBundle:Project:myProjects.html.twig');
 	}
 
 	public function detailAction($id) {
