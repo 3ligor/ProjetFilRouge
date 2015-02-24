@@ -1,6 +1,6 @@
 {% extends "AppBundle::layout.html.twig" %}
-
 {% block content %}
+	
     <table class="table table-condensed table-hover">
 		<thead>
 		<th>Rôles</th>
@@ -36,12 +36,17 @@
 					{{ user.lastname }}
 				</td>
 				<td class="text-center">
-					<span class="badge badge-info">
-						{{ user.projects|length }}
+					<span class="badge badge-primary">
+						{% for project in user.projects %}
+							{% set nbprojects = 0 %}
+						{{ project.status >= 4 ? nbprojects++ }}
+						{% endfor %}
 					</span>
 				</td>
 				<td class="text-center">
-					{{ 'temp' }}
+					<span class="badge badge-info">
+						{{ user.projects|length }}
+					</span>
 				</td>
 			</tr>
 		{% endfor %}
