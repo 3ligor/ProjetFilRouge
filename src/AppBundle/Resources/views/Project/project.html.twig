@@ -66,26 +66,26 @@
 						</a>
 						{% for userProject in project.userProjects %}
 							{% if userProject.status == 3 %}
-							<a class='list-group-item' href='#' data-toggle="tooltip" data-placement="top" title='Membre'>
-								<strong>{{ userProject.user.pseudo }}</strong><br />
-								{{ userProject.user.firstname }} {{ userProject.user.lastname }}
-							</a>
+								<a class='list-group-item' href='#' data-toggle="tooltip" data-placement="top" title='Membre'>
+									<strong>{{ userProject.user.pseudo }}</strong><br />
+									{{ userProject.user.firstname }} {{ userProject.user.lastname }}
+								</a>
 							{% endif %}
 						{% endfor %}
 						{% for userProject in project.userProjects %}
 							{% if userProject.status == 2 %}
-							<a class='list-group-item list-group-item-info' href='#' data-toggle="tooltip" data-placement="top" title='Invitation'>
-								<strong>{{ userProject.user.pseudo }}</strong><br />
-								{{ userProject.user.firstname }} {{ userProject.user.lastname }}
-							</a>
+								<a class='list-group-item list-group-item-info' href='#' data-toggle="tooltip" data-placement="top" title='Invitation'>
+									<strong>{{ userProject.user.pseudo }}</strong><br />
+									{{ userProject.user.firstname }} {{ userProject.user.lastname }}
+								</a>
 							{% endif %}
 						{% endfor %}
 						{% for userProject in project.userProjects %}
 							{% if userProject.status == 1 %}
-							<a class='list-group-item list-group-item-success' href='#' data-toggle="tooltip" data-placement="top" title='Postulation'>
-								<strong>{{ userProject.user.pseudo }}</strong><br />
-								{{ userProject.user.firstname }} {{ userProject.user.lastname }}
-							</a>
+								<a class='list-group-item list-group-item-success' href='#' data-toggle="tooltip" data-placement="top" title='Postulation'>
+									<strong>{{ userProject.user.pseudo }}</strong><br />
+									{{ userProject.user.firstname }} {{ userProject.user.lastname }}
+								</a>
 							{% endif %}
 						{% endfor %}
 					</ul>
@@ -104,7 +104,8 @@
 					{{ project.longDescription }}
 				</div>
 				<div class='panel-footer'>
-
+					<button type="button" class="btn btn-primary btn-block"><strong>Rejoindre le projet</strong></button>
+					<button type="button" class="btn btn-primary btn-block"><strong>Abandoner le projet</strong></button>
 				</div>
 			</div>
 		</div>	
