@@ -18,8 +18,8 @@ class ProjectRepository extends EntityRepository {
 				->addSelect('c')
 				->leftJoin('p.stages', 's')
 				->addSelect('s')
-				->leftJoin('p.members', 'm')
-				->addSelect('m')
+				->leftJoin('p.userProjects', 'up')
+				->addSelect('up')
 				->leftJoin('p.leader', 'l')
 				->addSelect('l');
 
@@ -32,8 +32,10 @@ class ProjectRepository extends EntityRepository {
 				->addSelect('c')
 				->leftJoin('p.stages', 's')
 				->addSelect('s')
-				->leftJoin('p.members', 'm')
-				->addSelect('m')
+				->leftJoin('p.userProjects', 'up')
+				->addSelect('up')
+				->leftJoin('up.user', 'u')
+				->addSelect('u')
 				->leftJoin('p.leader', 'l')
 				->addSelect('l')
 				->where('p.id = :id')

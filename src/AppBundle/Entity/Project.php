@@ -89,12 +89,6 @@ class Project
 
 	/**
 	 * @var User
-	 * @ORM\ManyToMany(targetEntity="User", mappedBy="projects")
-	 */
-	private $members;
-
-	/**
-	 * @var User
 	 * 
 	 * @ORM\ManyToOne(targetEntity="User", inversedBy="leadProjects")
 	 */
@@ -111,7 +105,7 @@ class Project
 	 *
 	 * @var array
 	 * 
-	 * @ORM\OneToMany(targetEntity="UserProject", mappedBy="user")
+	 * @ORM\OneToMany(targetEntity="UserProject", mappedBy="project")
 	 */
 	private $userProjects;
 	
