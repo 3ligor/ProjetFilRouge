@@ -14,46 +14,46 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface {
 	 */
 	public function load(ObjectManager $manager) {
 
-		$user1 = new User();
-		$user1->setPseudo('Shru')
-				->setFirstname('Julien')
-				->setLastname('Sanselme')
-				->setBirthdate(new \DateTime())
-				->setTel('0605040302')
-				->setEmail('julien.sanselme@gmail.com')
-				->setCity('Nantes')
-				->setPublicMail(true)
-				->setPublicCity(true)
-				->setPublicTel(true)
-				->setPublicBirthdate(true)
-				->setPassword('1234')
-				->setSalt('')
-				->setRoles('ROLE_USER')
-				->setActive(true)
-				->setAvailable(true)
-				->addPromo($this->getReference('promo1'))
-				->addPromo($this->getReference('promo5'))
-				->setImage($this->getReference('image1'));
-
-		$user2 = new User();
-		$user2->setPseudo('Eligor')
-				->setFirstname('Alexandre')
-				->setLastname('Defebvre')
-				->setBirthdate(new \DateTime())
-				->setTel('0602030405')
-				->setEmail('alexandre.defebvre@gmail.com')
-				->setCity('Nantes')
-				->setPublicMail(false)
-				->setPublicCity(true)
-				->setPublicTel(false)
-				->setPublicBirthdate(true)
-				->setPassword('1234')
-				->setSalt('')
-				->setRoles('ROLE_USER')
-				->setActive(true)
-				->setAvailable(false)
-				->addPromo($this->getReference('promo2'))
-				->setImage($this->getReference('image2'));
+	$user1 = new User();
+	$user1->setPseudo('Shru')
+		->setFirstname('Julien')
+		->setLastname('Sanselme')
+		->setBirthdate(new \DateTime())
+		->setTel('0605040302')
+		->setEmail('julien.sanselme@gmail.com')
+		->setCity('Nantes')
+		->setPublicMail(true)
+		->setPublicCity(true)
+		->setPublicTel(true)
+		->setPublicBirthdate(true)
+		->setPassword('1234')
+		->setSalt('')
+		->setRoles('ROLE_ADMIN')
+		->setActive(true)
+		->setAvailable(true)
+		->addPromo($this->getReference('promo1'))
+		->addPromo($this->getReference('promo5'))
+		->setImage($this->getReference('image1'));
+	
+	$user2 = new User();
+	$user2->setPseudo('Eligor')
+		->setFirstname('Alexandre')
+		->setLastname('Defebvre')
+		->setBirthdate(new \DateTime())
+		->setTel('0602030405')
+		->setEmail('alexandre.defebvre@gmail.com')
+		->setCity('Nantes')
+		->setPublicMail(false)
+		->setPublicCity(true)
+		->setPublicTel(false)
+		->setPublicBirthdate(true)
+		->setPassword('1234')
+		->setSalt('')
+		->setRoles('ROLE_LEADER')
+		->setActive(true)
+		->setAvailable(false)
+		->addPromo($this->getReference('promo2'))
+		->setImage($this->getReference('image2'));
 
 		$user3 = new User();
 		$user3->setPseudo('Miss XXII')
@@ -109,12 +109,11 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface {
 				->setPublicBirthdate(true)
 				->setPassword('1234')
 				->setSalt('')
-				->setRoles('ROLE_USER')
+				->setRoles('ROLE_ADMIN')
 				->setActive(true)
 				->setAvailable(false)
 				->addPromo($this->getReference('promo2'))
 				->setImage($this->getReference('image5'));
-
 
 		$manager->persist($user1);
 		$manager->persist($user2);

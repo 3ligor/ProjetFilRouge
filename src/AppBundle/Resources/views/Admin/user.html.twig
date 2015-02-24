@@ -1,6 +1,51 @@
 {% extends "AppBundle::layout.html.twig" %}
 
 {% block content %}
-    USER ADMIN
+    <table class="table table-condensed table-hover">
+		<thead>
+		<th>Rôles</th>
+		<th>Prénom</th>
+		<th>Nom</th>
+		<th class="text-center">Projets en cours</th>
+		<th class="text-center">Projets finis</th>
+	</thead>
+	<tbody class="">
+		{% for user in users %}
+			<tr>
+				<td>
+					{% for role in user.roles %}
+						{% if role == 'ROLE_USER'%}
+							{{ loop.last ? 'Utilisateur' : 'Utilisateur - ' }}
+						{% endif %}
+						{% if role == 'ROLE_LEADER'%}
+							{{ loop.last ? 'Chef de Projet' : 'Chef de Projet - ' }}
+						{% endif %}
+						{% if role == 'ROLE_ADMIN'%}
+							{{ loop.last ? 'Administrateur' : 'Administrateur - ' }}
+						{% endif %}
+						{% if role == 'ROLE_SUPERADMIN'%}
+							{{ loop.last ? 'Super Administrateur' : 'Super Administrateur - ' }}
+						{% endif %}
+						{{ loop.length > 2 ? '<br/>' }}
+					{% endfor %}
+				</td>
+				<td>
+					{{ user.firstname }}
+				</td>
+				<td>
+					{{ user.lastname }}
+				</td>
+				<td class="text-center">
+					<span class="badge badge-info">
+						{{ user.projects|length }}
+					</span>
+				</td>
+				<td class="text-center">
+					{{ 'temp' }}
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
 {% endblock content %}
 

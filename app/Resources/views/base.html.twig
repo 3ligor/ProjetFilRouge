@@ -5,6 +5,7 @@
         <title>{% block title %}PFR {% endblock %}</title>
         {% block stylesheets %}
 			<link rel="stylesheet" href="{{ asset('bundles/app/css/bootstrap.min.css') }}">
+			<link rel="stylesheet" href="{{ asset('bundles/app/css/style.css') }}">
 		{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('faviconcoca.ico') }}" />
     </head>
@@ -14,7 +15,6 @@
 			{% endblock %}
 		</div>
 		{% block javascripts %}
-			<script	src='{{ asset('bundles/app/js/bootstrap.min.js') }}'></script>
 		{% endblock %}
 	</body>
 </html>

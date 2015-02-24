@@ -48,5 +48,4 @@ class ProjectRepository extends EntityRepository {
 				->orderBy('a.creationDate', 'DESC');
 		return $query->getQuery()->getResult();
 	}
-
 }
