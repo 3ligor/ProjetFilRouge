@@ -12,4 +12,34 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
+    public function findUsersEager(){
+        
+        $query = $this->createQueryBuilder('u')
+                ->leftJoin('u.userSkills', 'us')
+                ->addSelect('us')
+                ->leftJoin('us.skill', 's')
+                ->addSelect('s');
+        
+        return $query->getQuery()->getResult();
+    } 
+   
+    public function findOneUserEager($id){
+        
+        $query = $this->createQueryBuilder('u')
+                ->leftJoin('u.promo', 'p')
+                ->addSelect('p')
+                ->leftJoin('u.image', 'i')
+                ->addSelect('i')
+                ->leftJoin('u.userSkills', 'us')
+                ->addSelect('us')
+                ->leftJoin('us.skill', 's')
+                ->addSelect('s')
+                ->leftJoin('s.parent', 'pa')
+                ->addSelect('pa')
+                ->where('u.id=:id')
+                ->setParameter('id', $id);
+        
+        return $query->getQuery()->getResult();
+    } 
+    
 }
