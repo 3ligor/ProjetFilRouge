@@ -1,6 +1,33 @@
 {% extends "AppBundle::layout.html.twig" %}
 
 {% block content %}
-    USER ADMIN
+    <table class="table table-condensed table-hover">
+		<th>Rôle</th>
+		<th>Nom</th>
+		<th>Prénom</th>
+		<th>Projets en cours</th>
+		<th>Projets finis</th>
+			{% for user in users %}
+			<tr>
+				<td>
+					{% for role in user.roles %}
+						{{ loop.last ? role : role~' - ' }}
+					{% endfor %}
+				</td>
+				<td>
+					{{ user.firstname }}
+				</td>
+				<td>
+					{{ user.lastname }}
+				</td>
+				<td class="text-center">
+					{{ 'temp' }}
+				</td>
+				<td class="text-center">
+					{{ 'temp' }}
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
 {% endblock content %}
 

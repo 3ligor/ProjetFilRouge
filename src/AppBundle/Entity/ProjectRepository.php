@@ -20,10 +20,10 @@ class ProjectRepository extends EntityRepository
         return $query->getQuery()->getResult();
     }
 	
-	public function getProjectsStatusNegative(){
-        $query = $this->createQueryBuilder('a')
-                ->where('a.status >= 0')
-				->orderBy('a.creationDate', 'DESC');
+	public function getProjectsStatusPositive(){
+        $query = $this->createQueryBuilder('p')
+                ->where('p.status >= 0')
+				->orderBy('p.creationDate', 'DESC');
         return $query->getQuery()->getResult();
     } 
 }
