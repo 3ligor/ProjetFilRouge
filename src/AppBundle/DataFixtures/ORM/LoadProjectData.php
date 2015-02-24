@@ -102,7 +102,7 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 				->addStage($this->getReference('stage54'))
 				->addStage($this->getReference('stage55'))
 				->addStage($this->getReference('stage56'))
-				->setLeader($this->getReference('user5'));
+				->setLeader($this->getReference('user4'));
 
 		$project6 = new Project();
 		$project6->setTitle('Liste de contacts en PHP et HTML-CSS')
