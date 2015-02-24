@@ -43,12 +43,6 @@ class LoadUserSkillData extends AbstractFixture implements OrderedFixtureInterfa
 		$manager->persist($userSkill5);
 
 		$manager->flush();
-
-		$this->addReference('userSkill1', $userSkill1);
-		$this->addReference('userSkill2', $userSkill2);
-		$this->addReference('userSkill3', $userSkill3);
-		$this->addReference('userSkill4', $userSkill4);
-		$this->addReference('userSkill5', $userSkill5);
 	}
 
 	public function getOrder() {

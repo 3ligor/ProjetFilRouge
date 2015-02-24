@@ -41,6 +41,17 @@ class Stage
 	 * @ORM\ManyToOne(targetEntity="Project", inversedBy="stages")
 	 */
 	private $project;
+	
+	/**
+	 *
+	 * @var boolean
+	 * @ORM\Column(name="status", type="boolean")
+	 */
+	private $status;
+	
+	public function __construct() {
+		$this->status = false;
+	}
 
     /**
      * Get id
@@ -116,5 +127,27 @@ class Stage
      */
     public function getProject() {
         return $this->project;
+    }
+
+    /**
+     * Set status
+     *
+     * @param boolean $status
+     * @return Stage
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return boolean 
+     */
+    public function getStatus() {
+        return $this->status;
     }
 }

@@ -158,6 +158,14 @@ class User {
 	private $userSkills;
 
 	/**
+	 *
+	 * @var array
+	 * 
+	 * @ORM\OneToMany(targetEntity="UserProject", mappedBy="user")
+	 */
+	private $userProjects;
+
+	/**
 	 * @var string
 	 *
 	 * @ORM\Column(name="salt", type="string", length=255)
@@ -470,6 +478,7 @@ class User {
 		$this->leadProjects = new ArrayCollection();
 		$this->promo = new ArrayCollection();
 		$this->userSkills = new ArrayCollection();
+		$this->userProjects = new ArrayCollection();
 	}
 
 	/**
@@ -686,4 +695,37 @@ class User {
 		return $this->username;
 	}
 
+
+    /**
+     * Add userProjects
+     *
+     * @param \AppBundle\Entity\UserProject $userProjects
+     * @return User
+     */
+    public function addUserProject(\AppBundle\Entity\UserProject $userProjects)
+    {
+        $this->userProjects[] = $userProjects;
+
+        return $this;
+    }
+
+    /**
+     * Remove userProjects
+     *
+     * @param \AppBundle\Entity\UserProject $userProjects
+     */
+    public function removeUserProject(\AppBundle\Entity\UserProject $userProjects)
+    {
+        $this->userProjects->removeElement($userProjects);
+    }
+
+    /**
+     * Get userProjects
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserProjects()
+    {
+        return $this->userProjects;
+    }
 }

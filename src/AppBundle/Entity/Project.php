@@ -103,9 +103,17 @@ class Project
 	/**
 	 * @var array
 	 * 
-	 * ORM\OneToMany(targetEntity="Stage", mappedBy="project", orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="Stage", mappedBy="project", orphanRemoval=true)
 	 */
 	private $stages;
+	
+	/**
+	 *
+	 * @var array
+	 * 
+	 * @ORM\OneToMany(targetEntity="UserProject", mappedBy="user")
+	 */
+	private $userProjects;
 	
     /**
      * Constructor
@@ -113,7 +121,8 @@ class Project
     public function __construct() {
         $this->categories = new ArrayCollection();
         $this->members = new ArrayCollection();
-		$this->stages = new ArrayCollection();
+		$this->stages = new ArrayCollection();		
+		$this->userProjects = new ArrayCollection();
     }
 
     /**
@@ -365,7 +374,7 @@ class Project
     public function getLeader() {
         return $this->leader;
     }
-	
+
     /**
      * Add stage
      *
@@ -384,7 +393,7 @@ class Project
      * @param Stage $stage
      */
     public function removeStage(Stage $stage) {
-        $this->categories->removeElement($stage);
+        $this->stages->removeElement($stage);
     }
 
     /**
@@ -393,7 +402,36 @@ class Project
      * @return Collection 
      */
     public function getStages() {
-        return $this->categories;
+        return $this->stages;
     }
 	
+
+    /**
+     * Add userProjects
+     *
+     * @param \AppBundle\Entity\UserProject $userProjects
+     * @return Project
+     */
+    public function addUserProject(\AppBundle\Entity\UserProject $userProjects) {
+        $this->userProjects[] = $userProjects;
+        return $this;
+    }
+
+    /**
+     * Remove userProjects
+     *
+     * @param \AppBundle\Entity\UserProject $userProjects
+     */
+    public function removeUserProject(\AppBundle\Entity\UserProject $userProjects) {
+        $this->userProjects->removeElement($userProjects);
+    }
+
+    /**
+     * Get userProjects
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserProjects() {
+        return $this->userProjects;
+    }
 }
