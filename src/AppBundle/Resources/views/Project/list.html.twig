@@ -23,7 +23,7 @@
 			</select>
 		</div>
 		<div class="col-sm-3 col-xs-6">
-			<label for='statutProjet'>Statut du projet</label>
+			<label for='statutProjet'>Status du projet</label>
 			<select id='statutProjet' class='form-control' multiple='true'>
 				<option>2</option>
 				<option>3</option>
@@ -67,7 +67,7 @@
 						<td></td>
 						<td>{{ project.startDate.format('d-m-Y') }}</td>
 						<td>{{ project.endDate.format('d-m-Y') }}</td>
-						<td>{{ project.members | length + 1 }}</td>
+						<td>{{ project.userProjects | length + 1 }}</td>
 					</tr>
 				{% endfor %}
 			</tbody>

@@ -1,35 +1,94 @@
 {% extends "AppBundle::layout.html.twig" %}
 {% block stylesheets %}
 	{{ parent() }}
-	<link rel="stylesheet" href="{{ asset('bundles/app/css/bootstrap-progressbar-3.3.0.min.css') }}">
 {% endblock %}
 {% block content %}
 	<div class='row'>
-		<div class='col-sm-3'>
+		<div class='col-xs-12'>
 			<div class='panel panel-default'>
-				<div class='panel-heading'>
-					Avancement
-				</div>
 				<div class='panel-body'>
-					<div class="progress vertical bottom">
-						<div id='stageBar' class="progress-bar" role="progressbar" data-transitiongoal="75"></div>
+					<div class='progress'>
+						{% set firstFalse = false %}
+						{% for stage in project.stages %}
+							{% if stage.status %}
+								<div class="progress-bar progress-bar-success" 
+									 style="width: {{ stage.volume }}%" 
+									 data-toggle="tooltip" 
+									 data-placement="top"
+									 title='{{ stage.title }}'>
+									<strong>{{ loop.index }}</strong>
+								</div>
+							{% else %}
+								{% if firstFalse == false %}
+									<div class="progress-bar progress-bar-warning" 
+										 style="width: {{ stage.volume }}%"
+										 data-toggle="tooltip" 
+										 data-placement="top"
+										 title='{{ stage.title }}'>
+										<strong>{{ loop.index }}</strong>
+									</div>
+								{% else %}
+									<div class="progress-bar progress-bar-danger" 
+										 style="width: {{ stage.volume }}%"
+										 data-toggle="tooltip" 
+										 data-placement="top"
+										 title='{{ stage.title }}'>
+										<strong>{{ loop.index }}</strong>
+									</div>
+								{% endif %}
+								{% set firstFalse = true %}
+							{% endif %}
+						{% endfor %}
+					</div>
+					<div class='col-xs-4 text-left'>
+						<span class="label label-success">Terminé : {{ stagesInfos.term }}%</span>
+					</div>
+					<div class='col-xs-4 text-center'>
+						<span class="label label-warning">En cours : {{ stagesInfos.current }}%</span>
+					</div>
+					<div class='col-xs-4 text-right'>
+						<span class="label label-danger">En attente : {{ stagesInfos.left }}%</span>
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+	<div class='row'>
+		<div class='col-sm-3'>
 			<div class='panel panel-default'>
-				<div class='panel-heading'>
-					Effectif
-				</div>
+				<div  class='panel-heading'>Effectif</div>
 				<div class='panel-body'>
-					<span class="glyphicon glyphicon-star"></span>
-					{{ project.leader.firstname }}
-					"{{ project.leader.pseudo }}"
-					{{ project.leader.lastname }}<br />
-					{% for member in project.members %}
-						{{ member.firstname }}
-						"{{ member.pseudo }}"
-						{{ member.lastname }}<br />
-					{% endfor %}
+					<ul class='list-group'>
+						<a class='list-group-item list-group-item-warning' href='#' data-toggle="tooltip" data-placement="top" title='Chef de Projet'>
+							<span class="glyphicon glyphicon-star"></span>
+							<strong>{{ project.leader.pseudo }}</strong><br />
+							{{ project.leader.firstname }} {{ project.leader.lastname }}
+						</a>
+						{% for userProject in project.userProjects %}
+							{% if userProject.status == 3 %}
+								<a class='list-group-item' href='#' data-toggle="tooltip" data-placement="top" title='Membre'>
+									<strong>{{ userProject.user.pseudo }}</strong><br />
+									{{ userProject.user.firstname }} {{ userProject.user.lastname }}
+								</a>
+							{% endif %}
+						{% endfor %}
+						{% for userProject in project.userProjects %}
+							{% if userProject.status == 2 %}
+								<a class='list-group-item list-group-item-info' href='#' data-toggle="tooltip" data-placement="top" title='Invitation'>
+									<strong>{{ userProject.user.pseudo }}</strong><br />
+									{{ userProject.user.firstname }} {{ userProject.user.lastname }}
+								</a>
+							{% endif %}
+						{% endfor %}
+						{% for userProject in project.userProjects %}
+							{% if userProject.status == 1 %}
+								<a class='list-group-item list-group-item-success' href='#' data-toggle="tooltip" data-placement="top" title='Postulation'>
+									<strong>{{ userProject.user.pseudo }}</strong><br />
+									{{ userProject.user.firstname }} {{ userProject.user.lastname }}
+								</a>
+							{% endif %}
+						{% endfor %}
+					</ul>
 				</div>
 			</div>
 		</div>
@@ -45,7 +104,8 @@
 					{{ project.longDescription }}
 				</div>
 				<div class='panel-footer'>
-
+					<button type="button" class="btn btn-primary btn-block"><strong>Rejoindre le projet</strong></button>
+					<button type="button" class="btn btn-primary btn-block"><strong>Abandoner le projet</strong></button>
 				</div>
 			</div>
 		</div>	
@@ -54,10 +114,11 @@
 {% block javascripts %}
 	<script src='{{ asset('bundles/app/js/jquery-2.1.1.min.js') }}'></script>
 	{{ parent() }}
-	<script	src='{{ asset('bundles/app/js/bootstrap-progressbar.min.js') }}'></script>
 	<script>
 		$(document).ready(function ($) {
-			$('#stageBar').progressbar();
+			$('[data-toggle="tooltip"]').tooltip({
+				animated: 'fade'
+			});
 		});
 	</script>
 {% endblock %}

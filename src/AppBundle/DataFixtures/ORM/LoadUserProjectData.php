@@ -86,7 +86,7 @@ class LoadUserProjectData extends AbstractFixture implements OrderedFixtureInter
 				->setStatus(2);
 
 		$userProject14->setUser($this->getReference('user5'))
-				->setProject($this->getReference('project2'))
+				->setProject($this->getReference('project3'))
 				->setStatus(2);
 
 		$manager->persist($userProject10);

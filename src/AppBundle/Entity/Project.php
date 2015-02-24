@@ -89,12 +89,6 @@ class Project
 
 	/**
 	 * @var User
-	 * @ORM\ManyToMany(targetEntity="User", mappedBy="projects")
-	 */
-	private $members;
-
-	/**
-	 * @var User
 	 * 
 	 * @ORM\ManyToOne(targetEntity="User", inversedBy="leadProjects")
 	 */

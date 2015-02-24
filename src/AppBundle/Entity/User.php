@@ -125,13 +125,6 @@ class User {
 	/**
 	 * @var array
 	 * 
-	 * @ORM\ManyToMany(targetEntity="Project", inversedBy="members")
-	 */
-	private $projects;
-
-	/**
-	 * @var array
-	 * 
 	 * @ORM\OneToMany(targetEntity="Project", mappedBy="leader")
 	 */
 	private $leadProjects;
