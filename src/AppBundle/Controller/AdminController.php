@@ -15,10 +15,10 @@ class AdminController extends Controller {
     }
 
     public function projectAction() {
-		$projects = $this->getDoctrine()
+		$repo = $this->getDoctrine()
 				->getManager()
-				->getRepository('AppBundle:Project')
-				->findAll();
+				->getRepository('AppBundle:Project');
+		$projects = $repo->getProjectsStatusNegative();
 		return $this->render('AppBundle:Admin:project.html.twig', array(
 		    'projects' => $projects
 			));

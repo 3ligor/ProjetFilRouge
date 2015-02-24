@@ -18,5 +18,12 @@ class ProjectRepository extends EntityRepository
                 ->addSelect('u');
                 
         return $query->getQuery()->getResult();
+    }
+	
+	public function getProjectsStatusNegative(){
+        $query = $this->createQueryBuilder('a')
+                ->where('a.status >= 0')
+				->orderBy('a.creationDate', 'DESC');
+        return $query->getQuery()->getResult();
     } 
 }
