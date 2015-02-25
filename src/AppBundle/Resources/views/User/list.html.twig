@@ -1,1 +1,71 @@
-{# empty Twig template #}
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block content %}
+
+    <h3>List des utilisateurs</h3>
+    <br>
+    <br>
+    <div class="row">
+        <div class="row">
+            <div class="col-sm-3 col-xs-6">
+                <label for='searchName'>Chercher par nom</label>
+                <input id="searchName" class='form-control' placeholder="Nom Prenom">
+                <label for='disponibilitée'>Disponibilitée</label>
+                <select id='disponibilitée' class='form-control'>
+                    <option>Indifférent</option>
+                    <option>Oui</option>
+                    <option>Non</option>
+                </select>
+            </div>
+
+            {% for i in 0..2 %}
+                <div class="col-sm-3 col-xs-6">
+                    <label for='typeProjet'>Type de compétence</label>
+                    <select id='typeProjet' class='form-control' multiple='true'>
+                        {% for skill in skills %}
+                            <option>{{ skill.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div> 
+            {% endfor %}
+	</div>
+    <br>
+    <br>
+        <table class="table table-hover">
+            <thead>
+            <th>Disponibilité</th>
+            <th>Nom Prénom</th>
+            <th>Compétence 1</th>
+            <th>Compétence 2</th>
+            <th>Compétence 3</th>
+            <th>Compétence 4</th>
+            <th>..</th>
+            </thead>
+            
+            {%for user in users %}
+                
+                <tr>
+                    <td>{{ user.available? "Oui" : "Non" }} </td>
+                    <td><strong>{{ user.lastname }}</strong> {{ user.firstname }}</td>
+                    {% set cpt = 4 %}
+                    {% for userSkill in user.userSkills|slice(0,4) %}
+                               {% set cpt = cpt - 1 %}
+                               <td>{{ userSkill.skill.title }}</td>
+                               
+                      
+                    {% endfor %}
+                    {% for i in 0..cpt %}
+                        <td></td>
+                    {% endfor %}
+                                            
+                                            
+
+                    <td><a href="{{ path('user_profile', {'id':user.id}) }}"><button>Detail</button></a></td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+    
+{% endblock content %}
+

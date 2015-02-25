@@ -49,6 +49,21 @@ class Skill
 	 * @ORM\OneToMany(targetEntity="UserSkill", mappedBy="skill")
 	 */
 	private $userSkills;
+	
+	/**
+	 * @var array
+	 * 
+	 * @ORM\ManyToMany(targetEntity="Project", mappedBy="Skill")
+	 */
+	private $projects;
+	
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->childs = new ArrayCollection();
+		        $this->childs = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -81,13 +96,6 @@ class Skill
     public function getTitle()
     {
         return $this->title;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->childs = new ArrayCollection();
     }
 
     /**
@@ -168,5 +176,38 @@ class Skill
      */
     public function removeUserSkill(UserSkill $userSkills) {
         $this->userSkills->removeElement($userSkills);
+    }
+
+    /**
+     * Add projects
+     *
+     * @param \AppBundle\Entity\Project $projects
+     * @return Skill
+     */
+    public function addProject(\AppBundle\Entity\Project $projects)
+    {
+        $this->projects[] = $projects;
+
+        return $this;
+    }
+
+    /**
+     * Remove projects
+     *
+     * @param \AppBundle\Entity\Project $projects
+     */
+    public function removeProject(\AppBundle\Entity\Project $projects)
+    {
+        $this->projects->removeElement($projects);
+    }
+
+    /**
+     * Get projects
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProjects()
+    {
+        return $this->projects;
     }
 }
