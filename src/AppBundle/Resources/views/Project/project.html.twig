@@ -117,11 +117,24 @@
 			</div>
 			<div class='panel-body'>
 				{% for skill in project.skills %}
-					<ul class="list-group">
-						{% if skill.parent %}
-							<li class="list-group-item active">{{ skill.title }}</li>
-						{% endif %}
-					</ul>
+					{% if skill.parent == null %}
+						<div class='col-xs-6 col-sm-4 col-md-3'>
+							<ul class="list-group">
+								<li class="list-group-item active">
+									{{ skill.title }}
+								</li>
+								{% if skill.childs|length > 0 %}
+									{% for childSkill in skill.childs %}
+										{% if childSkill.existInProject(project) %}
+										<li class="list-group-item">
+											{{ childSkill.title }}
+										</li>
+										{% endif %}
+									{% endfor %}
+								{% endif %}
+							</ul>
+						</div>
+					{% endif %}
 				{% endfor %}
 			</div>
 		</div>
