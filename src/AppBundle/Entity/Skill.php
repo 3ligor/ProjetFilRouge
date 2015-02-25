@@ -49,20 +49,20 @@ class Skill {
      */
     private $childs;
 
-    /**
-     * @var UserSkill
-     * 
-     * @ORM\OneToMany(targetEntity="UserSkill", mappedBy="skill")
-     */
-    private $userSkills;
-
-    /**
-     * @var array
-     * 
-     * @ORM\ManyToMany(targetEntity="Project", mappedBy="Skill")
-     */
-    private $projects;
-
+	/**
+	 * @var UserSkill
+	 * 
+	 * @ORM\OneToMany(targetEntity="UserSkill", mappedBy="skill")
+	 */
+	private $userSkills;
+	
+	/**
+	 * @var array
+	 * 
+	 * @ORM\ManyToMany(targetEntity="Project", mappedBy="skills")
+	 */
+	private $projects;
+	
     /**
      * Constructor
      */

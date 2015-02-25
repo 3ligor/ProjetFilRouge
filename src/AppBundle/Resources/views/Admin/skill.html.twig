@@ -1,16 +1,47 @@
 {% extends "AppBundle::layout.html.twig" %}
 
 {% block content %}
-	{% for skill in skills %}
-		<div class="list-group col-lg-3">
-			{{dump(skill)}}
-			<ul>
-				<li class="list-group-item active">{{ skill }}</li>
-					{% for childSkills in skill.parent() %}
-					<li class="list-group-item">{{ childSkill }}</li>
-					{% endfor %}
-			</ul>
+	<div class="row">
+		{% for skill in skills %}
+			{% if skill.parent == null %}
+				<div class="list-group col-lg-3">
+					<ul>
+						<li class="list-group-item active">{{ skill.title }}</li>
+							{% if skill.childs|length > 0 %}
+								{% for childSkill in skill.childs %}
+								<li class="list-group-item">{{ childSkill.title }}</li>
+								{% endfor %}
+							{% endif %}
+					</ul>
+				</div>
+			{% endif %}		
+		{% endfor %}
+	</div>
+	<div class="row">
+		<div class="panel panel-default">
+			<div class="panel-heading">Ajouter une compétence ou une catégorie</div>
+			<div class="panel-body text-center">
+				<form class="form-inline">
+					<div class="form-group">
+						<label class="sr-only" for="inputSkill">Nom de la catégorie ou de la compétence</label>
+						<input type="text" class="form-control" id="inputSkill" placeholder="Intitulé">
+					</div>
+					<div class="form-group">
+						<label class="" for="selectCat">Catégorie :</label>
+						<select class="form-control" id="selectCat" placeholder="Catégorie">
+							{% for skill in skills %}
+								{% if skill.parent == null %}
+									<option>{{ skill.title }}</option>
+								{% endif %}
+							{% endfor %}
+							<option>Ajouter une catégorie</option>
+						</select>
+					</div>
+					<button type="submit" class="btn btn-primary">Ajouter</button>
+				</form>
+			</div>
+			<div class="panel-footer small">Choisir "Ajouter une catégorie" pour ajouter une nouvelle catégorie.</div>
 		</div>
-	{% endfor %}
+	</div>
 {% endblock content %}
 
