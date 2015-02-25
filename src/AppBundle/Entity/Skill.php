@@ -210,4 +210,13 @@ class Skill
     {
         return $this->projects;
     }
+	
+	public function existInProject(Project $project) {
+		foreach ($project->getSkills() as $skill) {
+			if ($skill === $this) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
