@@ -2,9 +2,15 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Project;
+use AppBundle\Entity\Skill;
+use AppBundle\Entity\SkillRepository;
+use AppBundle\Entity\User;
+use AppBundle\Entity\UserSkill;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
 
 /**
  * Skill
@@ -12,8 +18,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="SkillRepository")
  */
-class Skill
-{
+class Skill {
+
     /**
      * @var integer
      *
@@ -30,39 +36,39 @@ class Skill
      */
     private $title;
 
-	/**
-	 * @var Skill
-	 * 
-	 * @ORM\ManyToOne(targetEntity="Skill", inversedBy="childs")
-	 */
-	private $parent;
+    /**
+     * @var Skill
+     * 
+     * @ORM\ManyToOne(targetEntity="Skill", inversedBy="childs")
+     */
+    private $parent;
 
-	/**
-	 * @var array
-	 * @ORM\OneToMany(targetEntity="Skill", mappedBy="parent")
-	 */
-	private $childs;
+    /**
+     * @var array
+     * @ORM\OneToMany(targetEntity="Skill", mappedBy="parent")
+     */
+    private $childs;
 
-	/**
-	 * @var UserSkill
-	 * 
-	 * @ORM\OneToMany(targetEntity="UserSkill", mappedBy="skill")
-	 */
-	private $userSkills;
-	
-	/**
-	 * @var array
-	 * 
-	 * @ORM\ManyToMany(targetEntity="Project", mappedBy="Skill")
-	 */
-	private $projects;
-	
+    /**
+     * @var UserSkill
+     * 
+     * @ORM\OneToMany(targetEntity="UserSkill", mappedBy="skill")
+     */
+    private $userSkills;
+
+    /**
+     * @var array
+     * 
+     * @ORM\ManyToMany(targetEntity="Project", mappedBy="Skill")
+     */
+    private $projects;
+
     /**
      * Constructor
      */
     public function __construct() {
         $this->childs = new ArrayCollection();
-		        $this->childs = new ArrayCollection();
+        $this->projects = new ArrayCollection();
     }
 
     /**
@@ -70,8 +76,7 @@ class Skill
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -81,8 +86,7 @@ class Skill
      * @param string $title
      * @return Skill
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -93,8 +97,7 @@ class Skill
      *
      * @return string 
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -106,7 +109,7 @@ class Skill
      */
     public function setParent(Skill $parent = null) {
         $this->parent = $parent;
-		$parent->addChild($this);
+        $parent->addChild($this);
         return $this;
     }
 
@@ -127,7 +130,7 @@ class Skill
      */
     public function addChild(Skill $childs) {
         $this->childs[] = $childs;
-		
+
         return $this;
     }
 
@@ -181,11 +184,10 @@ class Skill
     /**
      * Add projects
      *
-     * @param \AppBundle\Entity\Project $projects
+     * @param Project $projects
      * @return Skill
      */
-    public function addProject(\AppBundle\Entity\Project $projects)
-    {
+    public function addProject(Project $projects) {
         $this->projects[] = $projects;
 
         return $this;
@@ -194,38 +196,37 @@ class Skill
     /**
      * Remove projects
      *
-     * @param \AppBundle\Entity\Project $projects
+     * @param Project $projects
      */
-    public function removeProject(\AppBundle\Entity\Project $projects)
-    {
+    public function removeProject(Project $projects) {
         $this->projects->removeElement($projects);
     }
 
     /**
      * Get projects
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection2 
      */
-    public function getProjects()
-    {
+    public function getProjects() {
         return $this->projects;
     }
-	
-	public function existInProject(Project $project) {
-		foreach ($project->getSkills() as $skill) {
-			if ($skill === $this) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public function existInUser(User $user) {
-		foreach ($user->getSkills() as $skill) {
-			if ($skill === $this) {
-				return true;
-			}
-		}
-		return false;
-	}
+
+    public function existInProject(Project $project) {
+        foreach ($project->getSkills() as $skill) {
+            if ($skill === $this) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function existInUser(User $user) {
+        foreach ($user->getSkills() as $skill) {
+            if ($skill === $this) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
