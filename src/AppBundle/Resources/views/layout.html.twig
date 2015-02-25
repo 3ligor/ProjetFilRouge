@@ -8,6 +8,7 @@
 				<li role='presentation'><a href='{{ path('project_list') }}'>Projets</a></li>
 				<li role='presentation'><a href='{{ path('user_list') }}'>Utilisateurs</a></li>
 				<li role='presentation'><a href='{{ path('project_myProjects') }}'>Mes projets</a></li>
+				<li role='presentation'><a href='{{ path('project_add') }}'>Nouveau projet</a></li>
 				<div class="col-sm-3 col-md-3 pull-right">
 					<form class="navbar-form" role="search" action='#' method='POST'>
 						<div class="input-group">
@@ -24,8 +25,6 @@
 		</ul>
 	</nav>
 	<div class='page-header'><h1>PFR</h1></div>
-	<div class='col-md-12 col-sm-12'>
-		{% block content %}
-		{% endblock content %}
-	</div>
+	{% block content %}
+	{% endblock content %}
 {% endblock body %}
