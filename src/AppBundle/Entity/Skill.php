@@ -219,4 +219,13 @@ class Skill
 		}
 		return false;
 	}
+	
+	public function existInUser(User $user) {
+		foreach ($user->getSkills() as $skill) {
+			if ($skill === $this) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
