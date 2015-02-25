@@ -26,25 +26,8 @@ class ProjectController extends Controller {
 		$repoP = $em->getRepository('AppBundle:Project');
 		$project = $repoP->findProjectEager($id);
 
-		$stagesInfos = array(
-			'term' => 0, 
-			'current' =>0, 
-			'left' => 0);
-		$check = true;
-		foreach ($project->getStages() as $stage) {
-			if ($stage->getStatus()) {
-				$stagesInfos['term'] += $stage->getVolume();
-			} elseif ($check) {
-				$check = false;
-				$stagesInfos['current'] += $stage->getVolume();
-			} else {
-				$stagesInfos['left'] += $stage->getVolume();
-			}
-		}
-
 		return $this->render('AppBundle:Project:project.html.twig', array(
-					'project' => $project,
-					'stagesInfos' => $stagesInfos
+					'project' => $project
 		));
 	}
 
