@@ -36,46 +36,46 @@ class LoadUserSkillData extends AbstractFixture implements OrderedFixtureInterfa
                 $userSkill20 = new UserSkill();
 
 		$userSkill1->setValue('5')
-				->setSkill($this->getReference('skill1'))
+				->setSkill($this->getReference('skill6'))
 				->setUser($this->getReference('user1'));
 		$userSkill2->setValue('4')
-				->setSkill($this->getReference('skill2'))
+				->setSkill($this->getReference('skill8'))
 				->setUser($this->getReference('user1'));
 		$userSkill3->setValue('4')
-				->setSkill($this->getReference('skill1'))
+				->setSkill($this->getReference('skill12'))
 				->setUser($this->getReference('user2'));
 		$userSkill4->setValue('3')
-				->setSkill($this->getReference('skill3'))
+				->setSkill($this->getReference('skill18'))
 				->setUser($this->getReference('user3'));
 		$userSkill5->setValue('2')
-				->setSkill($this->getReference('skill8'))
+				->setSkill($this->getReference('skill9'))
 				->setUser($this->getReference('user4'));
                 
                 $userSkill6->setValue('3')
-				->setSkill($this->getReference('skill13'))
+				->setSkill($this->getReference('skill5'))
 				->setUser($this->getReference('user1'));
                 
                 $userSkill7->setValue('3')
-				->setSkill($this->getReference('skill11'))
+				->setSkill($this->getReference('skill10'))
 				->setUser($this->getReference('user1'));
                 $userSkill8->setValue('2')
-				->setSkill($this->getReference('skill15'))
+				->setSkill($this->getReference('skill22'))
 				->setUser($this->getReference('user1'));
                 $userSkill9->setValue('4')
-				->setSkill($this->getReference('skill17'))
+				->setSkill($this->getReference('skill9'))
 				->setUser($this->getReference('user1'));
                 
                 $userSkill10->setValue('4')
-				->setSkill($this->getReference('skill21'))
+				->setSkill($this->getReference('skill5'))
 				->setUser($this->getReference('user2'));
                 $userSkill11->setValue('4')
-				->setSkill($this->getReference('skill20'))
-				->setUser($this->getReference('user2'));
-                $userSkill12->setValue('4')
 				->setSkill($this->getReference('skill23'))
 				->setUser($this->getReference('user2'));
+                $userSkill12->setValue('4')
+				->setSkill($this->getReference('skill19'))
+				->setUser($this->getReference('user2'));
                 $userSkill13->setValue('4')
-				->setSkill($this->getReference('skill16'))
+				->setSkill($this->getReference('skill7'))
 				->setUser($this->getReference('user2'));
                 
                 $userSkill14->setValue('3')
