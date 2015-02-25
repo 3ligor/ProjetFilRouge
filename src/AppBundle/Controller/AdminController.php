@@ -15,8 +15,8 @@ class AdminController extends Controller {
 				->getManager()
 				->getRepository('AppBundle:Skill');
 		$skills = $repo->getSkillsWithChilds();
-		return $this->render('AppBundle:Admin:skill.html.twig',array(
-			'skills' => $skills
+		return $this->render('AppBundle:Admin:skill.html.twig', array(
+					'skills' => $skills
 		));
 	}
 
@@ -42,6 +42,23 @@ class AdminController extends Controller {
 
 	public function importAction() {
 		return $this->render('AppBundle:Admin:import.html.twig');
+	}
+
+	public function validateProjectAction($id) {
+		if ($id > 0) {
+			$project = $this->getDoctrine()
+					->getManager()
+					->getRepository('AppBundle:Project')
+					->find($id);
+			if($project->getStatus()== 4){
+				$project->setStatus(-4);
+			} else {
+				$project->setStatus(0);
+			}
+			
+		} else {
+			throw $this->createNotFoundException('Article N°' . $id . ' introuvable');
+		}
 	}
 
 }
