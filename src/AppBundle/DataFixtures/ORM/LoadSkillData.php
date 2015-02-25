@@ -44,50 +44,70 @@ class LoadSkillData extends AbstractFixture implements OrderedFixtureInterface {
 
         $skill1->setTitle('Language');
         $skill2->setTitle('CMS');
-        $skill3->setTitle('Framwork');
+        $skill3->setTitle('Framework');
         $skill4->setTitle('Divers');
 
 
         $skill5->setTitle('C++')
                 ->setParent($skill1);
+        
         $skill6->setTitle('Symfony 2')
                 ->setParent($skill3);
+        
         $skill7->setTitle('Bootstrap')
                 ->setParent($skill4);
+        
         $skill8->setTitle('J2EE')
                 ->setParent($skill1);
+        
         $skill9->setTitle('Photoshop CS6')
                 ->setParent($skill4);
+        
         $skill10->setTitle('Indesign')
                 ->setParent($skill4);
+        
         $skill11->setTitle('Wordpress')
                 ->setParent($skill2);
+        
         $skill12->setTitle('PHP')
                 ->setParent($skill1);
+        
         $skill13->setTitle('Joomla')
                 ->setParent($skill2);
+        
         $skill14->setTitle('Methode Agile')
                 ->setParent($skill4);
+        
         $skill15->setTitle('JavaScript')
                 ->setParent($skill1);
+        
         $skill16->setTitle('Prestashop')
-                ->setParent($skill4);
+                ->setParent($skill2);
+        
         $skill17->setTitle('PhoneGap')
                 ->setParent($skill3);
+        
         $skill18->setTitle('WebMarketing')
                 ->setParent($skill4);
+        
         $skill19->setTitle('HTML - CSS')
                 ->setParent($skill1);
+        
         $skill20->setTitle('SEA')
                 ->setParent($skill4);
+        
         $skill21->setTitle('SEO')
                 ->setParent($skill4);
+        
         $skill22->setTitle('E-mailing')
                 ->setParent($skill4);
+        
         $skill23->setTitle('Communication')
                 ->setParent($skill4);
+        
         $skill24->setTitle('Facebook')
                 ->setParent($skill4);
+        
         $skill25->setTitle('Java')
                 ->setParent($skill1);
 
