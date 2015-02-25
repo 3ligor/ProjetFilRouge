@@ -53,7 +53,7 @@ class Skill
 	/**
 	 * @var array
 	 * 
-	 * @ORM\ManyToMany(targetEntity="Project", mappedBy="Skill")
+	 * @ORM\ManyToMany(targetEntity="Project", mappedBy="skills")
 	 */
 	private $projects;
 	
