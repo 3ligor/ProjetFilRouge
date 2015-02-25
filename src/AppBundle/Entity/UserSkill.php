@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  */
 class UserSkill {
+
     /**
      * @var integer
      *
@@ -26,29 +27,27 @@ class UserSkill {
      * @ORM\Column(name="value", type="integer")
      */
     private $value;
-	
-		/**
-	 * @var User
-	 * 
-	 * @ORM\ManyToOne(targetEntity="User", inversedBy="userSkills")
-	 */
-	private $user;
 
-	/**
-	 * @var Skill
-	 * 
-	 * @ORM\ManyToOne(targetEntity="Skill", inversedBy="userSkills")
-	 */
-	private $skill;
+    /**
+     * @var User
+     * 
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="userSkills")
+     */
+    private $user;
 
+    /**
+     * @var Skill
+     * 
+     * @ORM\ManyToOne(targetEntity="Skill", inversedBy="userSkills")
+     */
+    private $skill;
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -58,8 +57,7 @@ class UserSkill {
      * @param integer $value
      * @return UserSkill
      */
-    public function setValue($value)
-    {
+    public function setValue($value) {
         $this->value = $value;
 
         return $this;
@@ -70,8 +68,7 @@ class UserSkill {
      *
      * @return integer 
      */
-    public function getValue()
-    {
+    public function getValue() {
         return $this->value;
     }
 
@@ -83,7 +80,7 @@ class UserSkill {
      */
     public function setUser(User $user = null) {
         $this->user = $user;
-		$user->addUserSkill($this);
+        $user->addUserSkill($this);
         return $this;
     }
 
@@ -104,12 +101,12 @@ class UserSkill {
      */
     public function setSkill(Skill $skill = null) {
         $this->skill = $skill;
-		$skill->addUserSkill($this);
+        $skill->addUserSkill($this);
         return $this;
     }
 
     /**
-	 *  
+     *  
      * Get skill
      *
      * @return Skill 
@@ -117,4 +114,5 @@ class UserSkill {
     public function getSkill() {
         return $this->skill;
     }
+
 }

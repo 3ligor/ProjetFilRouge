@@ -1,12 +1,5 @@
 {% extends "AppBundle::layout.html.twig" %}
 
 {% block content %}
-    <ul class="list-group">
-		{% for user in users %}
-			<li class="list-group-item">
-				<span class="badge">{{user.id}}</span>
-				{{user.pseudo}}
-			</li>
-		</ul>
-	{% endfor %}	
+	{% include "AppBundle:Admin:menuAdmin.html.twig" with {'default' : 'index'} %}	
 {% endblock content %}

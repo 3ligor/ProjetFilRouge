@@ -94,29 +94,24 @@
         </div>
     </div>
     <hr>
+		
     <div class="row">
         
-        {% for user in user %}
+       
         
             {%for userSkill in user.userSkills %}
-              
+				{{ dump(userSkill)}}
                 <div class="col-sm-6 col-xs-6 border">
-                    
-                   
-                    <ul>  
-                        {% if userSkill.skill.parent.title is defined  %}
-                            <h4>{{ userSkill.skill.parent.title }} {{ loop.index }}</h4>
-                            
-                        {% else %}
-                            <h4>{{ userSkill.skill.title }}</h4>
-                           
-                         
-                        {% endif %}    
-                    </ul>
+					{% if userSkill.skill.parent.title is defined %}
+						<h4>{{ userSkill.skill.parent.title }}</h4>
+						{{'PARENT DEFINED'}}
+					{% else %}
+						<h4>{{ userSkill.skill.title }}</h4>
+					{% endif%}
                 </div>
             {% endfor%}
 
-        {% endfor %}
+     
 
     </div>
 

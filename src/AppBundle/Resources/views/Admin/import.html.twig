@@ -1,6 +1,24 @@
 {% extends "AppBundle::layout.html.twig" %}
 
 {% block content %}
-    IMPORT ADMIN
+	{% include "AppBundle:Admin:menuAdmin.html.twig" with {'default' : 'import'} %}
+	<div class="row">
+		<div class="panel panel-default">
+			<div class="panel-heading">Importation du fichier xls pour remplir la base</div>
+			<div class="panel-body">
+				<div class="col-lg-12">
+					<div class="input-group">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button">Chercher</button>
+						</span>
+						<input type="text" class="form-control" placeholder="Chemin vers le fichier">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button">Envoyer</button>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock content %}
 

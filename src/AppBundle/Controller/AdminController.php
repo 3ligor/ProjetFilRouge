@@ -11,10 +11,10 @@ class AdminController extends Controller {
 	}
 
 	public function skillAction() {
-		$skills = $this->getDoctrine()
+		$repo = $this->getDoctrine()
 				->getManager()
-				->getRepository('AppBundle:Skill')
-				->findAll();
+				->getRepository('AppBundle:Skill');
+		$skills = $repo->getSkillsWithChilds();
 		return $this->render('AppBundle:Admin:skill.html.twig',array(
 			'skills' => $skills
 		));
