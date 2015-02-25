@@ -45,6 +45,7 @@ class UserRepository extends EntityRepository
         return $query->getQuery()->getResult();
     } 
     
+<<<<<<< HEAD
 	
 	public function getUsersWithProject() {
 		$query = $this->createQueryBuilder('u')
@@ -56,4 +57,6 @@ class UserRepository extends EntityRepository
 		return $query->getQuery()->getResult();
 	}
 	
+=======
+>>>>>>> origin/master
 }
