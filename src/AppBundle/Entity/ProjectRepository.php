@@ -25,7 +25,7 @@ class ProjectRepository extends EntityRepository {
 
 		return $query->getQuery()->getResult();
 	}
-	
+
 	public function findProjectEager($id) {
 		$query = $this->createQueryBuilder('p')
 				->leftJoin('p.categories', 'c')
