@@ -1,0 +1,44 @@
+{% extends "AppBundle::layout.html.twig" %}
+{% block stylesheets %}
+	{{ parent() }}
+{% endblock %}
+{% block content %}
+	<div class='row'>
+		<div class='col-xs-12'>
+			<div class='panel panel-default'>
+				<div class='panel-body'>
+					Ajouter des étapes
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='row'>
+		<div class='col-sm-3'>
+			<div class='panel panel-default'>
+				<div  class='panel-heading'>Effectif</div>
+				<div class='panel-body'>
+					<ul class='list-group'>
+						Inviter
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class='col-sm-9'>
+			<div class='panel panel-default'>
+				<div class='panel-heading'>
+					Titre
+				</div>
+				<div class='panel-body'>
+					smallDesc
+					<div class='panel-body'>
+					</div>
+					longDesc
+				</div>
+				<div class='panel-footer'>
+					<button type="button" class="btn btn-primary btn-block"><strong>Proposer le projet</strong></button>
+					<button type="button" class="btn btn-primary btn-block"><strong>Sauvegarder le brouillon</strong></button>
+				</div>
+			</div>
+		</div>	
+	</div>
+{% endblock content %}

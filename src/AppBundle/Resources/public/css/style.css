@@ -17,3 +17,7 @@
 .badge-inverse {
   background-color: #333333;
 }
+
+.progress {
+	margin-bottom: 5px;
+}

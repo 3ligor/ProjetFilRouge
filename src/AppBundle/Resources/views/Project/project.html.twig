@@ -41,13 +41,13 @@
 						{% endfor %}
 					</div>
 					<div class='col-xs-4 text-left'>
-						<span class="label label-success">Terminé : {{ stagesInfos.term }}%</span>
+						<span class="label label-success">Terminé : {{ project.getProgress.term }}%</span>
 					</div>
 					<div class='col-xs-4 text-center'>
-						<span class="label label-warning">En cours : {{ stagesInfos.current }}%</span>
+						<span class="label label-warning">En cours : {{ project.getProgress.current }}%</span>
 					</div>
 					<div class='col-xs-4 text-right'>
-						<span class="label label-danger">En attente : {{ stagesInfos.left }}%</span>
+						<span class="label label-danger">En attente : {{ project.getProgress.left }}%</span>
 					</div>
 				</div>
 			</div>
@@ -109,6 +109,22 @@
 				</div>
 			</div>
 		</div>	
+	</div>
+	<div class="row">
+		<div class="panel panel-default">
+			<div class='panel-heading'>
+				Compétences recherchées
+			</div>
+			<div class='panel-body'>
+				{% for skill in project.skills %}
+					<ul class="list-group">
+						{% if skill.parent %}
+							<li class="list-group-item active">{{ skill.title }}</li>
+						{% endif %}
+					</ul>
+				{% endfor %}
+			</div>
+		</div>
 	</div>
 {% endblock content %}
 {% block javascripts %}
