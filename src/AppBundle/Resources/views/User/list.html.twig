@@ -41,13 +41,25 @@
             <th>Compétence 4</th>
             <th>..</th>
             </thead>
+            
             {%for user in users %}
+                
                 <tr>
                     <td>{{ user.available? "Oui" : "Non" }} </td>
                     <td><strong>{{ user.lastname }}</strong> {{ user.firstname }}</td>
-                    {% for userSkill in user.userSkills %}
-                        <td> {{ userSkill.skill.title }}</td>
+                    {% set cpt = 4 %}
+                    {% for userSkill in user.userSkills|slice(0,4) %}
+                               {% set cpt = cpt - 1 %}
+                               <td>{{ userSkill.skill.title }}</td>
+                               
+                      
                     {% endfor %}
+                    {% for i in 0..cpt %}
+                        <td></td>
+                    {% endfor %}
+                                            
+                                            
+
                     <td><a href="{{ path('user_profile', {'id':user.id}) }}"><button>Detail</button></a></td>
                 </tr>
             {% endfor %}

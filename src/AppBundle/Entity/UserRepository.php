@@ -19,6 +19,9 @@ class UserRepository extends EntityRepository
                 ->addSelect('us')
                 ->leftJoin('us.skill', 's')
                 ->addSelect('s');
+               
+               
+                
         
         return $query->getQuery()->getResult();
     } 
