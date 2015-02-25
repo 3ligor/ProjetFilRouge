@@ -11,7 +11,13 @@ class AdminController extends Controller {
 	}
 
 	public function skillAction() {
-		return $this->render('AppBundle:Admin:skill.html.twig');
+		$skills = $this->getDoctrine()
+				->getManager()
+				->getRepository('AppBundle:Skill')
+				->findAll();
+		return $this->render('AppBundle:Admin:skill.html.twig',array(
+			'skills' => $skills
+		));
 	}
 
 	public function projectAction() {
@@ -25,10 +31,10 @@ class AdminController extends Controller {
 	}
 
 	public function userAction() {
-		$users = $this->getDoctrine()
+		$repo = $this->getDoctrine()
 				->getManager()
-				->getRepository('AppBundle:User')
-				->findAll();
+				->getRepository('AppBundle:User');
+		$users = $repo->getUsersWithProject();
 		return $this->render('AppBundle:Admin:user.html.twig', array(
 					'users' => $users
 		));

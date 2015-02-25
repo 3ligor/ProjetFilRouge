@@ -1,6 +1,5 @@
 {% extends "AppBundle::layout.html.twig" %}
 {% block content %}
-	
     <table class="table table-condensed table-hover">
 		<thead>
 		<th>Rôles</th>
@@ -15,15 +14,16 @@
 				<td>
 					{% for role in user.roles %}
 						{% if role == 'ROLE_USER' %}
-							Utilisateur {{ loop.last ? '' : '-' }}
+							Utilisateur
 						{% elseif role == 'ROLE_ADMIN' %}
 							Administrateur
 						{% elseif role == 'ROLE_SUPERADMIN' %}
 							Super Administrateur
 						{% endif %}
+						{{ loop.last ? '' : '-' }}
 					{% endfor %}
 					{% if user.leadProjects|length!=0 %}
-							{{ 'Chef de Projet'  }}
+							{{ ' - Chef de Projet'  }}
 					{% endif %}
 				</td>
 				<td>
