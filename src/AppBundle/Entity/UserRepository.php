@@ -42,7 +42,7 @@ class UserRepository extends EntityRepository
                 ->where('u.id=:id')
                 ->setParameter('id', $id);
         
-        return $query->getQuery()->getResult();
+        return $query->getQuery()->getOneOrNullResult();
     } 
     
 	
