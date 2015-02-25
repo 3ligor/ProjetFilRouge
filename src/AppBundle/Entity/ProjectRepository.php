@@ -45,9 +45,11 @@ class ProjectRepository extends EntityRepository {
 	}
 
 	public function getProjectsStatusPositive() {
-		$query = $this->createQueryBuilder('a')
-				->where('a.status >= 0')
-				->orderBy('a.creationDate', 'DESC');
+		$query = $this->createQueryBuilder('p')
+				->leftjoin('p.categories', 'c')
+				->addSelect('c')
+				->where('p.status >= 0')
+				->orderBy('p.creationDate', 'DESC');
 		return $query->getQuery()->getResult();
 	}
 }

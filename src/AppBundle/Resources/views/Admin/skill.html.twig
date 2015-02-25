@@ -1,6 +1,16 @@
 {% extends "AppBundle::layout.html.twig" %}
 
 {% block content %}
-    SKILL ADMIN
+	{% for skill in skills %}
+		<div class="list-group col-lg-3">
+			{{dump(skill)}}
+			<ul>
+				<li class="list-group-item active">{{ skill }}</li>
+					{% for childSkills in skill.parent() %}
+					<li class="list-group-item">{{ childSkill }}</li>
+					{% endfor %}
+			</ul>
+		</div>
+	{% endfor %}
 {% endblock content %}
 
