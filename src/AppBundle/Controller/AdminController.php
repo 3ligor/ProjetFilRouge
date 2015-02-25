@@ -46,16 +46,14 @@ class AdminController extends Controller {
 
 	public function validateProjectAction($id) {
 		if ($id > 0) {
-			$project = $this->getDoctrine()
-					->getManager()
-					->getRepository('AppBundle:Project')
-					->find($id);
-			if($project->getStatus()== 4){
-				$project->setStatus(-4);
-			} else {
-				$project->setStatus(0);
-			}
-			
+			$em = $this->getDoctrine()
+					->getManager();
+			$project = $em->getRepository('AppBundle:Project')->find($id);
+			$project->toggleStatus('valider');
+			$em->flush();
+			return $this->redirect(
+							$this->generateUrl('admin_project')
+			);
 		} else {
 			throw $this->createNotFoundException('Article N°' . $id . ' introuvable');
 		}

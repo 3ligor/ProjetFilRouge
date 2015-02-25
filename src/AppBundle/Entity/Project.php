@@ -295,8 +295,8 @@ class Project {
 	}
 
 	public function toggleStatus($status) {
-		if ($status === 'valdider') {
-			if ($this->getStatus >= 4) {
+		if ($status === 'valider') {
+			if ($this->getStatus() >= 4) {
 				$this->setStatus($this->getStatus() - 4);
 			} else {
 				$this->setStatus($this->getStatus() + 4);
