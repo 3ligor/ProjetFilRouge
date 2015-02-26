@@ -12,56 +12,64 @@
 			<tbody class="">
 				{% for user in users %}
 					<tr {% for role in user.roles %}
-								{% if role == 'ROLE_ADMIN' %}
-									class="bg-warning"
-								{% elseif role == 'ROLE_SUPERADMIN' %}
-									class="bg-danger"
-								{% endif %}
-							{% endfor %}>
-						<td>
-							{% for role in user.roles %}
-								{% if role == 'ROLE_USER' %}
-									Utilisateur
-								{% elseif role == 'ROLE_ADMIN' %}
-									Administrateur
-								{% elseif role == 'ROLE_SUPERADMIN' %}
-									Super Administrateur
-								{% endif %}
-								{{ loop.last ? '' : '-' }}
-							{% endfor %}
-							{% if user.leadProjects|length!=0 %}
-								{{ ' - Chef de Projet'  }}
+						{% if role == 'ROLE_ADMIN' %}
+							class="bg-warning"
+						{% elseif role == 'ROLE_SUPERADMIN' %}
+							class="bg-danger"
+						{% endif %}
+					{% endfor %}>
+					<td>
+						{% for role in user.roles %}
+							{% if role == 'ROLE_USER' %}
+								Utilisateur
+							{% elseif role == 'ROLE_ADMIN' %}
+								Administrateur
+							{% elseif role == 'ROLE_SUPERADMIN' %}
+								Super Administrateur
 							{% endif %}
-						</td>
-						<td>
-							<a href="{{path('user_profile',{'id':user.id})}}">{{ user.firstname }} {{ user.lastname }} - "{{user.pseudo}}"</a>
-						</td>
-						<td class="text-center">
-							<span class="badge badge-primary">
-								{% set currentp = 0 %}
-								{% for userProject in user.userProjects %}
-									{% if userProject.project.status == 4 %}
-										{% set currentp = currentp+1 %}
-									{% endif %}
-								{% endfor %}
-								{{ currentp }}
-							</span>
-						</td>
-						<td class="text-center">
-							<span class="badge badge-info">
-								{% set endedp = 0 %}
-								{% for userProject in user.userProjects %}
-									{% if userProject.project.status >= 6 %}
-										{% set endedp = endedp+1 %}
-									{% endif %}
-								{% endfor %}
-								{{ endedp }}
-							</span>
-						</td>
-					</tr>
+							{{ loop.last ? '' : '-' }}
+						{% endfor %}
+						{#		Is the user project leader ?		#}	
+						{% set check = true %}
+						{% for userProject in user.userProjects if check %}
+							{#		If the user is project leader		#}
+							{% if userProject.status == 4 %}
+								{#		Display the status		#}
+								{{ ' - Chef de Projet'  }}
+								{#		Set the check to false for one iteration			#}
+								{% set check = false %}
+							{% endif %}
+						{% endfor %}
+					</td>
+					<td>
+						<a href="{{path('user_profile',{'id':user.id})}}">{{ user.firstname }} {{ user.lastname }} - "{{user.pseudo}}"</a>
+					</td>
+					<td class="text-center">
+						<span class="badge badge-primary">
+							{% set currentp = 0 %}
+							{% for userProject in user.userProjects %}
+								{% if userProject.project.status == 4 %}
+									{% set currentp = currentp+1 %}
+								{% endif %}
+							{% endfor %}
+							{{ currentp }}
+						</span>
+					</td>
+					<td class="text-center">
+						<span class="badge badge-info">
+							{% set endedp = 0 %}
+							{% for userProject in user.userProjects %}
+								{% if userProject.project.status >= 6 %}
+									{% set endedp = endedp+1 %}
+								{% endif %}
+							{% endfor %}
+							{{ endedp }}
+						</span>
+					</td>
+				</tr>
 				{% endfor %}
-			</tbody>
-		</table>
-	</div>
-{% endblock content %}
+				</tbody>
+			</table>
+		</div>
+		{% endblock content %}
 
