@@ -63,8 +63,8 @@
 							{% if userProject.status == 4 %}
 								<a class='list-group-item list-group-item-warning' href='#' data-toggle="tooltip" data-placement="top" title='Chef de Projet'>
 							<span class="glyphicon glyphicon-star"></span>
-							<strong>{{ project.leader.pseudo }}</strong><br />
-							{{ project.leader.firstname }} {{ project.leader.lastname }}
+							<strong>{{ userProject.user.pseudo }}</strong><br />
+							{{ userProject.user.firstname }} {{ userProject.user.lastname }}
 								</a>
 							{% endif %}
 						{% endfor %}
