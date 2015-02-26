@@ -43,9 +43,11 @@ class ProjectController extends Controller {
 		$stage2 = (new Stage())->setTitle('TesStage')->setVolume(12)->setStatus(false);
 		$userProject1 = (new UserProject())->setUser($repoUser->find(2))->setStatus(1);
 		$userProject2 = (new UserProject())->setUser($repoUser->find(3))->setStatus(1);
+		$userProject3 = (new UserProject())->setUser($repoUser->find(4))->setStatus(4);
 		$project = (new Project())->addStage($stage1)->addStage($stage2)
 				->addUserProject($userProject1)
-				->addUserProject($userProject2);
+				->addUserProject($userProject2)
+				->addUserProject($userProject3);
 		// /test
 
 		$form = $this->createForm(new ProjectType(), $project, array(
