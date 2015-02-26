@@ -18,6 +18,7 @@ class InviteType extends AbstractType {
 				))
 				->add('status', 'choice', array(
 					'choices' => array(
+						'4' => 'Chef de projet',
 						'3' => 'Membre',
 						'2' => 'Candidat',
 						'1' => 'Invité',

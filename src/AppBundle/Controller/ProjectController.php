@@ -7,6 +7,7 @@ use AppBundle\Entity\Stage;
 use AppBundle\Entity\UserProject;
 use AppBundle\Form\ProjectType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class ProjectController extends Controller {
 
@@ -19,7 +20,6 @@ class ProjectController extends Controller {
 					'projects' => $projects
 		));
 	}
-	
 
 	public function myProjectsAction() {
 		return $this->render('AppBundle:Project:myProjects.html.twig');
@@ -36,28 +36,30 @@ class ProjectController extends Controller {
 		));
 	}
 
-	public function addAction() {
-		//test
-		$repoUser = $this->getDoctrine()->getManager()->getRepository('AppBundle:User');
-		$stage1 = (new Stage())->setTitle('Blablo')->setVolume(32)->setStatus(true);
-		$stage2 = (new Stage())->setTitle('TesStage')->setVolume(12)->setStatus(false);
-		$userProject1 = (new UserProject())->setUser($repoUser->find(2))->setStatus(1);
-		$userProject2 = (new UserProject())->setUser($repoUser->find(3))->setStatus(1);
-		$userProject3 = (new UserProject())->setUser($repoUser->find(4))->setStatus(4);
-		$project = (new Project())->addStage($stage1)->addStage($stage2)
-				->addUserProject($userProject1)
-				->addUserProject($userProject2)
-				->addUserProject($userProject3);
-		// /test
-
+	public function addAction(Request $req) {
+		$em = $this->getDoctrine()->getManager();
+		$project = new Project();
 		$form = $this->createForm(new ProjectType(), $project, array(
 			'action' => $this->generateUrl('project_add')
 		));
-		
+
+		$form->handleRequest($req);
+		if ($form->isValid()) {
+			if ($project->getId() === null) {
+				$em->persist($project);
+			}
+			$em->flush();
+			$id = $project->getId();
+			// Redirection vers le projet crée
+			return $this->redirect($this->generateUrl('project_detail', array(
+								'id' => $id,
+							))
+			);
+		}
+		// Aucun formulaire envoyé
 		return $this->render('AppBundle:Project:add.html.twig', array(
-			'form' => $form->createView()
+					'form' => $form->createView()
 		));
 	}
-
 
 }
