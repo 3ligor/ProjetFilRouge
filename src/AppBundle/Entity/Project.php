@@ -6,6 +6,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Project
@@ -28,6 +29,7 @@ class Project {
 	 * @var string
 	 *
 	 * @ORM\Column(name="title", type="string", length=255)
+	 * @Assert\NotBlank()
 	 */
 	private $title;
 
@@ -35,6 +37,7 @@ class Project {
 	 * @var string
 	 *
 	 * @ORM\Column(name="smallDescription", type="string", length=255)
+	 * @Assert\NotBlank()
 	 */
 	private $smallDescription;
 
@@ -49,6 +52,7 @@ class Project {
 	 * @var DateTime
 	 *
 	 * @ORM\Column(name="startDate", type="datetime")
+	 * @Assert\DateTime()
 	 */
 	private $startDate;
 
@@ -70,6 +74,8 @@ class Project {
 	 * @var integer
 	 *
 	 * @ORM\Column(name="maxMembers", type="integer")
+	 * @Assert\GreaterThan(value = 0)
+	 * @Assert\NotBlank()
 	 */
 	private $maxMembers;
 
@@ -84,6 +90,7 @@ class Project {
 	 * @var array
 	 *
 	 * @ORM\ManyToMany(targetEntity="Category", inversedBy="projects")
+	 * @Assert\NotBlank()
 	 */
 	private $categories;
 
@@ -97,7 +104,7 @@ class Project {
 	/**
 	 * @var array
 	 * 
-	 * @ORM\OneToMany(targetEntity="Stage", mappedBy="project", orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="Stage", mappedBy="project", cascade={"persist"})
 	 */
 	private $stages;
 
@@ -108,7 +115,7 @@ class Project {
 	 * @ORM\OneToMany(targetEntity="UserProject", mappedBy="project")
 	 */
 	private $userProjects;
-	
+
 	/**
 	 * @var array
 	 * 
@@ -287,6 +294,31 @@ class Project {
 		return $this;
 	}
 
+	public function toggleStatus($status) {
+		if ($status === 'valider') {
+			if ($this->getStatus() >= 4) {
+				$this->setStatus($this->getStatus() - 4);
+			} else {
+				$this->setStatus($this->getStatus() + 4);
+			}
+		} elseif ($status === 'terminer') {
+			if ($this->getStatus() === 2 && $this->getStatus() === 3 && $this->getStatus() >= 6) {
+				$this->setStatus($this->getStatus() - 2);
+			} else {
+				$this->setStatus($this->getStatus() + 2);
+			}
+		} elseif ($status === 'archiver') {
+			if ($this->getStatus() === 1 && $this->getStatus() === 3 && $this->getStatus() === 5 && $this->getStatus() === 7 ) {
+				$this->setStatus($this->getStatus() - 1);
+			} else {
+				$this->setStatus($this->getStatus() + 1);
+			}
+		} else {
+			return false;
+		}
+		return $this->getStatus();
+	}
+
 	/**
 	 * Get status
 	 *
@@ -441,9 +473,9 @@ class Project {
 			'term' => 0,
 			'current' => 0,
 			'left' => 0);
-		
+
 		$check = true;
-		
+
 		foreach ($this->getStages() as $stage) {
 			if ($stage->getStatus()) {
 				$progress['term'] += $stage->getVolume();
@@ -454,38 +486,38 @@ class Project {
 				$progress['left'] += $stage->getVolume();
 			}
 		}
-		
+
 		return $progress;
 	}
 
-
-    /**
-     * Add skills
-     *
-     * @param \AppBundle\Entity\Skill $skills
-     * @return Project
-     */
-    public function addSkill(\AppBundle\Entity\Skill $skills) {
-        $this->skills[] = $skills;
+	/**
+	 * Add skills
+	 *
+	 * @param \AppBundle\Entity\Skill $skills
+	 * @return Project
+	 */
+	public function addSkill(\AppBundle\Entity\Skill $skills) {
+		$this->skills[] = $skills;
 		$skills->addProject($this);
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Remove skills
-     *
-     * @param \AppBundle\Entity\Skill $skills
-     */
-    public function removeSkill(\AppBundle\Entity\Skill $skills) {
-        $this->skills->removeElement($skills);
-    }
+	/**
+	 * Remove skills
+	 *
+	 * @param \AppBundle\Entity\Skill $skills
+	 */
+	public function removeSkill(\AppBundle\Entity\Skill $skills) {
+		$this->skills->removeElement($skills);
+	}
 
-    /**
-     * Get skills
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getSkills() {
-        return $this->skills;
-    }
+	/**
+	 * Get skills
+	 *
+	 * @return \Doctrine\Common\Collections\Collection 
+	 */
+	public function getSkills() {
+		return $this->skills;
+	}
+
 }

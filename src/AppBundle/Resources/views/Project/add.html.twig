@@ -6,8 +6,17 @@
 	<div class='row'>
 		<div class='col-xs-12'>
 			<div class='panel panel-default'>
-				<div class='panel-body'>
-					Ajouter des étapes
+				<div class='panel-heading'>Étapes</div>
+				<div class='panel-body stages' data-prototype="{{ form_widget(form.stages.vars.prototype)|e }}">
+					{% for stage in form.stages %}
+						<div class='stage col-xs-6 col-sm-4 col-md-3'>
+							<div>
+							{{ form_row(stage.title) }}
+							{{ form_row(stage.volume) }}
+							{{ form_row(stage.status) }}
+							</div>
+						</div>
+					{% endfor %}
 				</div>
 			</div>
 		</div>
@@ -24,21 +33,70 @@
 			</div>
 		</div>
 		<div class='col-sm-9'>
+			{{ form_start(form) }}
 			<div class='panel panel-default'>
 				<div class='panel-heading'>
-					Titre
+					{{ form_row(form.title) }}
 				</div>
 				<div class='panel-body'>
-					smallDesc
+					{{ form_row(form.smallDescription) }}
 					<div class='panel-body'>
 					</div>
-					longDesc
+					{{ form_row(form.longDescription) }}
+					<div class='panel-body'>
+						{{ form_row(form.maxMembers) }}
+						{{ form_row(form.categories) }}
+						{{ form_row(form.startDate) }}
+						{{ form_row(form.endDate) }}
+						{{ form_row(form.Brouillon) }}
+						{{ form_row(form.Valider) }}
+					</div>
 				</div>
 				<div class='panel-footer'>
 					<button type="button" class="btn btn-primary btn-block"><strong>Proposer le projet</strong></button>
 					<button type="button" class="btn btn-primary btn-block"><strong>Sauvegarder le brouillon</strong></button>
 				</div>
 			</div>
-		</div>	
+			{{ form_end(form) }}
+		</div>
 	</div>
 {% endblock content %}
+{% block javascripts %}
+	<script src="{{ asset('bundles/app/js/jquery-2.1.1.min.js') }}"></script>
+	{{ parent() }}
+	<script>
+		jQuery(document).ready(function () {
+			var collectionHolder = $('div.stages');
+			var $addStageLink = $('<div class="col-xs-6 col-sm-4 col-md-3 text-center"><a href="#" class="add_stage_link"><button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus"></span></button></a></div>');
+			var $newLinkDiv = $('<span></span>').append($addStageLink);
+
+			collectionHolder.append($newLinkDiv);
+			collectionHolder.find('div.stage').each(function () {
+				addStageFormDeleteLink($(this));
+			});
+
+			$addStageLink.on('click', function (e) {
+				e.preventDefault();
+				addStageForm(collectionHolder, $newLinkDiv);
+			});
+
+			function addStageForm(collectionHolder, $newLinkDiv) {
+				var prototype = collectionHolder.attr('data-prototype');
+				var newForm = prototype.replace(/__name__/g, collectionHolder.children().length);
+				var $newFormDiv = $('<div class="stage col-xs-6 col-sm-4 col-md-3"></div>').append(newForm);
+				$newLinkDiv.before($newFormDiv);
+
+				addStageFormDeleteLink($newFormDiv);
+			}
+
+			function addStageFormDeleteLink($stageFormDiv) {
+				var $removeFormA = $('<a href="#"><span class="glyphicon glyphicon-remove"></span></a>');
+				$stageFormDiv.append($removeFormA);
+				$removeFormA.on('click', function (e) {
+					e.preventDefault();
+					$stageFormDiv.remove();
+				});
+			}
+		});
+	</script>
+{% endblock javascripts %}

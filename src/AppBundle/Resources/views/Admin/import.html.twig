@@ -1,6 +1,7 @@
 {% extends "AppBundle::layout.html.twig" %}
 
 {% block content %}
+	{% include "AppBundle:Admin:menuAdmin.html.twig" with {'default' : 'import'} %}
 	<div class="row">
 		<div class="panel panel-default">
 			<div class="panel-heading">Importation du fichier xls pour remplir la base</div>

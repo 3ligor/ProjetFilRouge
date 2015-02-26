@@ -1,6 +1,7 @@
 {% extends "AppBundle::layout.html.twig" %}
 
 {% block content %}
+{% include "AppBundle:Admin:menuAdmin.html.twig" with {'default' : 'skill'}%}
 	<div class="row">
 		{% for skill in skills %}
 			{% if skill.parent == null %}

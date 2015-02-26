@@ -2,6 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Project;
+use AppBundle\Entity\Stage;
+use AppBundle\Form\ProjectType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -26,13 +29,24 @@ class ProjectController extends Controller {
 		$repoP = $em->getRepository('AppBundle:Project');
 		$project = $repoP->findProjectEager($id);
 
+
 		return $this->render('AppBundle:Project:project.html.twig', array(
 					'project' => $project
 		));
 	}
 
 	public function addAction() {
-		return $this->render('AppBundle:Project:add.html.twig');
+		$stage1 = (new Stage())->setTitle('Blablo')->setVolume(32)->setStatus(true);
+		$stage2 = (new Stage())->setTitle('TesStage')->setVolume(12)->setStatus(false);
+		$project = (new Project())->addStage($stage1)->addStage($stage2);
+
+		$form = $this->createForm(new ProjectType(), $project, array(
+			'action' => $this->generateUrl('project_add')
+		));
+		
+		return $this->render('AppBundle:Project:add.html.twig', array(
+			'form' => $form->createView()
+		));
 	}
 
 }

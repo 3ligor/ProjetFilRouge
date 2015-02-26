@@ -11,12 +11,12 @@ class AdminController extends Controller {
 	}
 
 	public function skillAction() {
-		$skills = $this->getDoctrine()
+		$repo = $this->getDoctrine()
 				->getManager()
-				->getRepository('AppBundle:Skill')
-				->findAll();
-		return $this->render('AppBundle:Admin:skill.html.twig',array(
-			'skills' => $skills
+				->getRepository('AppBundle:Skill');
+		$skills = $repo->getSkillsWithChilds();
+		return $this->render('AppBundle:Admin:skill.html.twig', array(
+					'skills' => $skills
 		));
 	}
 
@@ -42,6 +42,21 @@ class AdminController extends Controller {
 
 	public function importAction() {
 		return $this->render('AppBundle:Admin:import.html.twig');
+	}
+
+	public function validateProjectAction($id) {
+		if ($id > 0) {
+			$em = $this->getDoctrine()
+					->getManager();
+			$project = $em->getRepository('AppBundle:Project')->find($id);
+			$project->toggleStatus('valider');
+			$em->flush();
+			return $this->redirect(
+							$this->generateUrl('admin_project')
+			);
+		} else {
+			throw $this->createNotFoundException('Article N°' . $id . ' introuvable');
+		}
 	}
 
 }

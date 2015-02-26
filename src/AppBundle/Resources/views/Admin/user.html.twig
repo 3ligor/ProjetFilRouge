@@ -1,62 +1,65 @@
 {% extends "AppBundle::layout.html.twig" %}
 {% block content %}
-    <table class="table table-condensed table-hover">
-		<thead>
-		<th>Rôles</th>
-		<th>Prénom</th>
-		<th>Nom</th>
-		<th class="text-center">Projets en cours</th>
-		<th class="text-center">Projets finis</th>
-	</thead>
-	<tbody class="">
-		{% for user in users %}
-			<tr>
-				<td>
-					{% for role in user.roles %}
-						{% if role == 'ROLE_USER' %}
-							Utilisateur
-						{% elseif role == 'ROLE_ADMIN' %}
-							Administrateur
-						{% elseif role == 'ROLE_SUPERADMIN' %}
-							Super Administrateur
-						{% endif %}
-						{{ loop.last ? '' : '-' }}
-					{% endfor %}
-					{% if user.leadProjects|length!=0 %}
-							{{ ' - Chef de Projet'  }}
-					{% endif %}
-				</td>
-				<td>
-					{{ user.firstname }}
-				</td>
-				<td>
-					{{ user.lastname }}
-				</td>
-				<td class="text-center">
-					<span class="badge badge-primary">
-						{% set currentp = 0 %}
-						{% for userProject in user.userProjects %}
-							{% if userProject.project.status == 4 %}
-								{% set currentp = currentp+1 %}
+	{% include "AppBundle:Admin:menuAdmin.html.twig" with {'default' : 'user'}%}
+	<div class="row">
+		<table class="table table-condensed table-hover">
+			<thead>
+			<th>Rôles</th>
+			<th>Prénom</th>
+			<th>Nom</th>
+			<th class="text-center">Projets en cours</th>
+			<th class="text-center">Projets finis</th>
+			</thead>
+			<tbody class="">
+				{% for user in users %}
+					<tr>
+						<td>
+							{% for role in user.roles %}
+								{% if role == 'ROLE_USER' %}
+									Utilisateur
+								{% elseif role == 'ROLE_ADMIN' %}
+									Administrateur
+								{% elseif role == 'ROLE_SUPERADMIN' %}
+									Super Administrateur
+								{% endif %}
+								{{ loop.last ? '' : '-' }}
+							{% endfor %}
+							{% if user.leadProjects|length!=0 %}
+								{{ ' - Chef de Projet'  }}
 							{% endif %}
-						{% endfor %}
-						{{ currentp }}
-					</span>
-				</td>
-				<td class="text-center">
-					<span class="badge badge-info">
-						{% set endedp = 0 %}
-						{% for userProject in user.userProjects %}
-							{% if userProject.project.status >= 6 %}
-								{% set endedp = endedp+1 %}
-							{% endif %}
-						{% endfor %}
-						{{ endedp }}
-					</span>
-				</td>
-			</tr>
-		{% endfor %}
-	</tbody>
-</table>
+						</td>
+						<td>
+							{{ user.firstname }}
+						</td>
+						<td>
+							{{ user.lastname }}
+						</td>
+						<td class="text-center">
+							<span class="badge badge-primary">
+								{% set currentp = 0 %}
+								{% for userProject in user.userProjects %}
+									{% if userProject.project.status == 4 %}
+										{% set currentp = currentp+1 %}
+									{% endif %}
+								{% endfor %}
+								{{ currentp }}
+							</span>
+						</td>
+						<td class="text-center">
+							<span class="badge badge-info">
+								{% set endedp = 0 %}
+								{% for userProject in user.userProjects %}
+									{% if userProject.project.status >= 6 %}
+										{% set endedp = endedp+1 %}
+									{% endif %}
+								{% endfor %}
+								{{ endedp }}
+							</span>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
 {% endblock content %}
 
