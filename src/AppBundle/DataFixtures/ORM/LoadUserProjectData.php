@@ -229,6 +229,7 @@ class LoadUserProjectData extends AbstractFixture implements OrderedFixtureInter
 		$userProject46 = new UserProject();
 		$userProject47 = new UserProject();
 		$userProject48 = new UserProject();
+		$userProject49 = new UserProject();
 
 		$userProject40->setUser($this->getReference('user1'))
 				->setProject($this->getReference('project1'))
@@ -255,8 +256,10 @@ class LoadUserProjectData extends AbstractFixture implements OrderedFixtureInter
 				->setProject($this->getReference('project8'))
 				->setStatus(4);
 		$userProject48->setUser($this->getReference('user4'))
-				->setUser($this->getReference('user1'))
 				->setProject($this->getReference('project9'))
+				->setStatus(4);
+		$userProject49->setUser($this->getReference('user3'))
+				->setProject($this->getReference('project1'))
 				->setStatus(4);
 		
 		$manager->persist($userProject40);
@@ -268,6 +271,7 @@ class LoadUserProjectData extends AbstractFixture implements OrderedFixtureInter
 		$manager->persist($userProject46);
 		$manager->persist($userProject47);
 		$manager->persist($userProject48);
+		$manager->persist($userProject49);
 
 		$manager->flush();
 	}
