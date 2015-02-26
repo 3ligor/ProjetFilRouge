@@ -11,7 +11,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
  * Skill
  *
@@ -20,34 +19,34 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Skill {
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
+	private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=255)
-     */
-    private $title;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="title", type="string", length=255)
+	 */
+	private $title;
 
-    /**
-     * @var Skill
-     * 
-     * @ORM\ManyToOne(targetEntity="Skill", inversedBy="childs")
-     */
-    private $parent;
+	/**
+	 * @var Skill
+	 * 
+	 * @ORM\ManyToOne(targetEntity="Skill", inversedBy="childs")
+	 */
+	private $parent;
 
-    /**
-     * @var array
-     * @ORM\OneToMany(targetEntity="Skill", mappedBy="parent")
-     */
-    private $childs;
+	/**
+	 * @var array
+	 * @ORM\OneToMany(targetEntity="Skill", mappedBy="parent")
+	 */
+	private $childs;
 
 	/**
 	 * @var UserSkill
@@ -55,178 +54,178 @@ class Skill {
 	 * @ORM\OneToMany(targetEntity="UserSkill", mappedBy="skill")
 	 */
 	private $userSkills;
-	
+
 	/**
 	 * @var array
 	 * 
 	 * @ORM\ManyToMany(targetEntity="Project", mappedBy="skills")
 	 */
 	private $projects;
-	
-    /**
-     * Constructor
-     */
-    public function __construct() {
-        $this->childs = new ArrayCollection();
-        $this->projects = new ArrayCollection();
-    }
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId() {
-        return $this->id;
-    }
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		$this->childs = new ArrayCollection();
+		$this->projects = new ArrayCollection();
+	}
 
-    /**
-     * Set title
-     *
-     * @param string $title
-     * @return Skill
-     */
-    public function setTitle($title) {
-        $this->title = $title;
+	/**
+	 * Get id
+	 *
+	 * @return integer 
+	 */
+	public function getId() {
+		return $this->id;
+	}
 
-        return $this;
-    }
+	/**
+	 * Set title
+	 *
+	 * @param string $title
+	 * @return Skill
+	 */
+	public function setTitle($title) {
+		$this->title = $title;
 
-    /**
-     * Get title
-     *
-     * @return string 
-     */
-    public function getTitle() {
-        return $this->title;
-    }
+		return $this;
+	}
 
-    /**
-     * Set parent
-     *
-     * @param Skill $parent
-     * @return Skill
-     */
-    public function setParent(Skill $parent = null) {
-        $this->parent = $parent;
-        $parent->addChild($this);
-        return $this;
-    }
+	/**
+	 * Get title
+	 *
+	 * @return string 
+	 */
+	public function getTitle() {
+		return $this->title;
+	}
 
-    /**
-     * Get parent
-     *
-     * @return Skill 
-     */
-    public function getParent() {
-        return $this->parent;
-    }
+	/**
+	 * Set parent
+	 *
+	 * @param Skill $parent
+	 * @return Skill
+	 */
+	public function setParent(Skill $parent = null) {
+		$this->parent = $parent;
+		$parent->addChild($this);
+		return $this;
+	}
 
-    /**
-     * Add childs
-     *
-     * @param Skill $childs
-     * @return Skill
-     */
-    public function addChild(Skill $childs) {
-        $this->childs[] = $childs;
+	/**
+	 * Get parent
+	 *
+	 * @return Skill 
+	 */
+	public function getParent() {
+		return $this->parent;
+	}
 
-        return $this;
-    }
+	/**
+	 * Add childs
+	 *
+	 * @param Skill $childs
+	 * @return Skill
+	 */
+	public function addChild(Skill $childs) {
+		$this->childs[] = $childs;
 
-    /**
-     * Remove childs
-     *
-     * @param Skill $childs
-     */
-    public function removeChild(Skill $childs) {
-        $this->childs->removeElement($childs);
-    }
+		return $this;
+	}
 
-    /**
-     * Get childs
-     *
-     * @return Collection 
-     */
-    public function getChilds() {
-        return $this->childs;
-    }
+	/**
+	 * Remove childs
+	 *
+	 * @param Skill $childs
+	 */
+	public function removeChild(Skill $childs) {
+		$this->childs->removeElement($childs);
+	}
 
-    /**
-     * Get userSkills
-     *
-     * @return UserSkill 
-     */
-    public function getUserSkills() {
-        return $this->userSkills;
-    }
+	/**
+	 * Get childs
+	 *
+	 * @return Collection 
+	 */
+	public function getChilds() {
+		return $this->childs;
+	}
 
-    /**
-     * Add userSkills
-     *
-     * @param UserSkill $userSkills
-     * @return Skill
-     */
-    public function addUserSkill(UserSkill $userSkills) {
-        $this->userSkills[] = $userSkills;
-        return $this;
-    }
+	/**
+	 * Get userSkills
+	 *
+	 * @return UserSkill 
+	 */
+	public function getUserSkills() {
+		return $this->userSkills;
+	}
 
-    /**
-     * Remove userSkills
-     *
-     * @param UserSkill $userSkills
-     */
-    public function removeUserSkill(UserSkill $userSkills) {
-        $this->userSkills->removeElement($userSkills);
-    }
+	/**
+	 * Add userSkills
+	 *
+	 * @param UserSkill $userSkills
+	 * @return Skill
+	 */
+	public function addUserSkill(UserSkill $userSkills) {
+		$this->userSkills[] = $userSkills;
+		return $this;
+	}
 
-    /**
-     * Add projects
-     *
-     * @param Project $projects
-     * @return Skill
-     */
-    public function addProject(Project $projects) {
-        $this->projects[] = $projects;
+	/**
+	 * Remove userSkills
+	 *
+	 * @param UserSkill $userSkills
+	 */
+	public function removeUserSkill(UserSkill $userSkills) {
+		$this->userSkills->removeElement($userSkills);
+	}
 
-        return $this;
-    }
+	/**
+	 * Add projects
+	 *
+	 * @param Project $projects
+	 * @return Skill
+	 */
+	public function addProject(Project $projects) {
+		$this->projects[] = $projects;
 
-    /**
-     * Remove projects
-     *
-     * @param Project $projects
-     */
-    public function removeProject(Project $projects) {
-        $this->projects->removeElement($projects);
-    }
+		return $this;
+	}
 
-    /**
-     * Get projects
-     *
-     * @return Collection2 
-     */
-    public function getProjects() {
-        return $this->projects;
-    }
+	/**
+	 * Remove projects
+	 *
+	 * @param Project $projects
+	 */
+	public function removeProject(Project $projects) {
+		$this->projects->removeElement($projects);
+	}
 
-    public function existInProject(Project $project) {
-        foreach ($project->getSkills() as $skill) {
-            if ($skill === $this) {
-                return true;
-            }
-        }
-        return false;
-    }
+	/**
+	 * Get projects
+	 *
+	 * @return Collection2 
+	 */
+	public function getProjects() {
+		return $this->projects;
+	}
 
-    public function existInUser(User $user) {
-        foreach ($user->getSkills() as $skill) {
-            if ($skill === $this) {
-                return true;
-            }
-        }
-        return false;
-    }
+	public function existInProject(Project $project) {
+		foreach ($project->getSkills() as $skill) {
+			if ($skill === $this) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public function existInUser(User $user) {
+		foreach ($user->getUserSkills() as $userSkill) {
+			if ($userSkill->getSkill() === $this) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

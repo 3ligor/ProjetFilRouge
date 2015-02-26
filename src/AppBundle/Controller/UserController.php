@@ -7,9 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class UserController extends Controller {
 
     public function indexAction() {
-
-        $repo = $this->getDoctrine()->getManager()->getRepository('AppBundle:User');
-        $repoSkill = $this->getDoctrine()->getManager()->getRepository('AppBundle:Skill');
+		$em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('AppBundle:User');
+        $repoSkill = $em->getRepository('AppBundle:Skill');
         $users = $repo->findUsersEager();
         $skills = $repoSkill->findAll();
 

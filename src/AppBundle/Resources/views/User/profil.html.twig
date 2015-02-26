@@ -6,15 +6,15 @@
 {% endblock %}
 
 {% block content %}
-    
+
     <div class="row">
         <div class="col-sm-2 col-xs-6 text-center">
-            {% for user in user %}
+          
                 <img src="{{ user.image.url }}"  alt="{{ user.image.alt }}" class="img-thumbnail "/>
-            {% endfor %}
+            
         </div>
         <div class="col-sm-6 col-xs-6">
-            {% for user in user %}
+           
 
                 <dl class="dl-horizontal">
                     <dt>Prénom</dt>
@@ -42,7 +42,7 @@
                     <dt>Disponibilité</dt>
                     <dd><input class="bootstrap-switch.bootstrap-switch-mini" type="checkbox" id="dispo" checked data-size="mini"></dd>
                 </dl>
-            {% endfor %}
+           
 
         </div>
 
@@ -58,7 +58,7 @@
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                         <div class="panel-body">
-                          Skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, 
+							Skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, 
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                     </div>
                     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                         <div class="panel-body">
-                          Skateboard et. Nihil anim keffiyeh helvetica, nth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+							Skateboard et. Nihil anim keffiyeh helvetica, nth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
                         </div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                     </div>
                     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                         <div class="panel-body">
-                             Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+							Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
                         </div>
                     </div>
                 </div>
@@ -94,39 +94,69 @@
         </div>
     </div>
     <hr>
-		
+
     <div class="row">
-        
-       
-        
-            {%for userSkill in user.userSkills %}
-				{{ dump(userSkill)}}
-                <div class="col-sm-6 col-xs-6 border">
-					{% if userSkill.skill.parent.title is defined %}
-						<h4>{{ userSkill.skill.parent.title }}</h4>
-						{{'PARENT DEFINED'}}
-					{% else %}
-						<h4>{{ userSkill.skill.title }}</h4>
-					{% endif%}
-                </div>
-            {% endfor%}
+	
+		{%for userSkill in user.userSkills %}
+			
+			{% if userSkill.skill.parent == null %}
+				
+				
+				<div class='col-xs-6 col-sm-4 col-md-3'>
+					<ul class='list-group'>
+						<li class='list-group-item active'>
+							{{ userSkill.skill.title }}
+						</li>
+						{% for childSkill in userSkill.skill.childs %}
+							
+							{% if childSkill.existInUser(user) %}
+								
+								<li class='list-group-item'>
+									<div class="row">
+									<div class="col-xs-6">{{ childSkill.title }}</div>
+									
+									<div class="text-right col-xs-6">
+									{% for childUserSkill in childSkill.userSkills%}
+										{% if  childUserSkill.user == user %}
+											
+											
+											 {% for i in 1..childUserSkill.value %}
+												 <span class="glyphicon glyphicon-star"></span>
+											 {% endfor%}
 
-     
+											 {% if childUserSkill.value != 5 %} 
+												 {% for i in childUserSkill.value..4 %}
+													 <span class="glyphicon glyphicon-star-empty"></span>
+												 {% endfor%}
+											 {% endif %}
+										{% endif %}
+									{% endfor%}
+									</div>
+									</div>
+								</li>
+									
 
-    </div>
+							{% endif%}
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif%}
+		{% endfor%}
+		
+	</div>
 
 {% endblock content %}
 
 {% block javascripts %}
-    
+
     <script src='{{ asset('bundles/app/js/jquery-2.1.1.js') }}'></script>
     <script src='{{ asset('bundles/app/js/bootstrap.min.js') }}'></script>
     <script src='{{ asset('bundles/app/js/bootstrap-switch.min.js') }}'></script>
     <script type="text/javascript">
-        $('#dispo').bootstrapSwitch();
-        $('#visibleTel').bootstrapSwitch();
-        $('#visibleEmail').bootstrapSwitch();
-        $('#visibleBirthDate').bootstrapSwitch();
-           
+		$('#dispo').bootstrapSwitch();
+		$('#visibleTel').bootstrapSwitch();
+		$('#visibleEmail').bootstrapSwitch();
+		$('#visibleBirthDate').bootstrapSwitch();
+
     </script>
 {% endblock %}
