@@ -2,7 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Skill;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class AdminController extends Controller {
 
@@ -45,10 +47,13 @@ class AdminController extends Controller {
 	}
 
 	public function validateProjectAction($id) {
+		// If we have an id
 		if ($id > 0) {
 			$em = $this->getDoctrine()
 					->getManager();
+			// Select the project by his id
 			$project = $em->getRepository('AppBundle:Project')->find($id);
+			// Call the "toggleStatus" function who change the status of a project
 			$project->toggleStatus('valider');
 			$em->flush();
 			return $this->redirect(
@@ -58,5 +63,45 @@ class AdminController extends Controller {
 			throw $this->createNotFoundException('Article N°' . $id . ' introuvable');
 		}
 	}
+	
+	public function addSkillAction(Request $req) {
+		$skill = new Skill;
+		
+		$rep = $this->getDoctrine()
+				->getManager()
+				->getRepository('AppBundle:Skill');
+		
+		$em = $this->getDoctrine()
+				->getManager();
+		// Determinate the id of the selected category
+		$id = $req->get('selectCat');
+		
+		// If the user has selected a category
+		if ($id > 0){
+			// The added skill will have a parent which is the selected category
+			$skillParent = $rep->find($id);
+			// Setting the title and the parent to the added skill
+			$skill->setTitle($req->get('title'));
+			$skill->setParent($skillParent);
+			$em->persist($skill);
+			$em->flush();
+			return $this->redirect(
+							$this->generateUrl('admin_skill'));
+		} 
+		// If the user hasn't selected a category
+		else {
+			// the skill will be a category without parent
+			$skill->setTitle($req->get('title'));
+			$em->persist($skill);
+			$em->flush();
+			return $this->redirect(
+							$this->generateUrl('admin_skill'));
+		}
+	}
+	
+	public function deleteSkillAction($id) {
 
+		return $this->redirect(
+							$this->generateUrl('admin_skill'));
+	}
 }

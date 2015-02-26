@@ -6,6 +6,12 @@ admin_project:
     path: /project
     defaults: { _controller: AppBundle:Admin:project }
     
+admin_validate_project:
+    path: /validate_project/{id}
+    defaults: { _controller: AppBundle:Admin:validateProject }
+    requirements:
+        id: \d+
+    
 admin_user:
     path: /user
     defaults: { _controller: AppBundle:Admin:user }
@@ -18,8 +24,12 @@ admin_skill:
     path: /skill
     defaults: { _controller: AppBundle:Admin:skill }
     
-admin_validate_project:
-    path: /validate_project/{id}
-    defaults: { _controller: AppBundle:Admin:validateProject }
+admin_add_skill:
+    path:	/add_skill
+    defaults: { _controller: AppBundle:Admin:addSkill }
+    
+admin_delete_skill:
+    path:	/delete_skill/{id}
+    defaults: { _controller: AppBundle:Admin:deleteSkill }
     requirements:
         id: \d+

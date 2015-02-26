@@ -92,7 +92,7 @@ class LoadUserProjectData extends AbstractFixture implements OrderedFixtureInter
 		$manager->persist($userProject10);
 		$manager->persist($userProject11);
 		$manager->persist($userProject12);
-		$manager->persist($userProject13);		
+		$manager->persist($userProject13);
 		$manager->persist($userProject14);
 
 
@@ -165,7 +165,7 @@ class LoadUserProjectData extends AbstractFixture implements OrderedFixtureInter
 		$userProject31->setUser($this->getReference('user4'))
 				->setProject($this->getReference('project7'))
 				->setStatus(3);
-		
+
 		$userProject32->setUser($this->getReference('user4'))
 				->setProject($this->getReference('project8'))
 				->setStatus(3);
@@ -173,7 +173,7 @@ class LoadUserProjectData extends AbstractFixture implements OrderedFixtureInter
 		$userProject33->setUser($this->getReference('user4'))
 				->setProject($this->getReference('project9'))
 				->setStatus(3);
-		
+
 		$userProject34->setUser($this->getReference('user5'))
 				->setProject($this->getReference('project6'))
 				->setStatus(3);
@@ -181,7 +181,7 @@ class LoadUserProjectData extends AbstractFixture implements OrderedFixtureInter
 		$userProject35->setUser($this->getReference('user5'))
 				->setProject($this->getReference('project7'))
 				->setStatus(3);
-		
+
 		$userProject36->setUser($this->getReference('user5'))
 				->setProject($this->getReference('project8'))
 				->setStatus(3);
@@ -189,7 +189,7 @@ class LoadUserProjectData extends AbstractFixture implements OrderedFixtureInter
 		$userProject37->setUser($this->getReference('user5'))
 				->setProject($this->getReference('project9'))
 				->setStatus(3);
-		
+
 		$userProject38->setUser($this->getReference('user5'))
 				->setProject($this->getReference('project1'))
 				->setStatus(3);
@@ -218,6 +218,56 @@ class LoadUserProjectData extends AbstractFixture implements OrderedFixtureInter
 		$manager->persist($userProject37);
 		$manager->persist($userProject38);
 		$manager->persist($userProject39);
+
+		// Leader
+		$userProject40 = new UserProject();
+		$userProject41 = new UserProject();
+		$userProject42 = new UserProject();
+		$userProject43 = new UserProject();
+		$userProject44 = new UserProject();
+		$userProject45 = new UserProject();
+		$userProject46 = new UserProject();
+		$userProject47 = new UserProject();
+		$userProject48 = new UserProject();
+
+		$userProject40->setUser($this->getReference('user1'))
+				->setProject($this->getReference('project1'))
+				->setStatus(4);
+		$userProject41->setUser($this->getReference('user2'))
+				->setProject($this->getReference('project2'))
+				->setStatus(4);
+		$userProject42->setUser($this->getReference('user3'))
+				->setProject($this->getReference('project3'))
+				->setStatus(4);
+		$userProject43->setUser($this->getReference('user4'))
+				->setProject($this->getReference('project4'))
+				->setStatus(4);
+		$userProject44->setUser($this->getReference('user4'))
+				->setProject($this->getReference('project5'))
+				->setStatus(4);
+		$userProject45->setUser($this->getReference('user1'))
+				->setProject($this->getReference('project6'))
+				->setStatus(4);
+		$userProject46->setUser($this->getReference('user2'))
+				->setProject($this->getReference('project7'))
+				->setStatus(4);
+		$userProject47->setUser($this->getReference('user3'))
+				->setProject($this->getReference('project8'))
+				->setStatus(4);
+		$userProject48->setUser($this->getReference('user4'))
+				->setUser($this->getReference('user1'))
+				->setProject($this->getReference('project9'))
+				->setStatus(4);
+		
+		$manager->persist($userProject40);
+		$manager->persist($userProject41);
+		$manager->persist($userProject42);
+		$manager->persist($userProject43);
+		$manager->persist($userProject44);
+		$manager->persist($userProject45);
+		$manager->persist($userProject46);
+		$manager->persist($userProject47);
+		$manager->persist($userProject48);
 
 		$manager->flush();
 	}
