@@ -5,14 +5,19 @@
 		<table class="table table-condensed table-hover">
 			<thead>
 			<th>Rôles</th>
-			<th>Prénom</th>
-			<th>Nom</th>
+			<th>Utilisateurs</th>
 			<th class="text-center">Projets en cours</th>
 			<th class="text-center">Projets finis</th>
 			</thead>
 			<tbody class="">
 				{% for user in users %}
-					<tr>
+					<tr {% for role in user.roles %}
+								{% if role == 'ROLE_ADMIN' %}
+									class="bg-warning"
+								{% elseif role == 'ROLE_SUPERADMIN' %}
+									class="bg-danger"
+								{% endif %}
+							{% endfor %}>
 						<td>
 							{% for role in user.roles %}
 								{% if role == 'ROLE_USER' %}
@@ -29,10 +34,7 @@
 							{% endif %}
 						</td>
 						<td>
-							{{ user.firstname }}
-						</td>
-						<td>
-							{{ user.lastname }}
+							<a href="{{path('user_profile',{'id':user.id})}}">{{ user.firstname }} {{ user.lastname }} - "{{user.pseudo}}"</a>
 						</td>
 						<td class="text-center">
 							<span class="badge badge-primary">

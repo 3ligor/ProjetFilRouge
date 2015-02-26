@@ -2,7 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Skill;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class AdminController extends Controller {
 
@@ -58,5 +60,35 @@ class AdminController extends Controller {
 			throw $this->createNotFoundException('Article N°' . $id . ' introuvable');
 		}
 	}
+	
+	public function addSkillAction(Request $req) {
+		$skill = new Skill;
+		
+		$rep = $this->getDoctrine()
+				->getManager()
+				->getRepository('AppBundle:Skill');
+		
+		$em = $this->getDoctrine()
+				->getManager();
+		
+		$id = $req->get('selectCat');
+		
+		if ($id > 0){
+			$skillParent = $rep->find($id);
+			$skill->setTitle($req->get('title'));
+			$skill->setParent($skillParent);
+			$em->persist($skill);
+			$em->flush();
+			return $this->redirect(
+							$this->generateUrl('admin_skill'));
+		} else {
+			$skill->setTitle($req->get('title'));
+			$em->persist($skill);
+			$em->flush();
+			return $this->redirect(
+							$this->generateUrl('admin_skill'));
+		}
+	}
+	
 
 }

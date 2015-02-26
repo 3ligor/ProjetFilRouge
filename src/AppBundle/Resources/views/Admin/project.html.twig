@@ -18,7 +18,7 @@
 						{% endfor %}
 					</td>
 					<td>
-						{{project.status}}
+						<a href="{{path('project_detail',{'id': project.id})}}">{{project.title}}</a>
 					</td>
 					<td class="text-center">
 						{{project.creationDate|date('d-m-Y')}}
@@ -36,7 +36,7 @@
 						{% elseif project.status >= 4 %}
 							<span class="glyphicon glyphicon-ok text-success"></span>
 							<a href="{{path('admin_validate_project',{'id': project.id})}}"><span class="glyphicon glyphicon-remove-circle text-danger"></span></a>
-						{% endif %}	
+							{% endif %}	
 					</td>
 				</tr>
 			{% endfor %}
