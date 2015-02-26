@@ -27,3 +27,9 @@ admin_skill:
 admin_add_skill:
     path:	/add_skill
     defaults: { _controller: AppBundle:Admin:addSkill }
+    
+admin_delete_skill:
+    path:	/delete_skill/{id}
+    defaults: { _controller: AppBundle:Admin:deleteSkill }
+    requirements:
+        id: \d+

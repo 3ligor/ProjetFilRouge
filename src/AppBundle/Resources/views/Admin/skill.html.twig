@@ -46,7 +46,7 @@
 								<li class="list-group-item">
 									<div class="row">
 										<div class="col-lg-9">{{ childSkill.title }}</div>
-										<div class="col-lg-3 text-right"><span class="glyphicon glyphicon-remove small"></span></div>
+										<div class="col-lg-3 text-right"><a href="{{path('admin_delete_skill',{'id','skill.id'})}}"><span class="glyphicon glyphicon-remove small"></span></div>
 									</div>
 								</li>
 							{% endfor %}
