@@ -8,9 +8,9 @@
     <div class="row">
         <div class="row">
             <div class="col-sm-3 col-xs-6">
-                <label for='searchName'>Chercher par nom</label>
+                <label for='searchName'>Par nom</label>
                 <input id="searchName" class='form-control' placeholder="Nom Prenom">
-                <label for='disponibilitée'>Disponibilitée</label>
+                <label for='disponibilitée'>Par disponibilitée</label>
                 <select id='disponibilitée' class='form-control'>
                     <option>Indifférent</option>
                     <option>Oui</option>
@@ -23,14 +23,16 @@
                     <label for='typeProjet'>Type de compétence</label>
                     <select id='typeProjet' class='form-control' multiple='true'>
                         {% for skill in skills %}
-                            <option>{{ skill.title }}</option>
+							{% if skill.parent is not null  %}
+								<option>{{ skill.title }}</option>
+							{% endif %}
                         {% endfor %}
                     </select>
                 </div> 
             {% endfor %}
-	</div>
-    <br>
-    <br>
+		</div>
+		<br>
+		<br>
         <table class="table table-hover">
             <thead>
             <th>Disponibilité</th>
@@ -41,24 +43,35 @@
             <th>Compétence 4</th>
             <th>..</th>
             </thead>
-            
+
             {%for user in users %}
-                
+
                 <tr>
                     <td>{{ user.available? "Oui" : "Non" }} </td>
                     <td><strong>{{ user.lastname }}</strong> {{ user.firstname }}</td>
                     {% set cpt = 4 %}
-                    {% for userSkill in user.userSkills|slice(0,4) %}
-                               {% set cpt = cpt - 1 %}
-                               <td>{{ userSkill.skill.title }}</td>
-                               
-                      
+
+                    {% for userSkill in user.userSkills %}
+						{% if userSkill.skill.parent != null %}
+
+							{% if cpt > 0 %}
+
+								{% set cpt = cpt - 1 %}
+								<td>
+									{{ userSkill.skill.title }}
+									
+								</td>
+
+							{% endif %}
+
+						{% endif%}
+
                     {% endfor %}
-                    {% for i in 0..cpt %}
-                        <td></td>
-                    {% endfor %}
-                                            
-                                            
+					{% if cpt > 0 %}
+						{% for i in 1..cpt %}
+							<td></td>
+						{% endfor %}                       
+                    {% endif %}      
 
                     <td><a href="{{ path('user_profile', {'id':user.id}) }}"><button>Detail</button></a></td>
                 </tr>
@@ -66,6 +79,7 @@
         </table>
 
     </div>
-    
+
+
 {% endblock content %}
 

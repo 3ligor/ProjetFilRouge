@@ -26,7 +26,7 @@ class UserProject {
 	 *
 	 * @ORM\Column(name="status", type="integer")
 	 */
-	private $status; // 1 = invitation, 2 = postulation, 3 = membre
+	private $status; // 0 = suppression, 1 = invitation, 2 = postulation, 3 = membre, 4 = chef
 
 	/**
 	 * @var User
@@ -58,6 +58,9 @@ class UserProject {
 	 * @return UserProject
 	 */
 	public function setStatus($status) {
+		if ($status === 0) {
+			$this->getProject()->removeUserProject($this);
+		}
 		$this->status = $status;
 		return $this;
 	}
@@ -111,6 +114,10 @@ class UserProject {
 	 */
 	public function getProject() {
 		return $this->project;
+	}
+	
+	public function __toString() {
+		return $this->user->getFirstname() . ' ' . $this->user->getLastname();
 	}
 
 }

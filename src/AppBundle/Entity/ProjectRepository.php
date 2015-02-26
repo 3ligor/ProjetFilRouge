@@ -19,13 +19,34 @@ class ProjectRepository extends EntityRepository {
 				->leftJoin('p.stages', 's')
 				->addSelect('s')
 				->leftJoin('p.userProjects', 'up')
-				->addSelect('up')
-				->leftJoin('p.leader', 'l')
-				->addSelect('l');
+				->addSelect('up');
 
 		return $query->getQuery()->getResult();
 	}
+	
+	public function findNewListeIndexProject(){
+		$query = $this->createQueryBuilder('p')
+				->leftJoin('p.userProjects', 'up')
+				->addSelect('up')
+				->where('p.status = 4')
+				->andWhere('p.startDate <= :date')
+				->setParameter('date', new \DateTime())
+				->setMaxResults(5)
+				->orderBy('p.creationDate', 'DESC');
 
+		return $query->getQuery()->getResult();
+	}
+	
+	public function findLastMemberListeIndexProject(){
+		$query = $this->createQueryBuilder('p')
+				->leftJoin('p.userProjects', 'up')
+				->addSelect('up')
+				->where('p.status = 4')
+				->orderBy('p.creationDate', 'DESC');
+
+		return $query->getQuery()->getResult();
+	}
+	
 	public function findProjectEager($id) {
 		$query = $this->createQueryBuilder('p')
 				->leftJoin('p.categories', 'c')
@@ -36,8 +57,6 @@ class ProjectRepository extends EntityRepository {
 				->addSelect('up')
 				->leftJoin('up.user', 'u')
 				->addSelect('u')
-				->leftJoin('p.leader', 'l')
-				->addSelect('l')
 				->where('p.id = :id')
 				->setParameter('id', $id);
 

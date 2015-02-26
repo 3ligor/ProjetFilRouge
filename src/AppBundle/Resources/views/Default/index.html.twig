@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="row">
-         <div class="col-lg-12">
+         <div class="col-sm-12">
              <table class="table table-bordered">
                 <tr>
                     <td><span class="glyphicon glyphicon-user"></span></td>
@@ -14,22 +14,37 @@
          </div>
     </div>
     <div class="row">	
-        <div class="col-lg-6">
+        <div class="col-sm-6">
             <h4>Les nouveaux projets</h4>
             <table class="table table-bordered">
+				
+				{% for project in fiveProject|slice(0,5) %}
+				
                 <tr>
-                    <td>Date</td>
-                    <td>Intitulé du projet</td>
+                    <td class="text-center"><strong>{{ project.startDate|date('d-m-Y')}}</strong></td>
+                    <td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
                 <tr>
+				</a>
+				{% endfor %}
+				
             </table>
         </div>
-        <div class="col-lg-6">
+        <div class="col-sm-6">
             <h4>Il ne manque plus que vous</h4>
             <table class="table table-bordered">
+				{% for project in fiveProject|slice(0,5) %}
+				{% set lastPlaces = project.maxMembers - ( project.userProjects | length + 1) %}
+				{% if lastPlaces > 0 %}
                 <tr>
-                    <td>Date</td>
-                    <td>Intitulé du projet</td>
+                    <td class="text-center"><span class="glyphicon glyphicon-user"></span> {{ lastPlaces|sort }}</td>
+                    <td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
                 <tr>
+				{% else %}
+					<td class="text-center"><span class="glyphicon glyphicon-user"></span></td>
+					<td>{{ 'Aucun projet ne nécessite de nouveaux colaborateurs'}}</td>
+					
+				{% endif %}
+					{% endfor %}
             </table>
         </div>
     </div>

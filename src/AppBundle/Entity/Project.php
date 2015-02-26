@@ -95,13 +95,6 @@ class Project {
 	private $categories;
 
 	/**
-	 * @var User
-	 * 
-	 * @ORM\ManyToOne(targetEntity="User", inversedBy="leadProjects")
-	 */
-	private $leader;
-
-	/**
 	 * @var array
 	 * 
 	 * @ORM\OneToMany(targetEntity="Stage", mappedBy="project", cascade={"persist"})
@@ -308,7 +301,7 @@ class Project {
 				$this->setStatus($this->getStatus() + 2);
 			}
 		} elseif ($status === 'archiver') {
-			if ($this->getStatus() === 1 && $this->getStatus() === 3 && $this->getStatus() === 5 && $this->getStatus() === 7 ) {
+			if ($this->getStatus() === 1 && $this->getStatus() === 3 && $this->getStatus() === 5 && $this->getStatus() === 7) {
 				$this->setStatus($this->getStatus() - 1);
 			} else {
 				$this->setStatus($this->getStatus() + 1);
@@ -389,27 +382,6 @@ class Project {
 	}
 
 	/**
-	 * Set leader
-	 *
-	 * @param User $leader
-	 * @return Project
-	 */
-	public function setLeader(User $leader = null) {
-		$this->leader = $leader;
-		$leader->addLeadProject($this);
-		return $this;
-	}
-
-	/**
-	 * Get leader
-	 *
-	 * @return User 
-	 */
-	public function getLeader() {
-		return $this->leader;
-	}
-
-	/**
 	 * Add stage
 	 *
 	 * @param Stage $stage
@@ -446,8 +418,19 @@ class Project {
 	 * @return Project
 	 */
 	public function addUserProject(\AppBundle\Entity\UserProject $userProjects) {
-		$this->userProjects[] = $userProjects;
-		return $this;
+		if (!$this->userExistsInProject($userProjects->getUser())) {			// On vérifie que l'utilisateur n'est pas déjà inscrit
+			$this->userProjects[] = $userProjects;								// d'une façon ou d'une autre dans le projet.
+			return $this;
+		}
+	}
+
+	private function userExistsInProject(User $user) {
+		foreach ($this->getUserProjects() as $userInProject) {
+			if ($user === $userInProject->getUser()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

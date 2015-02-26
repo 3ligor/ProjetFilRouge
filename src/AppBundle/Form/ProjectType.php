@@ -36,6 +36,12 @@ class ProjectType extends AbstractType {
 					'allow_delete' => true,
 					'by_reference' => false
 				))
+				->add('userProjects', 'collection', array(
+					'type' => new InviteType(),
+					'allow_add' => true,
+					'allow_delete' => true,
+					'by_reference' => false
+				))
 				->add('startDate', 'date', array(
 					'years' => range(date('Y') - 1, date('Y') + 50),
 				))

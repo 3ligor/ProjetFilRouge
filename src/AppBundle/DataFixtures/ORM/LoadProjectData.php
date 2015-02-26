@@ -130,7 +130,7 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 				->setStartDate(new \DateTime())
 				->setEndDate(new \DateTime())
 				->setCreationDate(new \DateTime())
-				->setMaxMembers(3)
+				->setMaxMembers(6)
 				->setStatus(4)
 				->addCategory($this->getReference('category3'))
 				->addSkill($this->getReference('skill7'))

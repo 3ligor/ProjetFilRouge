@@ -3,6 +3,7 @@
 	{{ parent() }}
 {% endblock %}
 {% block content %}
+	<h3>Ajouter un projet</h3>
 	<div class='row'>
 		<div class='col-xs-12'>
 			<div class='panel panel-default'>
@@ -11,9 +12,9 @@
 					{% for stage in form.stages %}
 						<div class='stage col-xs-6 col-sm-4 col-md-3'>
 							<div>
-							{{ form_row(stage.title) }}
-							{{ form_row(stage.volume) }}
-							{{ form_row(stage.status) }}
+								{{ form_row(stage.title) }}
+								{{ form_row(stage.volume) }}
+								{{ form_row(stage.status) }}
 							</div>
 						</div>
 					{% endfor %}
@@ -26,8 +27,20 @@
 			<div class='panel panel-default'>
 				<div  class='panel-heading'>Effectif</div>
 				<div class='panel-body'>
-					<ul class='list-group'>
-						Inviter
+					<ul class='list-group invite' data-prototype="{{ form_widget(form.userProjects.vars.prototype.children.user)|e }}<br />{{ form_widget(form.userProjects.vars.prototype.children.status)|e }} ">
+						<li class='list-group-item list-group-item-warning' data-toggle="tooltip" data-placement="top" title='Chef de Projet'>
+							<span class="glyphicon glyphicon-star"></span>
+							<strong>Pseudo</strong><br />
+							Prénom Nom
+						</li>
+						{% for userProject in form.userProjects %}
+							<li class="list-group-item invite">
+								<div class='form-group'>
+									{{ form_widget(userProject.user) }}<br />
+									{{ form_widget(userProject.status) }}
+								</div>
+							</li>
+						{% endfor %}
 					</ul>
 				</div>
 			</div>
@@ -66,23 +79,23 @@
 	{{ parent() }}
 	<script>
 		jQuery(document).ready(function () {
-			var collectionHolder = $('div.stages');
+			var collectionHolderStage = $('div.stages');
 			var $addStageLink = $('<div class="col-xs-6 col-sm-4 col-md-3 text-center"><a href="#" class="add_stage_link"><button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus"></span></button></a></div>');
 			var $newLinkDiv = $('<span></span>').append($addStageLink);
 
-			collectionHolder.append($newLinkDiv);
-			collectionHolder.find('div.stage').each(function () {
+			collectionHolderStage.append($newLinkDiv);
+			collectionHolderStage.find('div.stage').each(function () {
 				addStageFormDeleteLink($(this));
 			});
 
 			$addStageLink.on('click', function (e) {
 				e.preventDefault();
-				addStageForm(collectionHolder, $newLinkDiv);
+				addStageForm(collectionHolderStage, $newLinkDiv);
 			});
 
-			function addStageForm(collectionHolder, $newLinkDiv) {
-				var prototype = collectionHolder.attr('data-prototype');
-				var newForm = prototype.replace(/__name__/g, collectionHolder.children().length);
+			function addStageForm(collectionHolderStage, $newLinkDiv) {
+				var prototype = collectionHolderStage.attr('data-prototype');
+				var newForm = prototype.replace(/__name__/g, collectionHolderStage.children().length);
 				var $newFormDiv = $('<div class="stage col-xs-6 col-sm-4 col-md-3"></div>').append(newForm);
 				$newLinkDiv.before($newFormDiv);
 
@@ -96,6 +109,73 @@
 					e.preventDefault();
 					$stageFormDiv.remove();
 				});
+			}
+
+			var collectionHolderInvite = $('ul.invite');
+			var $addInviteLink = $('<a href="#" class="add_invite_link list-group-item"><button type="button" class="btn btn-primary">Ajouter une invitation</button></a>');
+			var $newLinkUl = $('<span></span>').append($addInviteLink);
+
+			collectionHolderInvite.append($newLinkUl);
+			collectionHolderInvite.find('li.invite').each(function () {
+				addInviteFormDeleteLink($(this));
+			});
+
+			$addInviteLink.on('click', function (e) {
+				e.preventDefault();
+				addInviteForm(collectionHolderInvite, $newLinkUl);
+			});
+
+			function addInviteForm(collectionHolderInvite, $newLinkUl) {
+				var prototype = collectionHolderInvite.attr('data-prototype');
+				var newForm = prototype.replace(/__name__/g, collectionHolderInvite.children().length);
+				var $newFormUl = $('<li class="invite list-group-item"></li>').append(newForm);
+				$newLinkUl.before($newFormUl);
+
+				addInviteFormDeleteLink($newFormUl);
+			}
+
+			function addInviteFormDeleteLink($inviteFormDiv) {
+				var $removeFormA = $('<a href="#"><span class="glyphicon glyphicon-remove"></span></a>');
+				$inviteFormDiv.append($removeFormA);
+				$removeFormA.on('click', function (e) {
+					e.preventDefault();
+					$inviteFormDiv.remove();
+				});
+			}
+
+			jQuery.expr[':'].regex = function (elem, index, match) {
+				var matchParams = match[3].split(','),
+						validLabels = /^(data|css):/,
+						attr = {
+							method: matchParams[0].match(validLabels) ?
+									matchParams[0].split(':')[0] : 'attr',
+							property: matchParams.shift().replace(validLabels, '')
+						},
+				regexFlags = 'ig',
+						regex = new RegExp(matchParams.join('').replace(/^s+|s+$/g, ''), regexFlags);
+				return regex.test(jQuery(elem)[attr.method](attr.property));
+			}
+
+
+			$(".invite select:regex(id, *_status)").each(function () {
+				changeLiColor(this);
+			});
+
+			$(".invite select:regex(id, *_status)").click(function (e) {
+				console.log(e);
+				changeLiColor(e.currentTarget);
+			});
+
+			function changeLiColor(node) {
+				if (node.value === '0') {
+					node.parentNode.parentNode.setAttribute('class', 'list-group-item list-group-item-danger');
+					} else if (node.value === '1') {
+					node.parentNode.parentNode.setAttribute('class', 'list-group-item list-group-item-info');
+				} else if (node.value === '2') {
+					node.parentNode.parentNode.setAttribute('class', 'list-group-item list-group-item-success');
+				} else if (node.value === '3') {
+					node.parentNode.parentNode.setAttribute('class', 'list-group-item');
+				}
 			}
 		});
 	</script>
