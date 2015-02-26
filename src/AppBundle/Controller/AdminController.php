@@ -60,7 +60,7 @@ class AdminController extends Controller {
 							$this->generateUrl('admin_project')
 			);
 		} else {
-			throw $this->createNotFoundException('Article N°' . $id . ' introuvable');
+			throw $this->createNotFoundException('Projet N°' . $id . ' introuvable');
 		}
 	}
 	
@@ -100,8 +100,19 @@ class AdminController extends Controller {
 	}
 	
 	public function deleteSkillAction($id) {
+		if ($id > 0) {
+			$em = $this->getDoctrine()
+					->getManager();
 
-		return $this->redirect(
-							$this->generateUrl('admin_skill'));
+			$skill = $em->getRepository('AppBundle:Skill')->find($id);
+			$em->remove($skill);
+			$em->flush();
+			
+			return $this->redirect(
+							$this->generateUrl('admin_skill')
+			);
+		} else {
+			throw $this->createNotFoundException('Skill N°' . $id . ' introuvable');
+		}
 	}
 }

@@ -40,13 +40,30 @@
 			{% if skill.parent == null %}
 				<div class="list-group col-lg-3">
 					<ul>
-						<li class="list-group-item active">{{ skill.title }}</li>
-							{% if skill.childs|length > 0 %}
-								{% for childSkill in skill.childs %}
+						<li class="list-group-item active">
+							<div class="row">
+								<div class="col-lg-9">{{ skill.title }}</div>
+								<div class="col-lg-3 text-right">
+									<span class="glyphicon glyphicon-edit small white"></span>
+									{% if skill.childs|length < 1 %}
+										<a href="{{path('admin_delete_skill',{'id' : skill.id })}}">
+											<span class="glyphicon glyphicon-remove small white"></span>
+										</a>
+									{% endif %}
+								</div>
+							</div>
+						</li>
+						{% if skill.childs|length > 0 %}
+							{% for childSkill in skill.childs %}
 								<li class="list-group-item">
 									<div class="row">
 										<div class="col-lg-9">{{ childSkill.title }}</div>
-										<div class="col-lg-3 text-right"><a href="{{path('admin_delete_skill',{'id','skill.id'})}}"><span class="glyphicon glyphicon-remove small"></span></div>
+										<div class="col-lg-3 text-right">
+											<span class="glyphicon glyphicon-edit text-primary small"></span>
+											<a href="{{path('admin_delete_skill',{'id' : childSkill.id })}}">
+												<span class="glyphicon glyphicon-remove small"></span>
+											</a>
+										</div>
 									</div>
 								</li>
 							{% endfor %}
@@ -56,6 +73,4 @@
 			{% endif %}		
 		{% endfor %}
 	</div>
-
 {% endblock content %}
-
