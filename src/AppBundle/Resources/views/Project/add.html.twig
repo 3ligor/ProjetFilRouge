@@ -3,6 +3,7 @@
 	{{ parent() }}
 {% endblock %}
 {% block content %}
+	{{ form_start(form) }}
 	<h3>Ajouter un projet</h3>
 	<div class='row'>
 		<div class='col-xs-12'>
@@ -46,7 +47,6 @@
 			</div>
 		</div>
 		<div class='col-sm-9'>
-			{{ form_start(form) }}
 			<div class='panel panel-default'>
 				<div class='panel-heading'>
 					{{ form_row(form.title) }}
@@ -59,6 +59,7 @@
 					<div class='panel-body'>
 						{{ form_row(form.maxMembers) }}
 						{{ form_row(form.categories) }}
+						{{ form_row(form.creationDate) }}
 						{{ form_row(form.startDate) }}
 						{{ form_row(form.endDate) }}
 						{{ form_row(form.Brouillon) }}
@@ -70,9 +71,10 @@
 					<button type="button" class="btn btn-primary btn-block"><strong>Sauvegarder le brouillon</strong></button>
 				</div>
 			</div>
-			{{ form_end(form) }}
+
 		</div>
 	</div>
+	{{ form_end(form) }}
 {% endblock content %}
 {% block javascripts %}
 	<script src="{{ asset('bundles/app/js/jquery-2.1.1.min.js') }}"></script>
@@ -112,7 +114,7 @@
 			}
 
 			var collectionHolderInvite = $('ul.invite');
-			var $addInviteLink = $('<a href="#" class="add_invite_link list-group-item"><button type="button" class="btn btn-primary">Ajouter une invitation</button></a>');
+			var $addInviteLink = $('<a href="#" class="add_invite_link list-group-item text-center"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></button></a>');
 			var $newLinkUl = $('<span></span>').append($addInviteLink);
 
 			collectionHolderInvite.append($newLinkUl);
@@ -158,23 +160,26 @@
 
 
 			$(".invite select:regex(id, *_status)").each(function () {
+				console.log('test');
 				changeLiColor(this);
 			});
 
 			$(".invite select:regex(id, *_status)").click(function (e) {
-				console.log(e);
+				console.log('test');
 				changeLiColor(e.currentTarget);
 			});
 
 			function changeLiColor(node) {
 				if (node.value === '0') {
 					node.parentNode.parentNode.setAttribute('class', 'list-group-item list-group-item-danger');
-					} else if (node.value === '1') {
+				} else if (node.value === '1') {
 					node.parentNode.parentNode.setAttribute('class', 'list-group-item list-group-item-info');
 				} else if (node.value === '2') {
 					node.parentNode.parentNode.setAttribute('class', 'list-group-item list-group-item-success');
 				} else if (node.value === '3') {
 					node.parentNode.parentNode.setAttribute('class', 'list-group-item');
+				} else if (node.value === '4') {
+					node.parentNode.parentNode.setAttribute('class', 'list-group-item list-group-item-warning');
 				}
 			}
 		});

@@ -42,11 +42,17 @@ class ProjectType extends AbstractType {
 					'allow_delete' => true,
 					'by_reference' => false
 				))
-				->add('startDate', 'date', array(
-					'years' => range(date('Y') - 1, date('Y') + 50),
+				->add('startDate', 'datetime', array(
+					'years' => range(date('Y') - 5, date('Y') + 50),
 				))
-				->add('endDate', 'date', array(
-					'years' => range(date('Y') - 1, date('Y') + 50)
+				->add('endDate', 'datetime', array(
+					'years' => range(date('Y') - 5, date('Y') + 50)
+				))
+				->add('creationDate', 'datetime', array(
+					'disabled' => true,
+				))
+				->add('status', 'hidden', array(
+					'data' => 0,
 				))
 				->add('Brouillon', 'submit')
 				->add('Valider', 'submit');

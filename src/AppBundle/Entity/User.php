@@ -147,7 +147,7 @@ class User {
      *
      * @var array
      * 
-     * @ORM\OneToMany(targetEntity="UserProject", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="UserProject", mappedBy="user", cascade={"persist"})
      */
     private $userProjects;
 

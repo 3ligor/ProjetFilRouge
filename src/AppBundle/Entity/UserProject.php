@@ -103,7 +103,6 @@ class UserProject {
 	 */
 	public function setProject(\AppBundle\Entity\Project $project = null) {
 		$this->project = $project;
-		$project->addUserProject($this);
 		return $this;
 	}
 

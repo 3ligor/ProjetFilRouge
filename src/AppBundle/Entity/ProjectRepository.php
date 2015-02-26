@@ -16,15 +16,17 @@ class ProjectRepository extends EntityRepository {
 		$query = $this->createQueryBuilder('p')
 				->leftJoin('p.categories', 'c')
 				->addSelect('c')
-				->leftJoin('p.stages', 's')
-				->addSelect('s')
+				->leftJoin('p.stages', 'st')
+				->addSelect('st')
 				->leftJoin('p.userProjects', 'up')
-				->addSelect('up');
+				->addSelect('up')
+				->leftJoin('p.skills', 'sk')
+				->addSelect('sk');
 
 		return $query->getQuery()->getResult();
 	}
-	
-	public function findNewListeIndexProject(){
+
+	public function findNewListeIndexProject() {
 		$query = $this->createQueryBuilder('p')
 				->leftJoin('p.userProjects', 'up')
 				->addSelect('up')
@@ -36,8 +38,8 @@ class ProjectRepository extends EntityRepository {
 
 		return $query->getQuery()->getResult();
 	}
-	
-	public function findLastMemberListeIndexProject(){
+
+	public function findLastMemberListeIndexProject() {
 		$query = $this->createQueryBuilder('p')
 				->leftJoin('p.userProjects', 'up')
 				->addSelect('up')
@@ -46,7 +48,7 @@ class ProjectRepository extends EntityRepository {
 
 		return $query->getQuery()->getResult();
 	}
-	
+
 	public function findProjectEager($id) {
 		$query = $this->createQueryBuilder('p')
 				->leftJoin('p.categories', 'c')

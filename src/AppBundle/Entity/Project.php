@@ -105,7 +105,7 @@ class Project {
 	 *
 	 * @var array
 	 * 
-	 * @ORM\OneToMany(targetEntity="UserProject", mappedBy="project")
+	 * @ORM\OneToMany(targetEntity="UserProject", mappedBy="project", cascade={"persist"})
 	 */
 	private $userProjects;
 
@@ -120,8 +120,8 @@ class Project {
 	 * Constructor
 	 */
 	public function __construct() {
+		$this->creationDate = new \DateTime();
 		$this->categories = new ArrayCollection();
-		$this->members = new ArrayCollection();
 		$this->stages = new ArrayCollection();
 		$this->userProjects = new ArrayCollection();
 		$this->skills = new ArrayCollection();
@@ -352,36 +352,6 @@ class Project {
 	}
 
 	/**
-	 * Add members
-	 *
-	 * @param User $members
-	 * @return Project
-	 */
-	public function addMember(User $members) {
-		$this->members[] = $members;
-		$members->addProject($this);
-		return $this;
-	}
-
-	/**
-	 * Remove members
-	 *
-	 * @param User $members
-	 */
-	public function removeMember(User $members) {
-		$this->members->removeElement($members);
-	}
-
-	/**
-	 * Get members
-	 *
-	 * @return Collection 
-	 */
-	public function getMembers() {
-		return $this->members;
-	}
-
-	/**
 	 * Add stage
 	 *
 	 * @param Stage $stage
@@ -391,6 +361,14 @@ class Project {
 		$this->stages[] = $stage;
 		$stage->setProject($this);
 		return $this;
+	}
+
+	public function setStages(ArrayCollection $stages) {
+		foreach ($stages as $stage) {
+			$stage->setProject($this);
+		}
+
+		$this->stages = $stages;
 	}
 
 	/**
@@ -418,10 +396,11 @@ class Project {
 	 * @return Project
 	 */
 	public function addUserProject(\AppBundle\Entity\UserProject $userProjects) {
-		if (!$this->userExistsInProject($userProjects->getUser())) {			// On vérifie que l'utilisateur n'est pas déjà inscrit
-			$this->userProjects[] = $userProjects;								// d'une façon ou d'une autre dans le projet.
-			return $this;
+		if (!$this->userExistsInProject($userProjects->getUser())) {   // On vérifie que l'utilisateur n'est pas déjà inscrit
+			$this->userProjects[] = $userProjects;		// d'une façon ou d'une autre dans le projet.
+			$userProjects->setProject($this);
 		}
+		return $this;
 	}
 
 	private function userExistsInProject(User $user) {

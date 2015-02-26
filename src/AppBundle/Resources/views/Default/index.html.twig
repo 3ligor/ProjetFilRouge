@@ -36,7 +36,7 @@
 				{% set lastPlaces = project.maxMembers - ( project.userProjects | length + 1) %}
 				{% if lastPlaces > 0 %}
                 <tr>
-                    <td class="text-center"><span class="glyphicon glyphicon-user"></span> {{ lastPlaces|sort }}</td>
+                    <td class="text-center"><span class="glyphicon glyphicon-user"></span> {{ lastPlaces }}</td>
                     <td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
                 <tr>
 				{% else %}
