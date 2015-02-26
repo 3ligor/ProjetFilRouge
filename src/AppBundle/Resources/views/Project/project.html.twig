@@ -78,7 +78,7 @@
 						{% endfor %}
 						{% for userProject in project.userProjects %}
 							{% if userProject.status == 2 %}
-								<a class='list-group-item list-group-item-info' href='#' data-toggle="tooltip" data-placement="top" title='Invitation'>
+								<a class='list-group-item list-group-item-info' href='#' data-toggle="tooltip" data-placement="top" title='Postulation'>
 									<strong>{{ userProject.user.pseudo }}</strong><br />
 									{{ userProject.user.firstname }} {{ userProject.user.lastname }}
 								</a>
@@ -86,7 +86,7 @@
 						{% endfor %}
 						{% for userProject in project.userProjects %}
 							{% if userProject.status == 1 %}
-								<a class='list-group-item list-group-item-success' href='#' data-toggle="tooltip" data-placement="top" title='Postulation'>
+								<a class='list-group-item list-group-item-success' href='#' data-toggle="tooltip" data-placement="top" title='Invitation'>
 									<strong>{{ userProject.user.pseudo }}</strong><br />
 									{{ userProject.user.firstname }} {{ userProject.user.lastname }}
 								</a>

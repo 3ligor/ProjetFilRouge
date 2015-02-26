@@ -35,3 +35,6 @@
 
 # nbProject
 /nbproject/*
+
+# web
+/web/*
