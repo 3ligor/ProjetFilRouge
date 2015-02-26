@@ -110,7 +110,7 @@ class LoadUserSkillData extends AbstractFixture implements OrderedFixtureInterfa
 		
 		$userSkill16->setValue('5')
 				->setSkill($this->getReference('skill12'))
-				->setUser($this->getReference('user1'));
+				->setUser($this->getReference('user3'));
 		
 		$userSkill17->setValue('-1')
 				->setSkill($this->getReference('skill2'))
