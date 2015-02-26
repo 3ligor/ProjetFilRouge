@@ -25,7 +25,30 @@ class ProjectRepository extends EntityRepository {
 
 		return $query->getQuery()->getResult();
 	}
+	
+	public function findNewListeIndexProject(){
+		$query = $this->createQueryBuilder('p')
+				->leftJoin('p.userProjects', 'up')
+				->addSelect('up')
+				->where('p.status = 4')
+				->andWhere('p.startDate <= :date')
+				->setParameter('date', new \DateTime())
+				->setMaxResults(5)
+				->orderBy('p.creationDate', 'DESC');
 
+		return $query->getQuery()->getResult();
+	}
+	
+	public function findLastMemberListeIndexProject(){
+		$query = $this->createQueryBuilder('p')
+				->leftJoin('p.userProjects', 'up')
+				->addSelect('up')
+				->where('p.status = 4')
+				->orderBy('p.creationDate', 'DESC');
+
+		return $query->getQuery()->getResult();
+	}
+	
 	public function findProjectEager($id) {
 		$query = $this->createQueryBuilder('p')
 				->leftJoin('p.categories', 'c')

@@ -5,7 +5,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Project;
 use AppBundle\Entity\Stage;
 use AppBundle\Form\ProjectType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ProjectController extends Controller {
@@ -19,6 +18,7 @@ class ProjectController extends Controller {
 					'projects' => $projects
 		));
 	}
+	
 
 	public function myProjectsAction() {
 		return $this->render('AppBundle:Project:myProjects.html.twig');
@@ -48,5 +48,6 @@ class ProjectController extends Controller {
 			'form' => $form->createView()
 		));
 	}
+
 
 }
