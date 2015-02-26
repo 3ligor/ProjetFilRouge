@@ -68,11 +68,11 @@
 							<div class="progress">
 								<div class="progress-bar 
 									 {% if project.getProgress.term <= 33 %}}
-										progress-bar-danger
+										 progress-bar-danger
 									 {% elseif project.getProgress.term <= 67%}
-										progress-bar-warning
+										 progress-bar-warning
 									 {% else %}
-										progress-bar-success
+										 progress-bar-success
 									 {% endif %}" 
 									 role="progressbar" 
 									 aria-valuenow="{{ project.getProgress.term }}" 
