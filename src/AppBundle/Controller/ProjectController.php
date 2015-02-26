@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Project;
 use AppBundle\Entity\Stage;
+use AppBundle\Entity\UserProject;
 use AppBundle\Form\ProjectType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -36,9 +37,16 @@ class ProjectController extends Controller {
 	}
 
 	public function addAction() {
+		//test
+		$repoUser = $this->getDoctrine()->getManager()->getRepository('AppBundle:User');
 		$stage1 = (new Stage())->setTitle('Blablo')->setVolume(32)->setStatus(true);
 		$stage2 = (new Stage())->setTitle('TesStage')->setVolume(12)->setStatus(false);
-		$project = (new Project())->addStage($stage1)->addStage($stage2);
+		$userProject1 = (new UserProject())->setUser($repoUser->find(2))->setStatus(1);
+		$userProject2 = (new UserProject())->setUser($repoUser->find(3))->setStatus(1);
+		$project = (new Project())->addStage($stage1)->addStage($stage2)
+				->addUserProject($userProject1)
+				->addUserProject($userProject2);
+		// /test
 
 		$form = $this->createForm(new ProjectType(), $project, array(
 			'action' => $this->generateUrl('project_add')

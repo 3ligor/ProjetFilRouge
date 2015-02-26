@@ -123,13 +123,6 @@ class User {
     private $available;
 
     /**
-     * @var array
-     * 
-     * @ORM\OneToMany(targetEntity="Project", mappedBy="leader")
-     */
-    private $leadProjects;
-
-    /**
      * @var Promo
      * 
      * @ORM\ManyToMany(targetEntity="Promo", inversedBy="users")
@@ -468,7 +461,6 @@ class User {
      */
     public function __construct() {
         $this->projects = new ArrayCollection();
-        $this->leadProjects = new ArrayCollection();
         $this->promo = new ArrayCollection();
         $this->userSkills = new ArrayCollection();
         $this->userProjects = new ArrayCollection();
@@ -521,35 +513,6 @@ class User {
      */
     public function getProjects() {
         return $this->projects;
-    }
-
-    /**
-     * Add leadProjects
-     *
-     * @param Project $leadProjects
-     * @return User
-     */
-    public function addLeadProject(Project $leadProjects) {
-        $this->leadProjects[] = $leadProjects;
-        return $this;
-    }
-
-    /**
-     * Remove leadProjects
-     *
-     * @param Project $leadProjects
-     */
-    public function removeLeadProject(Project $leadProjects) {
-        $this->leadProjects->removeElement($leadProjects);
-    }
-
-    /**
-     * Get leadProjects
-     *
-     * @return Collection 
-     */
-    public function getLeadProjects() {
-        return $this->leadProjects;
     }
 
     /**
@@ -685,7 +648,7 @@ class User {
     }
 
     public function __toString() {
-        return $this->username;
+        return $this->firstname . ' ' . $this->lastname;
     }
 
     /**
