@@ -17,35 +17,35 @@
         </div>
         <div class="col-sm-6 col-xs-6" id="profil">
 			<div class="text-right" id="updateProfil"><a href="{{ path('user_update', { id: user.id }) }}"><span class="glyphicon glyphicon-edit"></span> Modifier</a></div>
-
+			
+			{{ form_start(userform) }}  
+			
 			<dl class="dl-horizontal">
 				<dt>Prénom</dt>
 				<dd><div>{{ user.firstname }}</div></dd>
 				<dt>Nom</dt>
 				<dd>{{ user.lastname }}</dd>
 				<dt>Année de Naissance</dt>
-				<dd>{{ user.birthdate|date("Y") }} <input class="bootstrap-switch.bootstrap-switch-mini" type="checkbox" id="visibleBirthDate" checked data-size="mini"></dd>
+				<dd>{{ user.birthdate|date("Y") }}</dd>
 				<dt>Ville</dt>
-				<dd>{{ user.city }}</dd>
+				<dd>{{ form_widget(userform.city) }} </dd>
 				<dt>E-mail</dt>
-				<dd>{{ user.email }} <input class="bootstrap-switch.bootstrap-switch-mini" type="checkbox" id="visibleEmail" checked data-size="mini"></dd>
+				<dd>
+						{{ form_widget(userform.email) }}
+				</dd>
 				<dt>Téléphone</dt>
-				<dd>{{ user.tel }} <input class="bootstrap-switch.bootstrap-switch-mini" type="checkbox" id="visibleTel" checked data-size="mini"></dd>
+				<dd>
+						{{ form_widget(userform.tel) }}
+				</dd>
 				<dt>Promotion</dt>
 				<dd>
-					{% for promo in user.promo %}
-						{% if loop.revindex == 1 %}
-							{{ promo. title }} <br>
-						{% else %}
-							{{ promo. title }} -
-						{% endif %}
-					{% endfor %}
+					{{ form_widget(userform.promo) }}
 				</dd>
 				<dt>Disponibilité</dt>
 				<dd><input class="bootstrap-switch.bootstrap-switch-mini" type="checkbox" id="dispo" checked data-size="mini"></dd>
 			</dl>
-
-
+			{{ form_end(userform) }}
+				
         </div>
 
         <div class="col-sm-4 col-xs-6">

@@ -130,7 +130,7 @@ class User {
     private $leadProjects;
 
     /**
-     * @var Promo
+     * @var array
      * 
      * @ORM\ManyToMany(targetEntity="Promo", inversedBy="users")
      */
@@ -685,7 +685,7 @@ class User {
     }
 
     public function __toString() {
-        return $this->username;
+        return $this->city;
     }
 
     /**
