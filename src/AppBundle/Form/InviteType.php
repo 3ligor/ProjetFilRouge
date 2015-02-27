@@ -13,12 +13,18 @@ class InviteType extends AbstractType {
 	 * @param array $options
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options) {
-		$builder->add('user', 'text')
-				->add('volume', 'integer')
-				->add('status', 'checkbox', array(
-					'label' => 'Étape terminée',
-					'required'  => false,
-				));
+		$builder->add('user', 'entity', array(
+					'class' => 'AppBundle:User'
+				))
+				->add('status', 'choice', array(
+					'choices' => array(
+						'4' => 'Chef de projet',
+						'3' => 'Membre',
+						'2' => 'Candidat',
+						'1' => 'Invité',
+						'0' => 'Supprimer'
+					)
+		));
 	}
 
 	/**
@@ -26,7 +32,7 @@ class InviteType extends AbstractType {
 	 */
 	public function setDefaultOptions(OptionsResolverInterface $resolver) {
 		$resolver->setDefaults(array(
-			'data_class' => 'AppBundle\Entity\User'
+			'data_class' => 'AppBundle\Entity\UserProject'
 		));
 	}
 

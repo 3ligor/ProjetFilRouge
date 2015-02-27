@@ -51,14 +51,14 @@ class Skill {
 	/**
 	 * @var UserSkill
 	 * 
-	 * @ORM\OneToMany(targetEntity="UserSkill", mappedBy="skill")
+	 * @ORM\OneToMany(targetEntity="UserSkill", mappedBy="skill", cascade={"remove"})
 	 */
 	private $userSkills;
 
 	/**
 	 * @var array
 	 * 
-	 * @ORM\ManyToMany(targetEntity="Project", mappedBy="skills")
+	 * @ORM\ManyToMany(targetEntity="Project", mappedBy="skills", orphanRemoval=true )
 	 */
 	private $projects;
 

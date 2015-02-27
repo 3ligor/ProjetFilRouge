@@ -68,11 +68,11 @@
 							<div class="progress">
 								<div class="progress-bar 
 									 {% if project.getProgress.term <= 33 %}}
-										progress-bar-danger
+										 progress-bar-danger
 									 {% elseif project.getProgress.term <= 67%}
-										progress-bar-warning
+										 progress-bar-warning
 									 {% else %}
-										progress-bar-success
+										 progress-bar-success
 									 {% endif %}" 
 									 role="progressbar" 
 									 aria-valuenow="{{ project.getProgress.term }}" 
@@ -85,7 +85,7 @@
 						</td>
 						<td>{{ project.startDate.format('d-m-Y') }}</td>
 						<td>{{ project.endDate.format('d-m-Y') }}</td>
-						<td>{{ project.userProjects | length + 1 }}</td>
+						<td>{{ project.userProjects | length }}</td>
 					</tr>
 				{% endfor %}
 			</tbody>

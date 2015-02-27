@@ -56,14 +56,18 @@
 	<div class='row'>
 		<div class='col-sm-3'>
 			<div class='panel panel-default'>
-				<div  class='panel-heading'>Effectif</div>
+				<div  class='panel-heading'><strong>Effectif</strong></div>
 				<div class='panel-body'>
 					<ul class='list-group'>
-						<a class='list-group-item list-group-item-warning' href='#' data-toggle="tooltip" data-placement="top" title='Chef de Projet'>
+						{% for userProject in project.userProjects %}
+							{% if userProject.status == 4 %}
+								<a class='list-group-item list-group-item-warning' href='#' data-toggle="tooltip" data-placement="top" title='Chef de Projet'>
 							<span class="glyphicon glyphicon-star"></span>
-							<strong>{{ project.leader.pseudo }}</strong><br />
-							{{ project.leader.firstname }} {{ project.leader.lastname }}
-						</a>
+							<strong>{{ userProject.user.pseudo }}</strong><br />
+							{{ userProject.user.firstname }} {{ userProject.user.lastname }}
+								</a>
+							{% endif %}
+						{% endfor %}
 						{% for userProject in project.userProjects %}
 							{% if userProject.status == 3 %}
 								<a class='list-group-item' href='#' data-toggle="tooltip" data-placement="top" title='Membre'>
@@ -74,7 +78,7 @@
 						{% endfor %}
 						{% for userProject in project.userProjects %}
 							{% if userProject.status == 2 %}
-								<a class='list-group-item list-group-item-info' href='#' data-toggle="tooltip" data-placement="top" title='Invitation'>
+								<a class='list-group-item list-group-item-info' href='#' data-toggle="tooltip" data-placement="top" title='Postulation'>
 									<strong>{{ userProject.user.pseudo }}</strong><br />
 									{{ userProject.user.firstname }} {{ userProject.user.lastname }}
 								</a>
@@ -82,7 +86,7 @@
 						{% endfor %}
 						{% for userProject in project.userProjects %}
 							{% if userProject.status == 1 %}
-								<a class='list-group-item list-group-item-success' href='#' data-toggle="tooltip" data-placement="top" title='Postulation'>
+								<a class='list-group-item list-group-item-success' href='#' data-toggle="tooltip" data-placement="top" title='Invitation'>
 									<strong>{{ userProject.user.pseudo }}</strong><br />
 									{{ userProject.user.firstname }} {{ userProject.user.lastname }}
 								</a>
@@ -95,7 +99,7 @@
 		<div class='col-sm-9'>
 			<div class='panel panel-default'>
 				<div class='panel-heading'>
-					{{ project.title }}
+					<strong>{{ project.title }}</strong>
 				</div>
 				<div class='panel-body'>
 					{{ project.smallDescription }}

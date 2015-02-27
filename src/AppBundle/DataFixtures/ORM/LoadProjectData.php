@@ -35,11 +35,16 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 				->addSkill($this->getReference('skill19'))
 				->addSkill($this->getReference('skill12'))
 				->addSkill($this->getReference('skill15'))
+				->addUserProject($this->getReference('userProject2'))
+				->addUserProject($this->getReference('userProject13'))
+				->addUserProject($this->getReference('userProject38'))
+				->addUserProject($this->getReference('userProject40'))
+				->addUserProject($this->getReference('userProject49'))
 				->addStage($this->getReference('stage11'))
 				->addStage($this->getReference('stage12'))
 				->addStage($this->getReference('stage13'))
-				->addStage($this->getReference('stage14'))
-				->setLeader($this->getReference('user1'));
+				->addStage($this->getReference('stage14'));
+				
 
 		$project2 = new Project();
 		$project2->setTitle('Liste de contacts en Javascript')
@@ -55,12 +60,15 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 				->addSkill($this->getReference('skill24'))
 				->addSkill($this->getReference('skill21'))
 				->addSkill($this->getReference('skill1'))
+				->addUserProject($this->getReference('userProject41'))
+				->addUserProject($this->getReference('userProject39'))
+				->addUserProject($this->getReference('userProject20'))
+				->addUserProject($this->getReference('userProject4'))
 				->addStage($this->getReference('stage21'))
 				->addStage($this->getReference('stage22'))
 				->addStage($this->getReference('stage23'))
 				->addStage($this->getReference('stage24'))
-				->addStage($this->getReference('stage25'))
-				->setLeader($this->getReference('user2'));
+				->addStage($this->getReference('stage25'));
 
 		$project3 = new Project();
 		$project3->setTitle('Liste de contacts en HTML-CSS')
@@ -78,14 +86,18 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 				->addSkill($this->getReference('skill21'))
 				->addSkill($this->getReference('skill17'))
 				->addSkill($this->getReference('skill19'))
+				->addUserProject($this->getReference('userProject5'))
+				->addUserProject($this->getReference('userProject14'))
+				->addUserProject($this->getReference('userProject21'))
+				->addUserProject($this->getReference('userProject22'))
+				->addUserProject($this->getReference('userProject42'))
 				->addStage($this->getReference('stage31'))
 				->addStage($this->getReference('stage32'))
 				->addStage($this->getReference('stage33'))
 				->addStage($this->getReference('stage34'))
 				->addStage($this->getReference('stage35'))
 				->addStage($this->getReference('stage36'))
-				->addStage($this->getReference('stage37'))
-				->setLeader($this->getReference('user3'));
+				->addStage($this->getReference('stage37'));
 
 		$project4 = new Project();
 		$project4->setTitle('Liste de contacts en Java J2EE')
@@ -99,11 +111,15 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 				->addCategory($this->getReference('category1'))
 				->addSkill($this->getReference('skill18'))
 				->addSkill($this->getReference('skill11'))
+				->addUserProject($this->getReference('userProject6'))
+				->addUserProject($this->getReference('userProject10'))
+				->addUserProject($this->getReference('userProject23'))
+				->addUserProject($this->getReference('userProject25'))
+				->addUserProject($this->getReference('userProject43'))
 				->addStage($this->getReference('stage41'))
 				->addStage($this->getReference('stage42'))
 				->addStage($this->getReference('stage43'))
-				->addStage($this->getReference('stage44'))
-				->setLeader($this->getReference('user4'));
+				->addStage($this->getReference('stage44'));
 
 		$project5 = new Project();
 		$project5->setTitle('Liste de contacts C++')
@@ -119,13 +135,16 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 				->addSkill($this->getReference('skill15'))
 				->addSkill($this->getReference('skill16'))
 				->addSkill($this->getReference('skill19'))
+				->addUserProject($this->getReference('userProject24'))
+				->addUserProject($this->getReference('userProject26'))
+				->addUserProject($this->getReference('userProject29'))
+				->addUserProject($this->getReference('userProject44'))
 				->addStage($this->getReference('stage51'))
 				->addStage($this->getReference('stage52'))
 				->addStage($this->getReference('stage53'))
 				->addStage($this->getReference('stage54'))
 				->addStage($this->getReference('stage55'))
-				->addStage($this->getReference('stage56'))
-				->setLeader($this->getReference('user4'));
+				->addStage($this->getReference('stage56'));
 
 		$project6 = new Project();
 		$project6->setTitle('Liste de contacts en PHP et HTML-CSS')
@@ -143,6 +162,11 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 				->addSkill($this->getReference('skill15'))
 				->addSkill($this->getReference('skill5'))
 				->addSkill($this->getReference('skill3'))
+				->addUserProject($this->getReference('userProject11'))
+				->addUserProject($this->getReference('userProject27'))
+				->addUserProject($this->getReference('userProject30'))
+				->addUserProject($this->getReference('userProject34'))
+				->addUserProject($this->getReference('userProject45'))
 				->addStage($this->getReference('stage61'))
 				->addStage($this->getReference('stage62'))
 				->addStage($this->getReference('stage63'))
@@ -151,8 +175,7 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 				->addStage($this->getReference('stage66'))
 				->addStage($this->getReference('stage67'))
 				->addStage($this->getReference('stage68'))
-				->addStage($this->getReference('stage69'))
-				->setLeader($this->getReference('user1'));
+				->addStage($this->getReference('stage69'));
 
 		$project7 = new Project();
 		$project7->setTitle('Liste de contacts en Javascript et HTML')
@@ -168,11 +191,14 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 				->addSkill($this->getReference('skill1'))
 				->addSkill($this->getReference('skill2'))
 				->addSkill($this->getReference('skill3'))
+				->addUserProject($this->getReference('userProject28'))
+				->addUserProject($this->getReference('userProject31'))
+				->addUserProject($this->getReference('userProject35'))
+				->addUserProject($this->getReference('userProject46'))
 				->addStage($this->getReference('stage71'))
 				->addStage($this->getReference('stage72'))
 				->addStage($this->getReference('stage73'))
-				->addStage($this->getReference('stage74'))
-				->setLeader($this->getReference('user2'));
+				->addStage($this->getReference('stage74'));
 
 		$project8 = new Project();
 		$project8->setTitle('Liste de contacts en JAVA et PHP')
@@ -187,11 +213,14 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 				->addCategory($this->getReference('category3'))
 				->addSkill($this->getReference('skill16'))
 				->addSkill($this->getReference('skill19'))
+				->addUserProject($this->getReference('userProject36'))
+				->addUserProject($this->getReference('userProject7'))
+				->addUserProject($this->getReference('userProject32'))
+				->addUserProject($this->getReference('userProject47'))
 				->addStage($this->getReference('stage81'))
 				->addStage($this->getReference('stage82'))
 				->addStage($this->getReference('stage83'))
-				->addStage($this->getReference('stage84'))
-				->setLeader($this->getReference('user3'));
+				->addStage($this->getReference('stage84'));
 
 		$project9 = new Project();
 		$project9->setTitle('Liste de contacts en C++ et JAVA')
@@ -208,12 +237,16 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 				->addSkill($this->getReference('skill16'))
 				->addSkill($this->getReference('skill17'))
 				->addSkill($this->getReference('skill6'))
+				->addUserProject($this->getReference('userProject1'))
+				->addUserProject($this->getReference('userProject3'))
+				->addUserProject($this->getReference('userProject12'))
+				->addUserProject($this->getReference('userProject37'))
+				->addUserProject($this->getReference('userProject48'))
 				->addStage($this->getReference('stage91'))
 				->addStage($this->getReference('stage92'))
 				->addStage($this->getReference('stage93'))
 				->addStage($this->getReference('stage94'))
-				->addStage($this->getReference('stage95'))
-				->setLeader($this->getReference('user4'));
+				->addStage($this->getReference('stage95'));
 
 		$manager->persist($project1);
 		$manager->persist($project2);
@@ -226,20 +259,10 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
 		$manager->persist($project9);
 
 		$manager->flush();
-
-		$this->addReference('project1', $project1);
-		$this->addReference('project2', $project2);
-		$this->addReference('project3', $project3);
-		$this->addReference('project4', $project4);
-		$this->addReference('project5', $project5);
-		$this->addReference('project6', $project6);
-		$this->addReference('project7', $project7);
-		$this->addReference('project8', $project8);
-		$this->addReference('project9', $project9);
 	}
 
 	public function getOrder() {
-		return 8;
+		return 9;
 	}
 
 }
