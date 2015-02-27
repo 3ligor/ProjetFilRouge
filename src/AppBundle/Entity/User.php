@@ -235,26 +235,6 @@ class User {
     }
 
     /**
-     * Set birtdate
-     *
-     * @param DateTime $birtdate
-     * @return User
-     */
-    public function setBirtdate($birtdate) {
-        $this->birtdate = $birtdate;
-        return $this;
-    }
-
-    /**
-     * Get birtdate
-     *
-     * @return DateTime 
-     */
-    public function getBirtdate() {
-        return $this->birtdate;
-    }
-
-    /**
      * Set tel
      *
      * @param integer $tel
