@@ -46,6 +46,7 @@
 								<div class="col-lg-3 text-right">
 									<span class="glyphicon glyphicon-edit small white"></span>
 									{% if skill.childs|length < 1 %}
+										{#			EDIT BUTTON				#}
 										<a href="{{path('admin_delete_skill',{'id' : skill.id })}}">
 											<span class="glyphicon glyphicon-remove small white"></span>
 										</a>
@@ -57,9 +58,11 @@
 							{% for childSkill in skill.childs %}
 								<li class="list-group-item">
 									<div class="row">
-										<div class="col-lg-9">{{ childSkill.title }}</div>
+										<div id="title{{childSkill.id}}" class="col-lg-9">{{ childSkill.title }}</div>
 										<div class="col-lg-3 text-right">
-											<span class="glyphicon glyphicon-edit text-primary small"></span>
+											{#		EDIT BUTTON			#}
+											<a href="#"  id="{{childSkill.id}}" class="editskill"><span class="glyphicon glyphicon-edit text-primary small"></span></a>
+												{#      DELETE BUTTON		#}					
 											<a href="{{path('admin_delete_skill',{'id' : childSkill.id })}}">
 												<span class="glyphicon glyphicon-remove small"></span>
 											</a>
@@ -74,3 +77,13 @@
 		{% endfor %}
 	</div>
 {% endblock content %}
+{% block javascripts %}
+	{{ parent() }}
+	<script language="JavaScript">
+		$('.editskill').click(function() {
+			id = this.id;
+			content = $('#title'+id).html();
+			$('#title'+id).html('<input value="'+content+'"></input>');
+		});
+	</script>
+{% endblock %}
