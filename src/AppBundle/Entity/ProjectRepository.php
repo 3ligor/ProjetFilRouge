@@ -26,7 +26,7 @@ class ProjectRepository extends EntityRepository {
 		return $query->getQuery()->getResult();
 	}
 
-	public function findNewListeIndexProject() {
+	public function findNewListIndexProject() {
 		$query = $this->createQueryBuilder('p')
 				->leftJoin('p.userProjects', 'up')
 				->addSelect('up')
@@ -39,7 +39,7 @@ class ProjectRepository extends EntityRepository {
 		return $query->getQuery()->getResult();
 	}
 
-	public function findLastMemberListeIndexProject() {
+	public function findLastMemberListIndexProject() {
 		$query = $this->createQueryBuilder('p')
 				->leftJoin('p.userProjects', 'up')
 				->addSelect('up')

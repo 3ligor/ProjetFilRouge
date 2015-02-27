@@ -42,13 +42,13 @@ class ProjectType extends AbstractType {
 					'allow_delete' => true,
 					'by_reference' => false
 				))
-				->add('startDate', 'datetime', array(
+				->add('startDate', 'date', array(
 					'years' => range(date('Y') - 5, date('Y') + 50),
 				))
-				->add('endDate', 'datetime', array(
+				->add('endDate', 'date', array(
 					'years' => range(date('Y') - 5, date('Y') + 50)
 				))
-				->add('creationDate', 'datetime', array(
+				->add('creationDate', 'date', array(
 					'disabled' => true,
 				))
 				->add('status', 'hidden', array(

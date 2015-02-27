@@ -31,7 +31,7 @@ class Promo
 	/**
 	 * @var array
 	 * 
-	 * @ORM\ManyToMany(targetEntity="User", mappedBy="promo")
+	 * @ORM\ManyToMany(targetEntity="User", mappedBy="promo", cascade={"persist"})
 	 */
 	private $users;
 

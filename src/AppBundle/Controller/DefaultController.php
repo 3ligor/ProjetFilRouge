@@ -11,7 +11,7 @@ class DefaultController extends Controller {
 	public function indexAction() {
 		$em = $this->getDoctrine()->getManager();
 		$repoP = $em->getRepository('AppBundle:Project');
-		$fiveProject = $repoP->findNewListeIndexProject();
+		$fiveProject = $repoP->findNewListIndexProject();
 
 		return $this->render('AppBundle:Default:index.html.twig', array(
 					'fiveProject' => $fiveProject

@@ -123,7 +123,7 @@ class User {
     private $available;
 
     /**
-     * @var Promo
+     * @var array
      * 
      * @ORM\ManyToMany(targetEntity="Promo", inversedBy="users")
      */
@@ -232,26 +232,6 @@ class User {
      */
     public function getLastname() {
         return $this->lastname;
-    }
-
-    /**
-     * Set birtdate
-     *
-     * @param DateTime $birtdate
-     * @return User
-     */
-    public function setBirtdate($birtdate) {
-        $this->birtdate = $birtdate;
-        return $this;
-    }
-
-    /**
-     * Get birtdate
-     *
-     * @return DateTime 
-     */
-    public function getBirtdate() {
-        return $this->birtdate;
     }
 
     /**
