@@ -125,7 +125,7 @@ class User {
     /**
      * @var array
      * 
-     * @ORM\ManyToMany(targetEntity="Promo", inversedBy="users", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Promo", inversedBy="users")
      */
     private $promo;
 
@@ -139,7 +139,7 @@ class User {
     /**
      * @var array
      * 
-     * @ORM\OneToMany(targetEntity="UserSkill", mappedBy="user",  cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="UserSkill", mappedBy="user")
      */
     private $userSkills;
 
@@ -232,26 +232,6 @@ class User {
      */
     public function getLastname() {
         return $this->lastname;
-    }
-
-    /**
-     * Set birtdate
-     *
-     * @param DateTime $birtdate
-     * @return User
-     */
-    public function setBirtdate($birtdate) {
-        $this->birtdate = $birtdate;
-        return $this;
-    }
-
-    /**
-     * Get birtdate
-     *
-     * @return DateTime 
-     */
-    public function getBirtdate() {
-        return $this->birtdate;
     }
 
     /**
@@ -682,3 +662,4 @@ class User {
     }
 
 }
+
