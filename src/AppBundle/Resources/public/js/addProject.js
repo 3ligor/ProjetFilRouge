@@ -11,7 +11,7 @@ jQuery(document).ready(function () {
 				regex = new RegExp(matchParams.join('').replace(/^s+|s+$/g, ''), regexFlags);
 		return regex.test(jQuery(elem)[attr.method](attr.property));
 	};
-	
+
 	var collectionHolderStage = $('div.stages');
 	var $addStageLink = $('<div class="col-xs-6 col-sm-4 col-md-3 text-center"><a href="#" class="add_stage_link"><button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus"></span></button></a></div>');
 	var $newLinkDiv = $('<span></span>').append($addStageLink);
@@ -44,7 +44,7 @@ jQuery(document).ready(function () {
 		});
 	}
 
-	var collectionHolderInvite = $('ul.invite');
+	var collectionHolderInvite = $('ul.invites');
 	var $addInviteLink = $('<a href="#" class="add_invite_link list-group-item text-center"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></button></a>');
 	var $newLinkUl = $('<span></span>').append($addInviteLink);
 
@@ -76,13 +76,15 @@ jQuery(document).ready(function () {
 		});
 	}
 
-
-	$(".invite select:regex(id, *_status)").each(function () {
+	$(".invites select:regex(id, *_status)").each(function () {
 		changeLiColor(this);
 	});
 
-	$(".invite").click(function (e) {
-		changeLiColor(e.target);
+	$(".invites").click(function (e) {
+		var pattern = /_userProjects_[0-9]+_status/;
+		if (pattern.test(e.target.id)) {
+			changeLiColor(e.target);
+		}
 	});
 
 	function changeLiColor(node) {
@@ -99,7 +101,6 @@ jQuery(document).ready(function () {
 		}
 	}
 
-
 	$('.stages').keyup(function () {
 		totalStageVolume();
 	});
@@ -109,8 +110,10 @@ jQuery(document).ready(function () {
 		$(".stage input:regex(id, *_volume)").each(function () {
 			sum += +Math.abs($(this).val());
 		});
-		if (sum <= 100 && sum >= 0) {
+		if (sum < 100 && sum >= 0) {
 			$("#total").html(': <span class="label label-info">' + sum + '%');
+		} else if (sum === 100) {
+			$("#total").html(': <span class="label label-success">' + sum + '%</span>');
 		} else {
 			$("#total").html(': <span class="label label-danger">' + sum + '%</span>');
 		}
