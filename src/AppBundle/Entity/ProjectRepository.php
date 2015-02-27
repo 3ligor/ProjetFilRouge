@@ -53,12 +53,16 @@ class ProjectRepository extends EntityRepository {
 		$query = $this->createQueryBuilder('p')
 				->leftJoin('p.categories', 'c')
 				->addSelect('c')
-				->leftJoin('p.stages', 's')
-				->addSelect('s')
+				->leftJoin('p.stages', 'st')
+				->addSelect('st')
 				->leftJoin('p.userProjects', 'up')
 				->addSelect('up')
 				->leftJoin('up.user', 'u')
 				->addSelect('u')
+				->leftJoin('p.skills', 'sk')
+				->addSelect('sk')
+				->leftJoin('sk.parent', 'pa')
+				->addSelect('pa')
 				->where('p.id = :id')
 				->setParameter('id', $id);
 

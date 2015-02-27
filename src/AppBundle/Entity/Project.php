@@ -448,8 +448,19 @@ class Project {
 				$progress['left'] += $stage->getVolume();
 			}
 		}
-
+		
+		foreach ($progress as $ii => $cell) {
+			$progress[$ii] = round($cell/$this->getTotalStageVolume()*100, 1);
+		}
 		return $progress;
+	}
+	
+	public function getTotalStageVolume() {
+		$total = 0;
+		foreach ($this->getStages() as $stage) {
+			$total += $stage->getVolume();
+		}
+		return $total;
 	}
 
 	/**

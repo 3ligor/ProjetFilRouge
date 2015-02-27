@@ -12,7 +12,7 @@
 						{% for stage in project.stages %}
 							{% if stage.status %}
 								<div class="progress-bar progress-bar-success" 
-									 style="width: {{ stage.volume }}%" 
+									 style="width: {{ stage.getProjectRelativeVolume }}%" 
 									 data-toggle="tooltip" 
 									 data-placement="top"
 									 title='{{ stage.title }}'>
@@ -21,7 +21,7 @@
 							{% else %}
 								{% if firstFalse == false %}
 									<div class="progress-bar progress-bar-warning" 
-										 style="width: {{ stage.volume }}%"
+										 style="width: {{ stage.getProjectRelativeVolume }}%"
 										 data-toggle="tooltip" 
 										 data-placement="top"
 										 title='{{ stage.title }}'>
@@ -29,7 +29,7 @@
 									</div>
 								{% else %}
 									<div class="progress-bar progress-bar-danger" 
-										 style="width: {{ stage.volume }}%"
+										 style="width: {{ stage.getProjectRelativeVolume }}%"
 										 data-toggle="tooltip" 
 										 data-placement="top"
 										 title='{{ stage.title }}'>
@@ -61,7 +61,7 @@
 					<ul class='list-group'>
 						{% for userProject in project.userProjects %}
 							{% if userProject.status == 4 %}
-								<a class='list-group-item list-group-item-warning' href='#' data-toggle="tooltip" data-placement="top" title='Chef de Projet'>
+								<a class='list-group-item list-group-item-warning' href='{{ path('user_profile', {'id': userProject.user.id}) }}' data-toggle="tooltip" data-placement="top" title='Chef de Projet'>
 									<span class="glyphicon glyphicon-star"></span>
 									<strong>{{ userProject.user.pseudo }}</strong><br />
 									{{ userProject.user.firstname }} {{ userProject.user.lastname }}
@@ -70,7 +70,7 @@
 						{% endfor %}
 						{% for userProject in project.userProjects %}
 							{% if userProject.status == 3 %}
-								<a class='list-group-item' href='#' data-toggle="tooltip" data-placement="top" title='Membre'>
+								<a class='list-group-item' href='{{ path('user_profile', {'id': userProject.user.id}) }}' data-toggle="tooltip" data-placement="top" title='Membre'>
 									<strong>{{ userProject.user.pseudo }}</strong><br />
 									{{ userProject.user.firstname }} {{ userProject.user.lastname }}
 								</a>
@@ -78,7 +78,7 @@
 						{% endfor %}
 						{% for userProject in project.userProjects %}
 							{% if userProject.status == 2 %}
-								<a class='list-group-item list-group-item-info' href='#' data-toggle="tooltip" data-placement="top" title='Postulation'>
+								<a class='list-group-item list-group-item-info' href='{{ path('user_profile', {'id': userProject.user.id}) }}' data-toggle="tooltip" data-placement="top" title='Postulation'>
 									<strong>{{ userProject.user.pseudo }}</strong><br />
 									{{ userProject.user.firstname }} {{ userProject.user.lastname }}
 								</a>
@@ -86,7 +86,7 @@
 						{% endfor %}
 						{% for userProject in project.userProjects %}
 							{% if userProject.status == 1 %}
-								<a class='list-group-item list-group-item-success' href='#' data-toggle="tooltip" data-placement="top" title='Invitation'>
+								<a class='list-group-item list-group-item-success' href='{{ path('user_profile', {'id': userProject.user.id}) }}' data-toggle="tooltip" data-placement="top" title='Invitation'>
 									<strong>{{ userProject.user.pseudo }}</strong><br />
 									{{ userProject.user.firstname }} {{ userProject.user.lastname }}
 								</a>
@@ -104,7 +104,7 @@
 							<strong>{{ project.title }}</strong>
 						</div>
 						<div class='col-xs-2 text-right'>
-							<a href='#'><span class='glyphicon glyphicon-edit'></span> Modifier</a>
+							<a href='{{ path('project_update', {'id': project.id }) }}'><span class='glyphicon glyphicon-edit'></span> Modifier</a>
 						</div>
 					</div>
 				</div>
@@ -125,7 +125,14 @@
 		<div class='col-xs-12'>
 			<div class="panel panel-default">
 				<div class='panel-heading'>
-					Compétences recherchées
+					<div class='row'>
+						<div class='col-xs-10 text-left'>
+							<strong>Compétences recherchées</strong>
+						</div>
+						<div class='col-xs-2 text-right'>
+							<a href='#'><span class='glyphicon glyphicon-edit'></span> Modifier</a>
+						</div>
+					</div>
 				</div>
 				<div class='panel-body'>
 					{% for skill in project.skills %}

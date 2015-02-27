@@ -92,10 +92,11 @@ class Stage
      * @param integer $volume
      * @return stage
      */
-    public function setVolume($volume)
-    {
+    public function setVolume($volume) {
+		if ($volume < 0) {
+			$volume = abs($volume);
+		}
         $this->volume = $volume;
-
         return $this;
     }
 
@@ -109,6 +110,12 @@ class Stage
         return $this->volume;
     }
 
+	public function getProjectRelativeVolume() {
+		$this->getProject()->getTotalStageVolume();
+		
+		return $this->volume/$this->getProject()->getTotalStageVolume()*100;
+	}
+	
     /**
      * Set project
      *

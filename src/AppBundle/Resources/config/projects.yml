@@ -20,4 +20,4 @@ project_add:
     
 project_update:
     path: /update/{id}
-    defaults : { _controller: AppBundle:Project:udpate, id: -1}
+    defaults : { _controller: AppBundle:Project:update, id: -1}

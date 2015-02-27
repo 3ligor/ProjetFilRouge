@@ -27,8 +27,8 @@ class StageType extends AbstractType {
 				))
 				->add('status', 'checkbox', array(
 					'label' => 'Étape terminée',
-					'required'  => false,
-				));
+					'required' => false,
+		));
 	}
 
 	/**
