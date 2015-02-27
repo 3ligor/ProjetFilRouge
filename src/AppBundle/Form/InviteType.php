@@ -17,12 +17,12 @@ class InviteType extends AbstractType {
 					'class' => 'AppBundle:User'
 				))
 				->add('status', 'choice', array(
+					'data' => '3',
 					'choices' => array(
 						'4' => 'Chef de projet',
 						'3' => 'Membre',
 						'2' => 'Candidat',
 						'1' => 'Invité',
-						'0' => 'Supprimer'
 					)
 		));
 	}

@@ -62,9 +62,9 @@
 						{% for userProject in project.userProjects %}
 							{% if userProject.status == 4 %}
 								<a class='list-group-item list-group-item-warning' href='#' data-toggle="tooltip" data-placement="top" title='Chef de Projet'>
-							<span class="glyphicon glyphicon-star"></span>
-							<strong>{{ userProject.user.pseudo }}</strong><br />
-							{{ userProject.user.firstname }} {{ userProject.user.lastname }}
+									<span class="glyphicon glyphicon-star"></span>
+									<strong>{{ userProject.user.pseudo }}</strong><br />
+									{{ userProject.user.firstname }} {{ userProject.user.lastname }}
 								</a>
 							{% endif %}
 						{% endfor %}
@@ -99,7 +99,14 @@
 		<div class='col-sm-9'>
 			<div class='panel panel-default'>
 				<div class='panel-heading'>
-					<strong>{{ project.title }}</strong>
+					<div class='row'>
+						<div class='col-xs-10 text-left'>
+							<strong>{{ project.title }}</strong>
+						</div>
+						<div class='col-xs-2 text-right'>
+							<a href='#'><span class='glyphicon glyphicon-edit'></span> Modifier</a>
+						</div>
+					</div>
 				</div>
 				<div class='panel-body'>
 					{{ project.smallDescription }}

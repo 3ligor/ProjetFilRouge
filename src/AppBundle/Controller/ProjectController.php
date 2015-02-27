@@ -39,6 +39,8 @@ class ProjectController extends Controller {
 	public function addAction(Request $req) {
 		$em = $this->getDoctrine()->getManager();
 		$project = new Project();
+		$stage = (new Stage())->setTitle('titre')->setStatus(true)->setVolume(50);
+		$project->addStage($stage);
 		$form = $this->createForm(new ProjectType(), $project, array(
 			'action' => $this->generateUrl('project_add')
 		));

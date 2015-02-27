@@ -8,15 +8,13 @@
 	<div class='row'>
 		<div class='col-xs-12'>
 			<div class='panel panel-default'>
-				<div class='panel-heading'>Étapes</div>
-				<div class='panel-body stages' data-prototype="{{ form_widget(form.stages.vars.prototype)|e }}">
+				<div class='panel-heading'>Étapes <span id='total'></span></div>
+				<div class='panel-body stages' data-prototype="{{ form_widget(form.stages.vars.prototype.children.title)|e }}<br />{{ form_widget(form.stages.vars.prototype.children.volume)|e }}{{ form_widget(form.stages.vars.prototype.children.status)|e }}">
 					{% for stage in form.stages %}
 						<div class='stage col-xs-6 col-sm-4 col-md-3'>
-							<div>
-								{{ form_row(stage.title) }}
-								{{ form_row(stage.volume) }}
-								{{ form_row(stage.status) }}
-							</div>
+							{{ form_widget(stage.title) }}<br />
+							{{ form_widget(stage.volume) }}
+							{{ form_widget(stage.status) }}
 						</div>
 					{% endfor %}
 				</div>
@@ -110,7 +108,7 @@
 			}
 
 			function addStageFormDeleteLink($stageFormDiv) {
-				var $removeFormA = $('<a href="#"><span class="glyphicon glyphicon-remove"></span></a>');
+				var $removeFormA = $('<a href="#"><button type="button" class="btn btn-default btn-xs btn-block"><span class="glyphicon glyphicon-remove"></span></button></a><hr />');
 				$stageFormDiv.append($removeFormA);
 				$removeFormA.on('click', function (e) {
 					e.preventDefault();
@@ -142,7 +140,7 @@
 			}
 
 			function addInviteFormDeleteLink($inviteFormDiv) {
-				var $removeFormA = $('<a href="#"><span class="glyphicon glyphicon-remove"></span></a>');
+				var $removeFormA = $('<br /><a href="#"><button type="button" class="btn btn-default btn-xs btn-block"><span class="glyphicon glyphicon-remove"></span></button></a>');
 				$inviteFormDiv.append($removeFormA);
 				$removeFormA.on('click', function (e) {
 					e.preventDefault();
@@ -161,8 +159,7 @@
 				regexFlags = 'ig',
 						regex = new RegExp(matchParams.join('').replace(/^s+|s+$/g, ''), regexFlags);
 				return regex.test(jQuery(elem)[attr.method](attr.property));
-			}
-
+			};
 
 			$(".invite select:regex(id, *_status)").each(function () {
 				console.log('test');
@@ -187,6 +184,20 @@
 					node.parentNode.parentNode.setAttribute('class', 'list-group-item list-group-item-warning');
 				}
 			}
+
+
+			$('.stages').keyup(function () {
+				totalStageVolume();
+			});
+
+			(totalStageVolume = function() {
+				var sum = 0;
+				$(".stage input:regex(id, *_volume)").each(function () {
+					sum += +$(this).val();
+				});
+				$("#total").text(': ' + sum + '%');
+			})();
+
 		});
 	</script>
 {% endblock javascripts %}
