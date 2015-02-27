@@ -13,8 +13,18 @@ class StageType extends AbstractType {
 	 * @param array $options
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options) {
-		$builder->add('title', 'text')
-				->add('volume', 'integer')
+		$builder->add('title', 'text', array(
+					'attr' => array(
+						'class' => 'input-sm',
+						'placeholder' => 'Intitulé'
+					)
+				))
+				->add('volume', 'integer', array(
+					'attr' => array(
+						'class' => 'input-sm',
+						'placeholder' => '%'
+					)
+				))
 				->add('status', 'checkbox', array(
 					'label' => 'Étape terminée',
 					'required'  => false,

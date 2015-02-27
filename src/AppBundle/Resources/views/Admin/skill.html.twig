@@ -41,11 +41,15 @@
 				<div class="list-group col-lg-3">
 					<ul>
 						<li class="list-group-item active">
-							<div class="row">
-								<div class="col-lg-9">{{ skill.title }}</div>
-								<div class="col-lg-3 text-right">
-									<span class="glyphicon glyphicon-edit small white"></span>
+							<div class="row category">
+								<div id="title{{skill.id}}" class="col-lg-8">{{ skill.title }}</div>
+								<div id="cat-buttons{{skill.id}}" class="col-lg-4 text-right">
+									{#		EDIT CATEGORY BUTTON							#}
+									<a href="" enable="true" class="editskillbtn " id="{{skill.id}}">
+										<span class="glyphicon glyphicon-edit small white"></span>
+									</a>
 									{% if skill.childs|length < 1 %}
+										{#			DELETE CATEGORY BUTTON				#}
 										<a href="{{path('admin_delete_skill',{'id' : skill.id })}}">
 											<span class="glyphicon glyphicon-remove small white"></span>
 										</a>
@@ -56,10 +60,12 @@
 						{% if skill.childs|length > 0 %}
 							{% for childSkill in skill.childs %}
 								<li class="list-group-item">
-									<div class="row">
-										<div class="col-lg-9">{{ childSkill.title }}</div>
-										<div class="col-lg-3 text-right">
-											<span class="glyphicon glyphicon-edit text-primary small"></span>
+									<div class="row skill{{childSkill.id}}">
+										<div id="title{{childSkill.id}}" class="col-lg-8">{{ childSkill.title }}</div>
+										<div class="col-lg-4 text-right">
+											{#		EDIT BUTTON			#}
+											<a href="" enable="true" class="editskillbtn " id="{{childSkill.id}}"><span class="glyphicon glyphicon-edit small"></span></a>
+												{#      DELETE BUTTON		#}					
 											<a href="{{path('admin_delete_skill',{'id' : childSkill.id })}}">
 												<span class="glyphicon glyphicon-remove small"></span>
 											</a>
@@ -74,3 +80,33 @@
 		{% endfor %}
 	</div>
 {% endblock content %}
+{% block javascripts %}
+	{{ parent() }}
+	<script language="JavaScript">
+
+		$('.editskillbtn').click(function (e) {
+			e.preventDefault();
+			// Get the id of the current ahref
+			id = this.id;
+			// Save the content of the div "title" with the same id of the ahref
+			content = $('#title' + id).html();
+			// If the ahref has the attribut "enable" to true
+			if ($(this).attr('enable') === "true") {
+		{# Replace the content of the div by an input and a validate button into a form #}
+					$('.row .skill' + id).html(
+							'<div class="col-lg-12">' + '<form class="form">' + '<div class="input-group">' + '<input class="form-control" value="' + content + '"></input>' + '<span class="input-group-btn">' + '<button class="btn btn-primary" type="submit">Valider</button></div></span>' + '</form></div>'
+							);
+					// Disable all the others editing skill button 
+					$('.category .editskillbtn').each(function () {
+						console.log($(this).attr('enable'));
+						$(this).attr('enable', 'false');
+					});
+					// Disable all the others editing category button
+					$('.skill-list .editskillbtn').each(function () {
+						$(this).attr('enable', 'false');
+					});
+				}
+				;
+			});
+	</script>
+{% endblock %}
