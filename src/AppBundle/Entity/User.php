@@ -123,7 +123,7 @@ class User {
     private $available;
 
     /**
-     * @var Promo
+     * @var array
      * 
      * @ORM\ManyToMany(targetEntity="Promo", inversedBy="users")
      */

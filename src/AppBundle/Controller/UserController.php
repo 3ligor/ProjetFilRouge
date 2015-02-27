@@ -2,7 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller {
 
@@ -32,4 +34,32 @@ class UserController extends Controller {
         ));
     }
 
+	public function updateAction($id, Request $req){
+		
+		$em = $this->getDoctrine()->getManager();
+        $repoUser =  $em->getRepository('AppBundle:User');
+
+        $oneUser = $repoUser->findOneUserEager($id);
+
+        $form = $this->createForm(new UserType(), $oneUser, array(
+            'action' => $this->generateUrl('user_update')
+        ));
+
+        $form->handleRequest($req); //permet d'ajouter les valeurs 
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+       
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('user_update'));
+        }
+
+        return $this->render('AppBundle:User:update.html.twig', array(
+                    'userform' => $form->createView(),
+					'user' => $oneUser,
+        ));
+	
+	}
+	
 }
