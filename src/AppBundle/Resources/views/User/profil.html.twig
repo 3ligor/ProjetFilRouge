@@ -23,14 +23,15 @@
 				<dd><div>{{ user.firstname }}</div></dd>
 				<dt>Nom</dt>
 				<dd>{{ user.lastname }}</dd>
-				<dt>Année de Naissance</dt>
-				<dd>{{ user.birthdate|date("Y") }} <input class="bootstrap-switch.bootstrap-switch-mini" type="checkbox" id="visibleBirthDate" checked data-size="mini"></dd>
-				<dt>Ville</dt>
-				<dd>{{ user.city }}</dd>
-				<dt>E-mail</dt>
-				<dd>{{ user.email }} <input class="bootstrap-switch.bootstrap-switch-mini" type="checkbox" id="visibleEmail" checked data-size="mini"></dd>
-				<dt>Téléphone</dt>
-				<dd>{{ user.tel }} <input class="bootstrap-switch.bootstrap-switch-mini" type="checkbox" id="visibleTel" checked data-size="mini"></dd>
+				<dt>Pseudo</dt>
+				<dd><div>{{ user.pseudo }}</div></dd>
+				{% set age = "now"|date("Y") - user.birthDate|date('Y')%}
+				
+				
+				{{ user.publicBirthdate == 1 ? ('<dt>Age </dt><dd>' ~ age ~ ' ans </dd>')|raw : "" }}
+				{{ user.publicCity == 1 ? ('<dt>Ville</dt><dd>' ~ user.city ~ '</dd>')|raw : "" }}
+				{{ user.publicCity == 1 ? ('<dt>E-mail</dt><dd>'~user.email~'</dd>')|raw : "" }}
+				{{ user.publicCity == 1 ? ('<dt>Téléphone</dt><dd>'~user.tel~'</dd>')|raw : "" }}
 				<dt>Promotion</dt>
 				<dd>
 					{% for promo in user.promo %}
@@ -42,7 +43,7 @@
 					{% endfor %}
 				</dd>
 				<dt>Disponibilité</dt>
-				<dd><input class="bootstrap-switch.bootstrap-switch-mini" type="checkbox" id="dispo" checked data-size="mini"></dd>
+				<dd>{{ user.available == 1 ? "Oui" : "Non" }}</dd>
 			</dl>
 
 
@@ -99,7 +100,7 @@
     <hr>
 
     <div class="row">
-		<div class="text-right"><a href="#"><span class="glyphicon glyphicon-edit"></span></a></div>
+		<div class="text-right" id="updateSkill"><a href="#"><span class="glyphicon glyphicon-edit"></span> Modifier</a></div>
 		{%for userSkill in user.userSkills %}
 
 			{% if userSkill.skill.parent == null %}
@@ -115,7 +116,7 @@
 
 							{% if childSkill.existInUser(user) %}
 
-								<li class='list-group-item'>
+								<li class='list-group-item visible'>
 									<div class="row">
 										<div class="col-xs-6">{{ childSkill.title }}</div>
 
@@ -138,7 +139,13 @@
 										</div>
 									</div>
 								</li>
-
+								
+							{% else %}	
+								<li id="panel" class='list-group-item hidden'>
+									<div class="row">
+										<div class="col-xs-6">{{ childSkill.title }}</div>
+									</div>
+								</li>
 
 							{% endif%}
 						{% endfor %}
@@ -156,10 +163,17 @@
     <script src='{{ asset('bundles/app/js/jquery-2.1.1.js') }}'></script>
     <script src='{{ asset('bundles/app/js/bootstrap.min.js') }}'></script>
     <script src='{{ asset('bundles/app/js/bootstrap-switch.min.js') }}'></script>
-    <script type="text/javascript">
-		$('#dispo').bootstrapSwitch();
-		$('#visibleTel').bootstrapSwitch();
-		$('#visibleEmail').bootstrapSwitch();
-		$('#visibleBirthDate').bootstrapSwitch();
-    </script>
+	
+	<script>
+	
+	$('#updateSkill').click(function(){
+		
+		$('#panel').removeClass('hidden').addClass('visible');
+		
+	});
+	
+		
+		
+	</script>
+
 {% endblock %}

@@ -125,7 +125,7 @@ class User {
     /**
      * @var array
      * 
-     * @ORM\ManyToMany(targetEntity="Promo", inversedBy="users")
+     * @ORM\ManyToMany(targetEntity="Promo", inversedBy="users", cascade={"persist"})
      */
     private $promo;
 
@@ -139,7 +139,7 @@ class User {
     /**
      * @var array
      * 
-     * @ORM\OneToMany(targetEntity="UserSkill", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="UserSkill", mappedBy="user",  cascade={"persist"})
      */
     private $userSkills;
 

@@ -12,11 +12,9 @@
 			<div class="text-right"><a href="#"><span class="glyphicon glyphicon-edit"></span></a></div>
 			<img src="{{ user.image.url }}"  alt="{{ user.image.alt }}" class="img-thumbnail "/><br>
 
-
-
         </div>
         <div class="col-sm-6 col-xs-6" id="profil">
-			<div class="text-right" id="updateProfil"><a href="{{ path('user_update', { id: user.id }) }}"><span class="glyphicon glyphicon-edit"></span> Modifier</a></div>
+			
 			
 			{{ form_start(userform) }}  
 			
@@ -25,24 +23,32 @@
 				<dd><div>{{ user.firstname }}</div></dd>
 				<dt>Nom</dt>
 				<dd>{{ user.lastname }}</dd>
+				<dt>Pseudo</dt>
+				<dd><div>{{ user.pseudo }}</div></dd>
 				<dt>Année de Naissance</dt>
-				<dd>{{ user.birthdate|date("Y") }}</dd>
+				<dd>{{ user.birthdate|date("Y") }} 
+					{{ form_widget(userform.publicBirthdate) }} 
+				</dd>
 				<dt>Ville</dt>
-				<dd>{{ form_widget(userform.city) }} </dd>
+				<dd>{{ form_widget(userform.city) }}
+					{{ form_widget(userform.publicCity) }}
+				</dd>
 				<dt>E-mail</dt>
 				<dd>
-						{{ form_widget(userform.email) }}
+						{{ form_widget(userform.email) }} 
+						{{ form_widget(userform.publicMail) }} 
 				</dd>
 				<dt>Téléphone</dt>
 				<dd>
 						{{ form_widget(userform.tel) }}
+						{{ form_widget(userform.publicTel) }} 
 				</dd>
 				<dt>Promotion</dt>
 				<dd>
-					{{ form_widget(userform.promo) }}
+						{{ form_widget(userform.promo) }}
 				</dd>
 				<dt>Disponibilité</dt>
-				<dd><input class="bootstrap-switch.bootstrap-switch-mini" type="checkbox" id="dispo" checked data-size="mini"></dd>
+				<dd>	{{ form_widget(userform.available)}}</dd>
 			</dl>
 			{{ form_end(userform) }}
 				
@@ -99,7 +105,8 @@
     <hr>
 
     <div class="row">
-		<div class="text-right"><a href="#"><span class="glyphicon glyphicon-edit"></span></a></div>
+		
+
 		{%for userSkill in user.userSkills %}
 
 			{% if userSkill.skill.parent == null %}

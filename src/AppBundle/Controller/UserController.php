@@ -3,8 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Form\UserType;
+use AppBundle\Form\UserEditSkillType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Entity\User;
+
 
 class UserController extends Controller {
 
@@ -34,32 +37,45 @@ class UserController extends Controller {
         ));
     }
 
-	public function updateAction($id, Request $req){
-		
-		$em = $this->getDoctrine()->getManager();
-        $repoUser =  $em->getRepository('AppBundle:User');
-
-        $oneUser = $repoUser->findOneUserEager($id);
-
-        $form = $this->createForm(new UserType(), $oneUser, array(
-            'action' => $this->generateUrl('user_update')
+	public function updateProfilAction(User $user, Request $req){
+        $form = $this->createForm(new UserType(), $user, array(
+            'action' => $this->generateUrl('user_update', array('id'=> $user->getId() ))
         ));
 
         $form->handleRequest($req); //permet d'ajouter les valeurs 
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-       
             $em->flush();
-
-            return $this->redirect($this->generateUrl('user_update'));
+            return $this->redirect($this->generateUrl('user_profile', array('id'=> $user->getId() )));
         }
 
         return $this->render('AppBundle:User:update.html.twig', array(
                     'userform' => $form->createView(),
-					'user' => $oneUser,
+					'user' => $user,
         ));
 	
 	}
 	
+	public function updateSkillProfilAction(User $user, Request $req){
+        $form = $this->createForm(new UserEditSkillType(), $user, array(
+            'action' => $this->generateUrl('user_updateskill', array('id'=> $user->getId() ))
+        ));
+
+        $form->handleRequest($req); //permet d'ajouter les valeurs 
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            return $this->redirect($this->generateUrl('user_profile', array('id'=> $user->getId() )));
+        }
+
+        return $this->render('AppBundle:User:updateSkillProfil.html.twig', array(
+                    'userSkillForm' => $form->createView(),
+					'user' => $user,
+        ));
+	
+	
+	
+	}
 }
