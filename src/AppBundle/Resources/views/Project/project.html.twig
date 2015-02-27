@@ -130,29 +130,86 @@
 							<strong>Compétences recherchées</strong>
 						</div>
 						<div class='col-xs-2 text-right'>
-							<a href='#'><span class='glyphicon glyphicon-edit'></span> Modifier</a>
+							<a href='#' id="editSkillButton"><span class='glyphicon glyphicon-edit'></span> Modifier</a>
 						</div>
 					</div>
 				</div>
-				<div class='panel-body'>
-					{% for skill in project.skills %}
-						{% if skill.parent == null %}
-							<div class='col-xs-6 col-sm-4 col-md-3'>
-								<ul class="list-group">
-									<li class="list-group-item active">
-										{{ skill.title }}
-									</li>
-									{% if skill.childs|length > 0 %}
-										{% for childSkill in skill.childs %}
-											{% if childSkill.existInProject(project) %}
-												<li class="list-group-item">
-													{{ childSkill.title }}
+				<div id='skillContainer' class='panel-body view'>
+					{% for skill in skills %}
+						{% if skill.parent == null%}
+							{% if skill.existInProject(project) %}
+								<div class='col-xs-6 col-sm-4 col-md-3'>
+									<ul class="list-group">
+										<li class="list-group-item projectSkill active">{#
+											#}{{ skill.title }}{#
+										#}</li>
+											{% if skill.childs|length > 0 %}
+												{% for childSkill in skill.childs %}
+													{% if childSkill.existInProject(project) %}
+													<li class="list-group-item projectSkill activeSkill visible">
+														<div class='row'>
+															<div class='col-xs-7'>
+																{{ childSkill.title }}
+															</div>
+															<div class='col-xs-5 text-right'>
+																<a href='#' role='button' class='addSkill'>
+																	<span id='skillCtrl' class="glyphicon glyphicon-plus hidden"></span>
+																</a>
+																<a href='#' role='button' class='addSkill'>
+																	<span id='skillCtrl' class="glyphicon glyphicon-minus hidden"></span>
+																</a>
+															</div>
+														</div>
+													</li>
+												{% else %}
+													<li class="list-group-item projectSkill inactiveSkill hidden">
+														<div class='row'>
+															<div class='col-xs-7'>
+																{{ childSkill.title }}
+															</div>
+															<div class='col-xs-5 text-right'>
+																<a href='#' role='button' class='addSkill'>
+																	<span id='skillCtrl' class="glyphicon glyphicon-plus hidden"></span>
+																</a>
+																<a href='#' role='button' class='addSkill'>
+																	<span id='skillCtrl' class="glyphicon glyphicon-minus hidden"></span>
+																</a>
+															</div>
+														</div>
+													</li>
+												{% endif %}
+											{% endfor %}
+										{% endif %}
+									</ul>
+								</div>
+							{% else %}
+								<div class='col-xs-6 col-sm-4 col-md-3 inactiveSkill hidden'>
+									<ul class="list-group">
+										<li class="list-group-item active inactiveSkill hidden">{#
+											#}{{ skill.title }}{#
+										#}</li>
+											{% if skill.childs|length > 0 %}
+												{% for childSkill in skill.childs %}
+												<li class="list-group-item projectSkill inactiveSkill hidden">
+														<div class='row'>
+															<div class='col-xs-7'>
+																{{ childSkill.title }}
+															</div>
+															<div class='col-xs-5 text-right'>
+																<a href='#' role='button' class='addSkill'>
+																	<span id='skillCtrl' class="glyphicon glyphicon-plus hidden"></span>
+																</a>
+																<a href='#' role='button' class='addSkill'>
+																	<span id='skillCtrl' class="glyphicon glyphicon-minus hidden"></span>
+																</a>
+															</div>
+														</div>
 												</li>
+												{% endfor %}
 											{% endif %}
-										{% endfor %}
-									{% endif %}
-								</ul>
-							</div>
+									</ul>
+								</div>
+							{% endif %}
 						{% endif %}
 					{% endfor %}
 				</div>
@@ -163,11 +220,5 @@
 {% block javascripts %}
 	<script src='{{ asset('bundles/app/js/jquery-2.1.1.min.js') }}'></script>
 	{{ parent() }}
-	<script>
-		$(document).ready(function ($) {
-			$('[data-toggle="tooltip"]').tooltip({
-				animated: 'fade'
-			});
-		});
-	</script>
+	<script src='{{ asset('bundles/app/js/projectDetail.js') }}'></script>
 {% endblock %}

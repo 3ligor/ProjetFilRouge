@@ -3,12 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Project;
-use AppBundle\Entity\Stage;
-use AppBundle\Entity\UserProject;
 use AppBundle\Form\ProjectType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProjectController extends Controller {
 
@@ -29,11 +28,14 @@ class ProjectController extends Controller {
 	public function detailAction($id) {
 		$em = $this->getDoctrine()->getManager();
 		$repoP = $em->getRepository('AppBundle:Project');
+		$repoS = $em->getRepository('AppBundle:Skill');
 		$project = $repoP->findProjectEager($id);
+		$skills = $repoS->findAll();
 
 
 		return $this->render('AppBundle:Project:project.html.twig', array(
-					'project' => $project
+					'project' => $project,
+					'skills' => $skills
 		));
 	}
 
@@ -87,7 +89,7 @@ class ProjectController extends Controller {
 
 		$form->handleRequest($req);
 		if ($form->isValid()) {
-			
+
 			// On supprime les étapes ayant été supprimé du projet
 			foreach ($originalStages as $stage) {
 				if ($project->getStages()->contains($stage) == false) {
@@ -95,7 +97,7 @@ class ProjectController extends Controller {
 					$em->persist($stage);
 				}
 			}
-			
+
 			// On supprime les user ayant été supprimé du projet
 			foreach ($originalUserProjects as $userProject) {
 				if ($project->getUserProjects()->contains($userProject) == false) {
@@ -103,7 +105,7 @@ class ProjectController extends Controller {
 					$em->persist($userProject);
 				}
 			}
-			
+
 			// On vérifie que le projet possède au moins un leader
 			$hasLeader = false;
 			foreach ($project->getUserProjects() as $userProject) {
@@ -117,8 +119,8 @@ class ProjectController extends Controller {
 							'message' => 'Votre projet ne possède pas de chef de projet.'
 				));
 			}
-			
-			
+
+
 			$em->persist($project);
 
 			$em->flush();
@@ -133,6 +135,42 @@ class ProjectController extends Controller {
 		return $this->render('AppBundle:Project:add.html.twig', array(
 					'form' => $form->createView()
 		));
+	}
+
+	public function removeProjectSkillAction($projectid, $skillid) {
+		$em = $this->getDoctrine()->getManager();
+		$repoP = $em->getRepository('AppBundle:Project');
+		$repoS = $em->getRepository('AppBundle:Skill');
+
+		$project = $repoP->find($projectid);
+		$skill = $repoS->find($skillid);
+
+		$project->removeSkill($skill);
+
+		$em->flush();
+
+		$response = new Response(json_encode(array('status' => 'ok')));
+		$response->headers->set('Content-Type', 'application/json');
+		
+		return $response;
+	}
+
+	public function addProjectSkillAction($projectid, $skillid) {
+		$em = $this->getDoctrine()->getManager();
+		$repoP = $em->getRepository('AppBundle:Project');
+		$repoS = $em->getRepository('AppBundle:Skill');
+
+		$project = $repoP->find($projectid);
+		$skill = $repoS->find($skillid);
+		
+		$project->addSkill($skill);
+
+		$em->flush();
+
+		$response = new Response(json_encode(array('status' => 'ok')));
+		$response->headers->set('Content-Type', 'application/json');
+		
+		return $response;
 	}
 
 }

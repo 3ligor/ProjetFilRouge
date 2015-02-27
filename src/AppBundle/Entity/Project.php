@@ -478,10 +478,11 @@ class Project {
 	/**
 	 * Remove skills
 	 *
-	 * @param \AppBundle\Entity\Skill $skills
+	 * @param \AppBundle\Entity\Skill $skill
 	 */
-	public function removeSkill(\AppBundle\Entity\Skill $skills) {
-		$this->skills->removeElement($skills);
+	public function removeSkill(\AppBundle\Entity\Skill $skill) {
+		$this->skills->removeElement($skill);
+		$skill->removeProject($this);		
 	}
 
 	/**

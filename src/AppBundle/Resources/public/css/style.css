@@ -29,3 +29,15 @@
 .white {
 	color: #fff;
 }
+
+div.edit li.activeSkill {
+	background-color: rgba(100, 250, 50, 0.5);
+}
+
+div.edit li.inactiveSkill {
+	background-color: rgba(250, 100, 50, 0.5);
+}
+
+.active {
+	background-color: #337ab7 !important;
+}
