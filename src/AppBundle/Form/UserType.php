@@ -13,23 +13,29 @@ class UserType extends AbstractType {
 	 * @param array $options
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options) {
-		$builder->add('pseudo','hidden')
-				->add('firstname','hidden')
-				->add('lastname','hidden')
-				->add('birthdate','hidden')
-				->add('publicMail','hidden')
-				->add('publicMail','hidden')
-				->add('publicCity','hidden')
-				->add('publicTel','hidden')
-				->add('publicBirthdate','hidden')
-				->add('password','hidden')
-				->add('active','hidden')
-				->add('available','hidden')
-				->add('image','hidden')
-				->add('userSkills','hidden')
-				->add('userProjects','hidden')
-				->add('salt','hidden')
-				->add('roles','hidden')
+		
+			$builder->add('publicMail', 'checkbox', array(
+				 'label'     => 'Afficher publiquement ?',
+				 'required'  => false,
+				))
+				->add('publicCity', 'checkbox', array(
+				 'label'     => 'Afficher publiquement ?',
+				 'required'  => false,
+				))
+				->add('publicTel', 'checkbox', array(
+				 'label'     => 'Afficher publiquement ?',
+				 'required'  => false,
+				))
+				->add('publicBirthdate', 'checkbox', array(
+				 'label'     => 'Afficher publiquement ?',
+				 'required'  => false,
+				))
+				->add('available', 'choice', array(
+					'choices'   => array(
+						'1'   => 'Oui',
+						'0' => 'Non',
+				 ),
+				))
 				->add('city', 'text')
 				->add('email', 'text')
 				->add('tel', 'text')
@@ -37,9 +43,8 @@ class UserType extends AbstractType {
                     'class'=>'AppBundle:Promo',
                     'property'=>'title', 
 					'multiple'=>'true',
-                   ))
-				->add('Modifier','submit');
-				
+                ))
+				->add('Modifier','submit');	
 	}
 
 	/**

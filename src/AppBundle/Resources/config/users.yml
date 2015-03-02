@@ -12,4 +12,8 @@ user_profile:
         
 user_update:
     path: /update/{id}
-    defaults: { _controller: AppBundle:User:update, id: -1 }
+    defaults: { _controller: AppBundle:User:updateProfil, id: -1 }
+
+user_updateskill:
+    path: /updateSkill/{id}
+    defaults: { _controller: AppBundle:User:updateSkillProfil, id: -1 }
