@@ -81,6 +81,8 @@ jQuery(document).ready(function () {
 		node.parent().children().each(function(data) {
 			if ($(this).hasClass(cssClass)) {
 				cpt++;
+				
+				// A changer
 				if (cpt === 2) {
 					check = true;
 				}
