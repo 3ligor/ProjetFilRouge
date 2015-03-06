@@ -58,7 +58,7 @@ class Skill {
 	/**
 	 * @var array
 	 * 
-	 * @ORM\ManyToMany(targetEntity="Project", mappedBy="skills", orphanRemoval=true )
+	 * @ORM\ManyToMany(targetEntity="Project", mappedBy="skills")
 	 */
 	private $projects;
 
@@ -119,6 +119,14 @@ class Skill {
 	 */
 	public function getParent() {
 		return $this->parent;
+	}
+	
+	public function hasParent() {
+		if ($this->getParent()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -188,17 +196,16 @@ class Skill {
 	 */
 	public function addProject(Project $projects) {
 		$this->projects[] = $projects;
-
 		return $this;
 	}
 
 	/**
-	 * Remove projects
+	 * Remove project
 	 *
-	 * @param Project $projects
+	 * @param Project $project
 	 */
-	public function removeProject(Project $projects) {
-		$this->projects->removeElement($projects);
+	public function removeProject(Project $project) {
+		$this->projects->removeElement($project);
 	}
 
 	/**

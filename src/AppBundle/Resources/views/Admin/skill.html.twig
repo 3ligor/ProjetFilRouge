@@ -1,5 +1,4 @@
 {% extends "AppBundle::layout.html.twig" %}
-
 {% block content %}
 	{% include "AppBundle:Admin:menuAdmin.html.twig" with {'default' : 'skill'}%}
 	<div class="row">
@@ -41,11 +40,12 @@
 				<div class="list-group col-lg-3">
 					<ul>
 						<li class="list-group-item active">
-							<div class="row category">
-								<div id="title{{skill.id}}" class="col-lg-8">{{ skill.title }}</div>
-								<div id="cat-buttons{{skill.id}}" class="col-lg-4 text-right">
+							{#		DIV DISPLAY						#}
+							<div class="row category" id="displaySkill{{ skill.id }}">
+								<div id="title{{ skill.id }}" class="col-lg-8">{{ skill.title }}</div>
+								<div id="cat-buttons{{ skill.id }}" class="col-lg-4 text-right">
 									{#		EDIT CATEGORY BUTTON							#}
-									<a href="" enable="true" class="editskillbtn " id="{{skill.id}}">
+									<a href="" enable="true" class="editskillbtn" id="{{ skill.id }}">
 										<span class="glyphicon glyphicon-edit small white"></span>
 									</a>
 									{% if skill.childs|length < 1 %}
@@ -56,21 +56,45 @@
 									{% endif %}
 								</div>
 							</div>
+							{#		DIV EDITING								#}
+							<div id="editSkill{{ skill.id }}" class="hidden">
+								<form class="form" action="Javascript:saveEditSkill({{ skill.id }})">
+									<div class="input-group">
+										<input class="form-control" id="skillName{{ skill.id }}" value="">
+										<span class="input-group-btn">
+											<button class="btn btn-primary" id="save" type="submit">Valider</button>
+										</span>
+									</div>
+								</form>
+							</div>
 						</li>
 						{% if skill.childs|length > 0 %}
 							{% for childSkill in skill.childs %}
 								<li class="list-group-item">
-									<div class="row skill{{childSkill.id}}">
+									{#			DIV DISPLAY						#}
+									<div class="row skill-list" id="displaySkill{{childSkill.id}}">
 										<div id="title{{childSkill.id}}" class="col-lg-8">{{ childSkill.title }}</div>
 										<div class="col-lg-4 text-right">
 											{#		EDIT BUTTON			#}
 											<a href="" enable="true" class="editskillbtn " id="{{childSkill.id}}"><span class="glyphicon glyphicon-edit small"></span></a>
-												{#      DELETE BUTTON		#}					
+												{#      DELETE BUTTON		#}				
 											<a href="{{path('admin_delete_skill',{'id' : childSkill.id })}}">
 												<span class="glyphicon glyphicon-remove small"></span>
 											</a>
 										</div>
 									</div>
+									{#			DIV EDITING								#}
+									<div id="editSkill{{childSkill.id}}" class="hidden">
+										<form class="form" action="Javascript:saveEditSkill({{childSkill.id}})">
+											<div class="input-group">
+												<input class="form-control" id="skillName{{childSkill.id}}" value="">
+												<span class="input-group-btn">
+													<button class="btn btn-primary" id="save" type="submit">Valider</button>
+												</span>
+											</div>
+										</form>
+									</div>
+
 								</li>
 							{% endfor %}
 						{% endif %}
@@ -83,30 +107,56 @@
 {% block javascripts %}
 	{{ parent() }}
 	<script language="JavaScript">
-
 		$('.editskillbtn').click(function (e) {
+
+
 			e.preventDefault();
-			// Get the id of the current ahref
-			id = this.id;
-			// Save the content of the div "title" with the same id of the ahref
-			content = $('#title' + id).html();
-			// If the ahref has the attribut "enable" to true
+			//	Get the id of the current ahref
+			var id = this.id;
+			//	Save the content of the div "title" with the same id of the ahref
+			var content = $('#title' + id).html();
+			//	If the ahref has the attribut "enable" to true
 			if ($(this).attr('enable') === "true") {
-		{# Replace the content of the div by an input and a validate button into a form #}
-					$('.row .skill' + id).html(
-							'<div class="col-lg-12">' + '<form class="form">' + '<div class="input-group">' + '<input class="form-control" value="' + content + '"></input>' + '<span class="input-group-btn">' + '<button class="btn btn-primary" type="submit">Valider</button></div></span>' + '</form></div>'
-							);
-					// Disable all the others editing skill button 
-					$('.category .editskillbtn').each(function () {
-						console.log($(this).attr('enable'));
-						$(this).attr('enable', 'false');
-					});
-					// Disable all the others editing category button
-					$('.skill-list .editskillbtn').each(function () {
-						$(this).attr('enable', 'false');
-					});
-				}
-				;
+				// Add the hidden attribute to the div i want to hide
+				$('#displaySkill' + id).attr('class', 'hidden');
+				// Replace the "hidden" attribute by "row" to the div i want to show
+				$('#editSkill' + id).attr('class', 'row');
+				// Give the previous content to the input
+				$('#editSkill' + id + ' #skillName' + id).val(content);
+				//	Disable all the others editing skill button
+				$('.category .editskillbtn').each(function () {
+					$(this).attr('enable', 'false');
+				});
+				//	Disable all the others editing category button
+				$('.skill-list .editskillbtn').each(function () {
+					$(this).attr('enable', 'false');
+				});
+			}
+		});
+
+		function saveEditSkill(id) {
+			var that = this;
+			var skillName = $('#skillName' + id).val();
+			var id = id;
+			$.ajax({
+				url: "{{ path('admin_update_skill') }}",
+				type: 'POST',
+				data: {title: skillName, id: id}
+			}).done(function (data) {
+				// Replace the "hidden" attribute by "row" to the div i want to show
+				$('#displaySkill' + id).attr('class', 'row');
+				$('#title' + id).html(skillName);
+				// Add the hidden attribute to the div i want to hide
+				$('#editSkill' + id).attr('class', 'hidden');
+				//	Disable all the others editing skill button
+				$('.category .editskillbtn').each(function () {
+					$(this).attr('enable', 'true');
+				});
+				//	Disable all the others editing category button
+				$('.skill-list .editskillbtn').each(function () {
+					$(this).attr('enable', 'true');
+				});
 			});
+		}
 	</script>
-{% endblock %}
+{% endblock javascripts %}
