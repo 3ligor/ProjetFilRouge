@@ -392,12 +392,12 @@ class Project {
 	/**
 	 * Add userProjects
 	 *
-	 * @param \AppBundle\Entity\UserProject $userProjects
+	 * @param UserProject $userProjects
 	 * @return Project
 	 */
-	public function addUserProject(\AppBundle\Entity\UserProject $userProjects) {
+	public function addUserProject(UserProject $userProjects) {
 		if (!$this->userExistsInProject($userProjects->getUser())) {   // On vérifie que l'utilisateur n'est pas déjà inscrit
-			$this->userProjects[] = $userProjects;		// d'une façon ou d'une autre dans le projet.
+			$this->userProjects[] = $userProjects;  // d'une façon ou d'une autre dans le projet.
 			$userProjects->setProject($this);
 		}
 		return $this;
@@ -415,16 +415,16 @@ class Project {
 	/**
 	 * Remove userProjects
 	 *
-	 * @param \AppBundle\Entity\UserProject $userProjects
+	 * @param UserProject $userProjects
 	 */
-	public function removeUserProject(\AppBundle\Entity\UserProject $userProjects) {
+	public function removeUserProject(UserProject $userProjects) {
 		$this->userProjects->removeElement($userProjects);
 	}
 
 	/**
 	 * Get userProjects
 	 *
-	 * @return \Doctrine\Common\Collections\Collection 
+	 * @return Collection 
 	 */
 	public function getUserProjects() {
 		return $this->userProjects;
@@ -448,13 +448,13 @@ class Project {
 				$progress['left'] += $stage->getVolume();
 			}
 		}
-		
+
 		foreach ($progress as $ii => $cell) {
-			$progress[$ii] = round($cell/$this->getTotalStageVolume()*100, 1);
+			$progress[$ii] = round($cell / $this->getTotalStageVolume() * 100, 1);
 		}
 		return $progress;
 	}
-	
+
 	public function getTotalStageVolume() {
 		$total = 0;
 		foreach ($this->getStages() as $stage) {
@@ -464,31 +464,43 @@ class Project {
 	}
 
 	/**
-	 * Add skills
+	 * Add skill
 	 *
-	 * @param \AppBundle\Entity\Skill $skills
+	 * @param Skill $skill
 	 * @return Project
 	 */
-	public function addSkill(\AppBundle\Entity\Skill $skills) {
-		$this->skills[] = $skills;
-		$skills->addProject($this);
+	public function addSkill(Skill $skill) {
+		if ($skill->hasParent() && !$skill->getParent()->existInProject($this)) {
+			$this->addSkill($skill->getParent());
+		}
+		$this->skills[] = $skill;
+		$skill->addProject($this);
 		return $this;
 	}
 
 	/**
 	 * Remove skills
 	 *
-	 * @param \AppBundle\Entity\Skill $skill
+	 * @param Skill $skill
 	 */
-	public function removeSkill(\AppBundle\Entity\Skill $skill) {
+	public function removeSkill(Skill $skill) {
 		$this->skills->removeElement($skill);
-		$skill->removeProject($this);		
+		$skill->removeProject($this);
+		
+		if ($skill->hasParent()) {
+			foreach ($skill->getParent()->getChilds() as $child) {
+				if (!$child->existInProject($this)) {
+					$this->removeSkill($skill->getParent());
+					break;
+				}
+			}
+		}
 	}
 
 	/**
 	 * Get skills
 	 *
-	 * @return \Doctrine\Common\Collections\Collection 
+	 * @return Collection 
 	 */
 	public function getSkills() {
 		return $this->skills;

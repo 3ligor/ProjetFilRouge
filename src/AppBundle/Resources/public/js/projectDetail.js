@@ -21,22 +21,46 @@ jQuery(document).ready(function () {
 	$('#editSkillButton').click(function (e) {
 		e.preventDefault();
 		if (state === 'edit') {													// Générer l'affichage de vue
-			state = 'view';
-			$('.inactiveSkill').each(function () {
-				$(this).removeClass('visible').addClass('hidden');
-			});
-			$('#skillContainer').addClass('view').removeClass('edit');
-			$('span#skillCtrl').addClass('hidden').removeClass('visible');
+			location.reload();
+//			state = 'view';
+//			$('.inactiveSkill').each(function () {
+//				$(this).removeClass('visible').addClass('hidden');
+//			});
+//			$('#skillContainer').addClass('view').removeClass('edit');
+//			$('span.skillCtrl').addClass('hidden').removeClass('visible');
 		} else if (state === 'view') {											// Générer l'affichage d'édition
 			state = 'edit';
 			$('.inactiveSkill').each(function () {
 				$(this).removeClass('hidden').addClass('visible');
 			});
 			$('#skillContainer').addClass('edit').removeClass('view');
-			$('span#skillCtrl').addClass('visible').removeClass('hidden');
+			$('span.skillCtrl').addClass('visible').removeClass('hidden');
 		}
+	});
 
+	// add/delete skill event Action
+	$('span.skillCtrl').click(function (e) {
+		e.preventDefault();
 
+		var li = $(this).parent().parent().parent().parent();
+		var id = li.attr('id');
+		var type = $(this).hasClass('glyphicon-plus');
 
+		$.ajax({
+			url: ajaxPath,
+			type: 'POST',
+			data: {type: type, skillId: id, projectId: projectId}
+		}).done(function (data) {
+			if (data.status === 'added') {
+				console.log('In added condition');
+				li.removeClass('inactiveSkill').addClass('activeSkill');
+			} else if (data.status === 'removed') {
+				console.log('In removed condition');
+				li.addClass('inactiveSkill').removeClass('activeSkill');
+			}
+			console.log(data.status);
+		}).fail(function (data) {
+			console.log(data);
+		});
 	});
 });
