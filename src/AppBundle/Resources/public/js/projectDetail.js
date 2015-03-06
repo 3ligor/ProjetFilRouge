@@ -52,13 +52,10 @@ jQuery(document).ready(function () {
 			data: {type: type, skillId: id, projectId: projectId}
 		}).done(function (data) {
 			if (data.status === 'added') {
-				console.log('In added condition');
 				li.removeClass('inactiveSkill').addClass('activeSkill');
 			} else if (data.status === 'removed') {
-				console.log('In removed condition');
 				li.addClass('inactiveSkill').removeClass('activeSkill');
 			}
-			console.log(data.status);
 		}).fail(function (data) {
 			console.log(data);
 		});
