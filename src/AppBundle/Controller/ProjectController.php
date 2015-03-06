@@ -30,7 +30,7 @@ class ProjectController extends Controller {
 		$repoP = $em->getRepository('AppBundle:Project');
 		$repoS = $em->getRepository('AppBundle:Skill');
 		$project = $repoP->findProjectEager($id);
-		$skills = $repoS->findAll();
+		$skills = $repoS->getSkillsWithChilds();
 
 
 		return $this->render('AppBundle:Project:project.html.twig', array(
@@ -137,39 +137,29 @@ class ProjectController extends Controller {
 		));
 	}
 
-	public function removeProjectSkillAction($projectid, $skillid) {
+	public function editProjectSkillAction(Request $req) {
 		$em = $this->getDoctrine()->getManager();
 		$repoP = $em->getRepository('AppBundle:Project');
 		$repoS = $em->getRepository('AppBundle:Skill');
 
-		$project = $repoP->find($projectid);
-		$skill = $repoS->find($skillid);
+		$project = $repoP->find($req->request->get('projectId'));
+		$skill = $repoS->find($req->request->get('skillId'));
+		$check = ($req->request->get('type') === 'true' ? true : false);
 
-		$project->removeSkill($skill);
-
-		$em->flush();
-
-		$response = new Response(json_encode(array('status' => 'ok')));
-		$response->headers->set('Content-Type', 'application/json');
-		
-		return $response;
-	}
-
-	public function addProjectSkillAction($projectid, $skillid) {
-		$em = $this->getDoctrine()->getManager();
-		$repoP = $em->getRepository('AppBundle:Project');
-		$repoS = $em->getRepository('AppBundle:Skill');
-
-		$project = $repoP->find($projectid);
-		$skill = $repoS->find($skillid);
-		
-		$project->addSkill($skill);
+		if ($skill->existInProject($project) && $check) {
+			$response = new Response(json_encode(array('status' => "Can't add skill : already exists")));
+		} elseif (!$skill->existInProject($project) && !$check) {
+			$response = new Response(json_encode(array('status' => "Can't remove skill : doesn't exists")));
+		} elseif ($check) {
+			$project->addSkill($skill);
+			$response = new Response(json_encode(array('status' => 'added')));
+		} else {
+			$project->removeSkill($skill);
+			$response = new Response(json_encode(array('status' => 'removed')));
+		}
 
 		$em->flush();
-
-		$response = new Response(json_encode(array('status' => 'ok')));
 		$response->headers->set('Content-Type', 'application/json');
-		
 		return $response;
 	}
 

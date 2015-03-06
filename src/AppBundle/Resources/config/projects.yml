@@ -21,3 +21,9 @@ project_add:
 project_update:
     path: /update/{id}
     defaults : { _controller: AppBundle:Project:update, id: -1}
+    
+project_editSkill:
+    path: /editSkill
+    defaults : { _controller: AppBundle:Project:editProjectSkill}
+    requirements:
+        _method:  POST
