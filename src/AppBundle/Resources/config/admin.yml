@@ -33,3 +33,9 @@ admin_delete_skill:
     defaults: { _controller: AppBundle:Admin:deleteSkill }
     requirements:
         id: \d+
+        
+admin_update_skill:
+    path:	/update_skill
+    defaults: { _controller: AppBundle:Admin:updateSkill }
+    requirements:
+         _method: POST

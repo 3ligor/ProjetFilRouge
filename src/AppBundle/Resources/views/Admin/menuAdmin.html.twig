@@ -1,15 +1,12 @@
-{% block content %}
-	{% block menuAdmin %}
-		<div class="row">
-			<ul class="nav nav-tabs">
-				<li role="presentation" {{ default=="index" ? 'class="active"' }}><a href="{{ path('admin_home') }}">Statistiques</a></li>
-				<li role="presentation" {{ default=="project" ? 'class="active"' }}><a href="{{ path('admin_project') }}">Projets</a></li>
-				<li role="presentation" {{ default=="user" ? 'class="active"' }}><a href="{{ path('admin_user') }}">Utilisateurs</a></li>
-				<li role="presentation" {{ default=="skill" ? 'class="active"' }}><a href="{{ path('admin_skill') }}">Compétences</a></li>
-				<li role="presentation" {{ default=="import" ? 'class="active"' }}><a href="{{ path('admin_import') }}">Importation</a></li>
-			</ul>
-		</div>
-		<br/>
-	{% endblock menuAdmin %}
-{% endblock content %}
-
+{% block menuAdmin %}
+	<div class="row">
+		<ul class="nav nav-tabs">
+			<li role="presentation" {{ default=="index" ? 'class="active"' }}><a href="{{ path('admin_home') }}">Statistiques</a></li>
+			<li role="presentation" {{ default=="project" ? 'class="active"' }}><a href="{{ path('admin_project') }}">Projets</a></li>
+			<li role="presentation" {{ default=="user" ? 'class="active"' }}><a href="{{ path('admin_user') }}">Utilisateurs</a></li>
+			<li role="presentation" {{ default=="skill" ? 'class="active"' }}><a href="{{ path('admin_skill') }}">Compétences</a></li>
+			<li role="presentation" {{ default=="import" ? 'class="active"' }}><a href="{{ path('admin_import') }}">Importation</a></li>
+		</ul>
+	</div>
+	<br/>
+{% endblock menuAdmin %}
