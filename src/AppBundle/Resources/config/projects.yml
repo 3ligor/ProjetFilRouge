@@ -26,3 +26,4 @@ project_editSkill:
     path: /editSkill
     defaults : { _controller: AppBundle:Project:editProjectSkill}
     requirements:
+        _method:  POST

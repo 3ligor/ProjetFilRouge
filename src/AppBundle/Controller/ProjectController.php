@@ -145,7 +145,7 @@ class ProjectController extends Controller {
 		$project = $repoP->find($req->request->get('projectId'));
 		$skill = $repoS->find($req->request->get('skillId'));
 		$check = ($req->request->get('type') === 'true' ? true : false);
-		
+
 		if ($skill->existInProject($project) && $check) {
 			$response = new Response(json_encode(array('status' => "Can't add skill : already exists")));
 		} elseif (!$skill->existInProject($project) && !$check) {
@@ -159,9 +159,7 @@ class ProjectController extends Controller {
 		}
 
 		$em->flush();
-
 		$response->headers->set('Content-Type', 'application/json');
-
 		return $response;
 	}
 
