@@ -28,11 +28,13 @@ class UserController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $repoUser =  $em->getRepository('AppBundle:User');
-
+		$repoSkill = $em->getRepository('AppBundle:Skill');
         $oneUser = $repoUser->findOneUserEager($id);
+		$skills = $repoSkill->getSkillsWithChilds();
        
         return $this->render('AppBundle:User:profil.html.twig', array(
                     'user' => $oneUser,
+					'skills' => $skills, 
                    
         ));
     }
