@@ -1,6 +1,6 @@
 {% extends "AppBundle::layout.html.twig" %}
 {% block content %}
-	{% include "AppBundle:Admin:menuAdmin.html.twig" with {'default' : 'skill'}%}
+	{% include "AppBundle:Admin:menuAdmin.html.twig" with {'active' : 'skill'}%}
 	<div class="row">
 		<div class="panel panel-default">
 			<div class="panel-heading">Ajouter une compétence ou une catégorie</div>
@@ -16,13 +16,14 @@
 						<label class="" for="selectCat">Catégorie :</label>
 						{#		MENU DÉROULANT				#}
 						<select class="form-control" name="selectCat" placeholder="Catégorie">
+							<option value="-1" selected >Ajouter une catégorie</option>
 							{% for skill in skills %}
 								{% if skill.parent == null %}
 									{#		OPTIONS DU MENU							#}
 									<option value="{{skill.id}}">{{ skill.title }}</option>
 								{% endif %}
 							{% endfor %}
-							<option value="-1">Ajouter une catégorie</option>
+
 						</select>
 						{#		FIN MENU DÉROULANT								#}
 					</div>
@@ -31,7 +32,6 @@
 				</form>
 				{#					FIN FORMULAIRE D'AJOUT DE COMPÉTENCE		#}
 			</div>
-			<div class="panel-footer small">Choisir "Ajouter une catégorie" pour ajouter une nouvelle catégorie.</div>
 		</div>
 	</div>
 	<div class="row">
@@ -85,7 +85,7 @@
 									</div>
 									{#			DIV EDITING								#}
 									<div id="editSkill{{childSkill.id}}" class="hidden">
-										<form class="form" action="Javascript:saveEditSkill({{childSkill.id}})">
+										<form class="form" action="Javascript:saveEditSkill({{childSkill.id}});">
 											<div class="input-group">
 												<input class="form-control" id="skillName{{childSkill.id}}" value="">
 												<span class="input-group-btn">
@@ -94,7 +94,6 @@
 											</div>
 										</form>
 									</div>
-
 								</li>
 							{% endfor %}
 						{% endif %}
@@ -106,57 +105,8 @@
 {% endblock content %}
 {% block javascripts %}
 	{{ parent() }}
-	<script language="JavaScript">
-		$('.editskillbtn').click(function (e) {
-
-
-			e.preventDefault();
-			//	Get the id of the current ahref
-			var id = this.id;
-			//	Save the content of the div "title" with the same id of the ahref
-			var content = $('#title' + id).html();
-			//	If the ahref has the attribut "enable" to true
-			if ($(this).attr('enable') === "true") {
-				// Add the hidden attribute to the div i want to hide
-				$('#displaySkill' + id).attr('class', 'hidden');
-				// Replace the "hidden" attribute by "row" to the div i want to show
-				$('#editSkill' + id).attr('class', 'row');
-				// Give the previous content to the input
-				$('#editSkill' + id + ' #skillName' + id).val(content);
-				//	Disable all the others editing skill button
-				$('.category .editskillbtn').each(function () {
-					$(this).attr('enable', 'false');
-				});
-				//	Disable all the others editing category button
-				$('.skill-list .editskillbtn').each(function () {
-					$(this).attr('enable', 'false');
-				});
-			}
-		});
-
-		function saveEditSkill(id) {
-			var that = this;
-			var skillName = $('#skillName' + id).val();
-			var id = id;
-			$.ajax({
-				url: "{{ path('admin_update_skill') }}",
-				type: 'POST',
-				data: {title: skillName, id: id}
-			}).done(function (data) {
-				// Replace the "hidden" attribute by "row" to the div i want to show
-				$('#displaySkill' + id).attr('class', 'row');
-				$('#title' + id).html(skillName);
-				// Add the hidden attribute to the div i want to hide
-				$('#editSkill' + id).attr('class', 'hidden');
-				//	Disable all the others editing skill button
-				$('.category .editskillbtn').each(function () {
-					$(this).attr('enable', 'true');
-				});
-				//	Disable all the others editing category button
-				$('.skill-list .editskillbtn').each(function () {
-					$(this).attr('enable', 'true');
-				});
-			});
-		}
+	<script src='{{ asset('bundles/app/js/editSkill.js') }}'></script>
+	<script>
+		var ajaxPath = '{{ path('admin_update_skill') }}';
 	</script>
 {% endblock javascripts %}
