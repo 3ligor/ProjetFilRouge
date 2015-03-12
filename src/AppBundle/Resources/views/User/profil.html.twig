@@ -26,8 +26,8 @@
 				<dt>Pseudo</dt>
 				<dd><div>{{ user.pseudo }}</div></dd>
 				{% set age = "now"|date("Y") - user.birthDate|date('Y')%}
-				
-				
+
+
 				{{ user.publicBirthdate == 1 ? ('<dt>Age </dt><dd>' ~ age ~ ' ans </dd>')|raw : "" }}
 				{{ user.publicCity == 1 ? ('<dt>Ville</dt><dd>' ~ user.city ~ '</dd>')|raw : "" }}
 				{{ user.publicCity == 1 ? ('<dt>E-mail</dt><dd>'~user.email~'</dd>')|raw : "" }}
@@ -101,64 +101,72 @@
 
     <div class="row">
 		<div class="text-right"><a href="#" id="updateSkill"><span class="glyphicon glyphicon-edit"></span> Modifier</a></div>
-		
-		<button type="submit" class="btn btn-primary btn-xs btn-block hidden" id="valider">Valider</button>
+
+		<a href="{{ path('user_profile', { id: user.id }) }}"><button type="submit" class="btn btn-primary btn-xs btn-block hidden" id="valider">Valider</button></a>
 		<br>
-		
+
 		{%for skill in skills %}
 			{#On va chercher les categories #}
 			{% if skill.parent == null %}	
 				{#On regarde si la categorie existe sur l'user#}
 				{% if skill.existInUser(user) %}
+
 					<div class='col-xs-6 col-sm-4 col-md-3'>
+
 						<ul class='list-group'>
 							<li class='list-group-item active'>	
 								{{ skill.title}}
-								
+							
 								{% for child in skill.childs %}
 									{% if child.existInUser(user) %}
-										<li class='list-group-item visible'>
-											<div class="row">
-												<div class="col-xs-6">{{ child.title }}</div>
-												
-												<div class="text-right col-xs-6 editSkill hidden">
-													{% for userSkill in user.userSkills %}
-														{% if userSkill.skill.title == child.title %}
-															<select id="{{ userSkill.id }}">
-															{% for i in 1..5 %}
-																{% if i == userSkill.value %}
-																	<option selected="selected" >{{ i }}</option>
-																{% else %}
-																<option>{{ i }}</option>
-																{% endif %}
-															{% endfor %}
-															</select>
+									<li class='list-group-item visible'>
+										<div class="row">
+											<div class="col-xs-6">{{ child.title }}</div>
+
+											<div class="text-right col-xs-6 editSkill hidden"> 
+												{% for userSkill in user.userSkills %}
+
+													{% if userSkill.skill.title == child.title %}
+														<div id="{{ userSkill.id }}">
+															<div id="{{ userSkill.id }}">
+																<select id="{{ child.id }}" >
+																	<option>0</option>
+																	{% for i in 1..5 %}
+																		{% if i == userSkill.value %}
+																			<option selected="selected" >{{ i }}</option>
+																		{% else %}
+																			<option>{{ i }}</option>
+																		{% endif %}
+																	{% endfor %}
+																</select>
+															</div>
+														</div>
 													{% endif %}
-													{% endfor %}
-												
-												</div>
-												
-												
-												<div class="text-right col-xs-6 valueSkill">
-													{% for userSkill in user.userSkills %}
-														{% if userSkill.skill.title == child.title %}
-															{% for i in 1.. userSkill.value %}
-																<span class="glyphicon glyphicon-star"></span>
-															{% endfor %}
-															{% if userSkill.value != 5 %}
-																{% for i in userSkill.value..4 %}
-																	<span class="glyphicon glyphicon-star-empty"></span>
-																{% endfor %}
-															{% endif %}
-													{% endif %}
-													{% endfor %}
-												
-												</div>
+												{% endfor %}
+
 											</div>
-										</li>
-									{% else %}
-										<li class='list-group-item inactiveSkill hidden'>
-											<div class="row">
+
+
+											<div class="text-right col-xs-6 valueSkill">
+												{% for userSkill in user.userSkills %}
+													{% if userSkill.skill.title == child.title %}
+														{% for i in 1.. userSkill.value %}
+															<span class="glyphicon glyphicon-star"></span>
+														{% endfor %}
+														{% if userSkill.value != 5 %}
+															{% for i in userSkill.value..4 %}
+																<span class="glyphicon glyphicon-star-empty"></span>
+															{% endfor %}
+														{% endif %}
+													{% endif %}
+												{% endfor %}
+
+											</div>
+										</div>
+									</li>
+								{% else %}
+									<li class='list-group-item inactiveSkill hidden'>
+										<div class="row">
 											<div class="col-xs-6">{{ child.title }}</div>
 											<div class="text-right col-xs-6">
 												<select id="{{ child.id }}">
@@ -170,11 +178,11 @@
 													<option>5</option>
 												</select>
 											</div>
-											</div>
-										</li>
-									{% endif %}
-								{% endfor %}
-								
+										</div>
+									</li>
+								{% endif %}
+							{% endfor %}
+
 							</li>
 						</ul>
 					</div>
@@ -186,23 +194,23 @@
 							</li>
 							{% for child in skill.childs %}
 								<li class='list-group-item inactiveSkill hidden'>
-											<div class="row">
-											<div class="col-xs-6">{{ child.title }}</div>
-											<div class="text-right col-xs-6">
-												<select id="{{ child.id }}">
-													<option>0</option>
-													<option>1</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
-												</select>
-											</div>
-											
-											</div>
+									<div class="row">
+										<div class="col-xs-6">{{ child.title }}</div>
+										<div class="text-right col-xs-6">
+											<select id="{{ child.id }}">
+												<option>0</option>
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+												<option>5</option>
+											</select>
+										</div>
+
+									</div>
 								</li>
 							{% endfor %}
-							
+
 						</ul>
 					</div>
 				{% endif %}
@@ -217,39 +225,50 @@
     <script src='{{ asset('bundles/app/js/jquery-2.1.1.js') }}'></script>
     <script src='{{ asset('bundles/app/js/bootstrap.min.js') }}'></script>
     <script src='{{ asset('bundles/app/js/bootstrap-switch.min.js') }}'></script>
-	
-	<script>
-	
-	$('#updateSkill').click(function(){
-		
-		// Utilise la class pour le each plutot qu'un id
-		$('.inactiveSkill ').each(function (){
-			$(this).removeClass('hidden').addClass('visible');
-		});
-		
-		$('#valider').removeClass('hidden').addClass('visible');
-		$('.editSkill').removeClass('hidden').addClass('visible');
-		$('.valueSkill').removeClass('visible').addClass('hidden');
 
-		
-	});
-	
-	
-		
-		$('select').click(function(e){
-			var id = e.target.id;
-			var value = e.toElement.selectedIndex;
+	<script>
+
+		$('#updateSkill').click(function () {
+
+			// Utilise la class pour le each plutot qu'un id
+			$('.inactiveSkill ').each(function () {
+				$(this).removeClass('hidden').addClass('visible');
+			});
+			$('#updateSkill').addClass('hidden');
+			$('#valider').removeClass('hidden').addClass('visible');
+			$('.editSkill').removeClass('hidden').addClass('visible');
+			$('.valueSkill').removeClass('visible').addClass('hidden');
+
+
+		});
+
+		$('select').change(function (e) {
+
+
+			var id = e.currentTarget.id;
+			var value = e.target.value;
 			var userId = {{ user.id }};
+			var userSkillId = e.currentTarget.parentElement.id;
+
 			console.log(id);
 			console.log(value);
 			console.log(userId);
-			
-			
+			console.log(userSkillId);
+			$.ajax({
+				url: "{{ path('user_addSkillUser') }}",
+				type: 'POST',
+				data: {skillId: id, skillValue: value, userId: userId, userSkillId: userSkillId}
+
+			}).success(function (data) {
+				console.log(data);
+			});
+
 
 		});
 
-	
-		
+
+
+
 	</script>
 
 {% endblock %}

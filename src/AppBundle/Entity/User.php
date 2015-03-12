@@ -557,12 +557,13 @@ class User {
     }
 
     /**
-     * Remove userSkills
+     * Remove userSkill
      *
-     * @param UserSkill $userSkills
+     * @param UserSkill $userSkill
      */
-    public function removeUserSkill(UserSkill $userSkills) {
-        $this->userSkills->removeElement($userSkills);
+    public function removeUserSkill(UserSkill $userSkill) {
+        $this->userSkills->removeElement($userSkill);
+		$userSkill->remove
     }
 
     /**

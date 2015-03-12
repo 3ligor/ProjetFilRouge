@@ -47,8 +47,8 @@ jQuery(document).ready(function () {
 		var type = $(this).hasClass('glyphicon-plus');
 
 		$.ajax({
-			url: ajaxPath,
-			type: 'POST',
+		url: ajaxPath,
+		type: 'POST',
 			data: {type: type, skillId: id, projectId: projectId}
 		}).done(function (data) {
 			if (data.status === 'added') {

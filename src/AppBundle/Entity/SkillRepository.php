@@ -15,7 +15,9 @@ class SkillRepository extends EntityRepository {
 	public function getSkillsWithChilds() {
 		$query = $this->createQueryBuilder('s')
 				->leftJoin('s.childs','c')
-				->addSelect('c');
+				->addSelect('c')
+				->leftJoin('s.userSkills','us')
+				->addSelect('us');
 		return $query->getQuery()->getResult();
 	}
 
