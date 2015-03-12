@@ -15,10 +15,16 @@ class SkillRepository extends EntityRepository {
 	public function getSkillsWithChilds() {
 		$query = $this->createQueryBuilder('s')
 				->leftJoin('s.childs','c')
-				->addSelect('c')
-				->leftJoin('s.userSkills','us')
-				->addSelect('us');
+				->addSelect('c');
 		return $query->getQuery()->getResult();
 	}
 
+	public function getSearchUserSkill($skillId, $userId){
+		$query = $this->createQueryBuilder('us')
+				->where('us.skill=:skillId')
+                ->setParameter('skillId', $skillId)
+				->where('us.user=:userId')
+				->setParameter('userId', $userId);
+		return $query->getQuery()->getResult();
+	}
 }

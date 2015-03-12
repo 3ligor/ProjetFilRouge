@@ -563,7 +563,6 @@ class User {
      */
     public function removeUserSkill(UserSkill $userSkill) {
         $this->userSkills->removeElement($userSkill);
-		$userSkill->remove
     }
 
     /**

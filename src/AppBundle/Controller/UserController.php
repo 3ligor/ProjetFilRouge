@@ -145,6 +145,10 @@ class UserController extends Controller {
 				)));
 				
 			} else {
+				$skillId = $skill->getParent();
+				$userId = $req->request->get('userId');
+				$repoUserParentSkill = $em->getRepository('AppBundle:UserSkill');
+				$userSkill = $repoUserParentSkill->getSearchUserSkill($skillId, $userId);
 				
 				$em->remove($userSkill);
 				
@@ -159,6 +163,10 @@ class UserController extends Controller {
 		$em->flush();
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;
+	}
+	
+	public function searchUserSkill($skill, $user){
+		
 	}
 
 }
