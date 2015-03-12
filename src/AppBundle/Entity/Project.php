@@ -486,13 +486,18 @@ class Project {
 	public function removeSkill(Skill $skill) {
 		$this->skills->removeElement($skill);
 		$skill->removeProject($this);
-		
+
 		if ($skill->hasParent()) {
+			$noChildInProject = true;
 			foreach ($skill->getParent()->getChilds() as $child) {
-				if (!$child->existInProject($this)) {
-					$this->removeSkill($skill->getParent());
+				if ($child->existInProject($this)) {
+					$noChildInProject = false;
 					break;
 				}
+			}
+			if ($noChildInProject) {
+				$this->removeSkill($skill->getParent());
+				$skill->getParent()->removeProject($this);
 			}
 		}
 	}
