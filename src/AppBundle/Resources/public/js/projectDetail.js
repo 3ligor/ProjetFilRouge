@@ -61,11 +61,11 @@ jQuery(document).ready(function () {
 			console.log(data);
 		});
 	});
-	
+
 	function checkCategoryDisplay(li) {
 		var parentDiv = li.parent().parent();
 		var categoryLi = li.parent()[0].childNodes[1];
-		console.log(parentHasChildsWithClass(li, 'activeSkill'));
+//		console.log(parentHasChildsWithClass(li, 'activeSkill'));
 		if (parentHasChildsWithClass(li, 'activeSkill')) {
 			parentDiv.addClass('activeSkill').removeClass('inactiveSkill');
 			$(categoryLi).addClass('activeSkill').removeClass('inactiveSkill');
@@ -76,18 +76,16 @@ jQuery(document).ready(function () {
 	}
 
 	function parentHasChildsWithClass(node, cssClass) {
-		var check = false;
-		var cpt = 0;
-		node.parent().children().each(function(data) {
-			if ($(this).hasClass(cssClass)) {
-				cpt++;
-				
-				// A changer
-				if (cpt === 2) {
-					check = true;
-				}
-			};
+		check = false;
+		node.parent().children().each(function () {
+			if ($(this).hasClass(cssClass) && !$(this).hasClass('active')) {
+				check = true;
+			}
 		});
-		return check;		
+		if (check) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 });
