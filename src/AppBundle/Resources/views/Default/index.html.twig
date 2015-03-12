@@ -2,50 +2,109 @@
 {% block title %}{{ parent() }} - Bienvenue{% endblock title %}
 
 {% block content %}
-    <div class="row">
-         <div class="col-sm-12">
-             <table class="table table-bordered">
-                <tr>
-                    <td><span class="glyphicon glyphicon-user"></span></td>
-                    <td>Progression</td>
-                    <td><strong>Intitulé du projet</strong></td>
-                <tr>
-            </table>
-         </div>
-    </div>
-    <div class="row">	
-        <div class="col-sm-6">
-            <h4>Les nouveaux projets</h4>
-            <table class="table table-bordered">
-				
+	<div class="panel panel-default chatbox">				
+		<div class="panel-heading" role="tab" id="headingOne">
+			<a data-toggle="collapse" href="#chat" aria-expanded="false" aria-controls="chat">
+				<h4 class="panel-title">
+					Chat Box
+				</h4>
+			</a>
+		</div>
+		<div id="chat" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+			<div class="panel-body">
+				<div class='col-xs-9' id='messageContainer'>
+					<table class="table table-condensed table-striped">
+						<tbody id='messages'>
+							
+						</tbody>
+					</table>
+				</div>
+				<div class='col-xs-3'>					
+					<div class='panel panel-default'>
+						<div class='panel-heading'>Utilisateurs</div>
+						<div class='panel-body'></div>
+					</div>
+				</div>
+			</div>
+			<div class='panel-footer'>    
+				<form class='form' action="">
+					<div class='input-group'>
+						<input id="msg" class='form-control' autocomplete="off" />
+						<span class='input-group-btn'>
+							<button class='btn btn-primary'>Envoyer</button>
+						</span>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<table class="table table-bordered">
+				<tr>
+					<td><span class="glyphicon glyphicon-user"></span></td>
+					<td>Progression</td>
+					<td><strong>Intitulé du projet</strong></td>
+				<tr>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+
+		<div class="col-sm-6">
+			<h4>Les nouveaux projets</h4>
+			<table class="table table-bordered">
+
 				{% for project in fiveProject|slice(0,5) %}
-				
-                <tr>
-                    <td class="text-center"><strong>{{ project.startDate|date('d-m-Y')}}</strong></td>
-                    <td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
-                <tr>
-				</a>
-				{% endfor %}
-				
-            </table>
-        </div>
-        <div class="col-sm-6">
-            <h4>Il ne manque plus que vous</h4>
-            <table class="table table-bordered">
-				{% for project in fiveProject|slice(0,5) %}
-				{% set lastPlaces = project.maxMembers - ( project.userProjects | length + 1) %}
-				{% if lastPlaces > 0 %}
-                <tr>
-                    <td class="text-center"><span class="glyphicon glyphicon-user"></span> {{ lastPlaces }}</td>
-                    <td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
-                <tr>
-				{% else %}
-					<td class="text-center"><span class="glyphicon glyphicon-user"></span></td>
-					<td>{{ 'Aucun projet ne nécessite de nouveaux colaborateurs'}}</td>
-					
-				{% endif %}
+
+					<tr>
+						<td class="text-center"><strong>{{ project.startDate|date('d-m-Y')}}</strong></td>
+						<td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
+					<tr>
+						</a>
 					{% endfor %}
-            </table>
-        </div>
-    </div>
+
+			</table>
+		</div>
+		<div class="col-sm-6">
+			<h4>Il ne manque plus que vous</h4>
+			<table class="table table-bordered">
+				{% for project in fiveProject|slice(0,5) %}
+					{% set lastPlaces = project.maxMembers - ( project.userProjects | length + 1) %}
+					{% if lastPlaces > 0 %}
+						<tr>
+							<td class="text-center"><span class="glyphicon glyphicon-user"></span> {{ lastPlaces }}</td>
+							<td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
+						<tr>
+						{% else %}
+							<td class="text-center"><span class="glyphicon glyphicon-user"></span></td>
+							<td>{{ 'Aucun projet ne nécessite de nouveaux colaborateurs'}}</td>
+
+						{% endif %}
+					{% endfor %}
+			</table>
+		</div>
+	</div>
 {% endblock content %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src='{{ asset('bundles/app/js/socket.io.js') }}'></script>
+	<script>
+		var socket = io('http://localhost:3000');
+		$('form').submit(function () {
+			var data = {
+				'pseudo': 'Jack',
+				'message': $('input#msg').val()
+			};
+			socket.emit('chat message', data);
+			$('input#msg').val('');
+			return false;
+		});
+		socket.on('chat message', function (data) {
+			console.log(data);
+			$('#messages').append($('<tr><td class="smallTD"><span class="hidden-sm hidden-xs">'+data.datetime+' - </span><strong>'+data.pseudo+'</strong></td><td>'+data.message+'</td></tr>'));
+			$("#messageContainer").scrollTop($("#messageContainer")[0].scrollHeight);
+		});
+	</script>
+{% endblock javascripts %}

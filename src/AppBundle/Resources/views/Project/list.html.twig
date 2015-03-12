@@ -14,7 +14,7 @@
 			</select>
 		</div>
 		<div class="col-sm-3 col-xs-6">
-			<label for='competenceProjet'>Compétences recherchées</label>
+			<label for='competenceProjet'>Compétences</label>
 			<select id='competenceProjet' class='form-control' multiple='true'>
 				<option>2</option>
 				<option>3</option>
@@ -56,7 +56,7 @@
 			</thead>
 			<tbody>
 				{% for project in projects %}
-					<tr>
+					<tr class='projectRow' id='{{ project.id }}'>
 						<td>
 							{% for category in project.categories %} 
 								{{ category.title }}
@@ -87,10 +87,19 @@
 						<td>{{ project.endDate.format('d-m-Y') }}</td>
 						<td>{{ project.userProjects | length }}</td>
 					</tr>
+					<tr class='projectInfo hidden'>
+						<td colspan='2'>Compétences</td>
+						<td colspan='4'>Description</td>
+					</tr>
 				{% endfor %}
 			</tbody>
 		</table>
 	</div>
 
 {% endblock content %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src='{{ asset('bundles/app/js/projectList.js') }}'></script>
+{% endblock %}
 
