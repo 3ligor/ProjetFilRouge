@@ -6,6 +6,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User
@@ -13,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="UserRepository")
  */
-class User {
+class User implements UserInterface {
 
     /**
      * @var integer
@@ -557,12 +558,12 @@ class User {
     }
 
     /**
-     * Remove userSkills
+     * Remove userSkill
      *
-     * @param UserSkill $userSkills
+     * @param UserSkill $userSkill
      */
-    public function removeUserSkill(UserSkill $userSkills) {
-        $this->userSkills->removeElement($userSkills);
+    public function removeUserSkill(UserSkill $userSkill) {
+        $this->userSkills->removeElement($userSkill);
     }
 
     /**
@@ -623,10 +624,6 @@ class User {
         return false;
     }
 
-    public function eraseCredentials() {
-        
-    }
-
     public function __toString() {
         return $this->firstname . ' ' . $this->lastname;
     }
@@ -634,10 +631,10 @@ class User {
     /**
      * Add userProjects
      *
-     * @param \AppBundle\Entity\UserProject $userProjects
+     * @param UserProject $userProjects
      * @return User
      */
-    public function addUserProject(\AppBundle\Entity\UserProject $userProjects) {
+    public function addUserProject(UserProject $userProjects) {
         $this->userProjects[] = $userProjects;
 
         return $this;
@@ -646,20 +643,27 @@ class User {
     /**
      * Remove userProjects
      *
-     * @param \AppBundle\Entity\UserProject $userProjects
+     * @param UserProject $userProjects
      */
-    public function removeUserProject(\AppBundle\Entity\UserProject $userProjects) {
+    public function removeUserProject(UserProject $userProjects) {
         $this->userProjects->removeElement($userProjects);
     }
 
     /**
      * Get userProjects
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection 
      */
     public function getUserProjects() {
         return $this->userProjects;
     }
+	
+	public function eraseCredentials(){
+    }
+	
+	public function getUsername() {
+		return $this->firstname;
+	}
 
 }
 

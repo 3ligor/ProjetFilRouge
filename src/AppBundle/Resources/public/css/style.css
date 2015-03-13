@@ -38,6 +38,34 @@ div.edit li.inactiveSkill {
 	background-color: rgba(200, 100, 100, 0.9);
 }
 
-.active {
+.list-group-item.active {
 	background-color: #337ab7 !important;
+}
+
+.chatbox form input { border: 1; padding: 10px; width: 90%; margin-right: .5%; }
+.chatbox form input[type='submit'] { width: 9%; border: none; padding: 10px; }
+
+div#messageContainer {
+	overflow-y: auto;
+	overflow-x: hidden;
+	height: 250px;
+	padding: 0px;
+}
+
+.smallTD {
+	width: 15%;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-left: 1px solid #ccc;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #337ab7;
+}
+::-webkit-scrollbar-thumb:hover {
+	background-color: #236aa7;
 }

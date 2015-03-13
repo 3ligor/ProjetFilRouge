@@ -2,50 +2,164 @@
 {% block title %}{{ parent() }} - Bienvenue{% endblock title %}
 
 {% block content %}
-    <div class="row">
-         <div class="col-sm-12">
-             <table class="table table-bordered">
-                <tr>
-                    <td><span class="glyphicon glyphicon-user"></span></td>
-                    <td>Progression</td>
-                    <td><strong>Intitulé du projet</strong></td>
-                <tr>
-            </table>
-         </div>
-    </div>
-    <div class="row">	
-        <div class="col-sm-6">
-            <h4>Les nouveaux projets</h4>
-            <table class="table table-bordered">
-				
+	<div class="panel panel-default chatbox">				
+		<div class="panel-heading" role="tab" id="headingOne">
+			<a id='chatBtn' data-toggle="collapse" href="#chat" aria-expanded="false" aria-controls="chat">
+				<h4 class="panel-title">
+					Chat Box
+				</h4>
+			</a>
+		</div>
+		<div id="chat" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+			<div class="panel-body">
+				<div class='col-xs-9' id='messageContainer'>
+					<table class="table table-condensed table-striped">
+						<tbody id='messages'>
+
+						</tbody>
+					</table>
+				</div>
+				<div class='col-xs-3'>					
+					<div class='panel panel-default'>
+						<div class='panel-heading'>Utilisateurs</div>
+						<div class='panel-body'>
+							<ul class='list-group'>
+								<div id='adminlist'>
+
+								</div>
+								<div id='userlist'>
+
+								</div>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='panel-footer'>    
+				<form class='form' action="">
+					<div class='input-group'>
+						<input id="msg" class='form-control' autocomplete="off" />
+						<span class='input-group-btn'>
+							<button class='btn btn-primary'>Envoyer</button>
+						</span>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<table class="table table-bordered">
+				<tr>
+					<td><span class="glyphicon glyphicon-user"></span></td>
+					<td>Progression</td>
+					<td><strong>Intitulé du projet</strong></td>
+				<tr>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6">
+			<h4>Les nouveaux projets</h4>
+			<table class="table table-bordered">
 				{% for project in fiveProject|slice(0,5) %}
-				
-                <tr>
-                    <td class="text-center"><strong>{{ project.startDate|date('d-m-Y')}}</strong></td>
-                    <td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
-                <tr>
-				</a>
+					<tr>
+						<td class="text-center">
+							<strong>
+								{{ project.startDate|date('d-m-Y')}}
+							</strong>
+						</td>
+						<td>
+							<a href="{{ path('project_detail', { id: project.id }) }}">
+								{{ project.title }}
+							</a>
+						</td>
+					</tr>
 				{% endfor %}
-				
-            </table>
-        </div>
-        <div class="col-sm-6">
-            <h4>Il ne manque plus que vous</h4>
-            <table class="table table-bordered">
+			</table>
+		</div>
+		<div class="col-sm-6">
+			<h4>Il ne manque plus que vous</h4>
+			<table class="table table-bordered">
 				{% for project in fiveProject|slice(0,5) %}
-				{% set lastPlaces = project.maxMembers - ( project.userProjects | length + 1) %}
-				{% if lastPlaces > 0 %}
-                <tr>
-                    <td class="text-center"><span class="glyphicon glyphicon-user"></span> {{ lastPlaces }}</td>
-                    <td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
-                <tr>
-				{% else %}
-					<td class="text-center"><span class="glyphicon glyphicon-user"></span></td>
-					<td>{{ 'Aucun projet ne nécessite de nouveaux colaborateurs'}}</td>
-					
-				{% endif %}
-					{% endfor %}
-            </table>
-        </div>
-    </div>
+					{% set lastPlaces = project.maxMembers - ( project.userProjects | length + 1) %}
+					{% if lastPlaces > 0 %}
+						<tr>
+							<td class="text-center"><span class="glyphicon glyphicon-user"></span> {{ lastPlaces }}</td>
+							<td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
+						</tr>
+					{% else %}
+						<tr>
+							<td class="text-center"><span class="glyphicon glyphicon-user"></span></td>
+							<td>{{ 'Aucun projet ne nécessite de nouveaux colaborateurs'}}</td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+			</table>
+		</div>
+	</div>
 {% endblock content %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src='{{ asset('bundles/app/js/socket.io.js') }}'></script>
+	<script>
+		var profilePath = "{{ path('user_profile') }}";
+
+		$('#chatBtn').click(chatManager);
+
+		function chatManager() {
+			// On détache l'évenement du bouton, afin d'éviter d'initialiser la connexion serveur plusieurs fois.
+			$('#chatBtn').unbind('click');
+
+			// On crée la connexion au serveur
+			var socket = io('http://localhost:3000');
+
+			// Les données de l'utilisateur utiles au chat
+			var user = {
+				pseudo: 'Jack',
+				id: '1',
+				role: 'admin'
+			};
+
+			// On signale au serveur que l'on se connecte au chat en lui envoyant les données de l'utilisateur
+			socket.emit('customConnection', user);
+
+			// L'action d'envoie d'un message
+			$('form').submit(function (e) {
+				e.preventDefault();
+
+				// Les données du message
+				var messageData = {
+					'pseudo': user,
+					'message': $('input#msg').val()
+				};
+
+				// On signale au serveur que l'on envoie un message
+				socket.emit('chat message', messageData);
+				$('input#msg').val('');
+			});
+
+			// L'acion à déclencher à la réception d'un message
+			socket.on('chat message', function (data) {
+				$('#messages').append($('<tr><td class="smallTD"><span class="hidden-sm hidden-xs">' + data.datetime + ' - </span><strong>' + data.pseudo + '</strong></td><td>' + data.message + '</td></tr>'));
+				$("#messageContainer").scrollTop($("#messageContainer")[0].scrollHeight);
+			});
+
+			// L'action à déclencher lorsque un utilisateur se connecte
+			socket.on('userjoin', function (data) {
+				if (data.role === 'user') {
+					$('#userlist').append($('<a class="list-group-item" href="' + profilePath + '/' + data.id + '">' + data.pseudo + '</a>'));
+				} else if (data.role === 'admin') {
+					$('#adminlist').append($('<a class="list-group-item list-group-item-warning" href="' + profilePath + '/' + data.id + '"><span class="glyphicon glyphicon-star"></span>' + data.pseudo + '</a>'));
+				}
+			});
+
+			// L'action à déclencher lorsque un utilisateur se déconnecte
+			socket.on('userleft', function (data) {
+				console.log(data);
+			});
+		}
+
+	</script>
+{% endblock javascripts %}
