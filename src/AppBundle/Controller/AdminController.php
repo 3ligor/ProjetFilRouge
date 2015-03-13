@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Skill;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdminController extends Controller {
@@ -116,4 +117,25 @@ class AdminController extends Controller {
         }
     }
 
+    public function updateSkillAction(Request $req) {
+        $id = ($req->request->get('id'));
+
+        if ($id > 0) {
+            $em = $this->getDoctrine()
+                    ->getManager();
+            $skill = $em->getRepository('AppBundle:Skill')->find($id);
+
+            $skill->setTitle($req->get('title'));
+
+            $em->merge($skill);
+            $em->flush();
+
+            $response = new JsonResponse();
+            $response->setData(array(
+                'data' => 'ok'));
+            return $response;
+        } else {
+            throw $this->createNotFoundException('Skill N°' . $id . ' introuvable');
+        }
+    }
 }
