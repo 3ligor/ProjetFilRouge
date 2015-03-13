@@ -21,15 +21,8 @@
 					</table>
 				</div>
 				<div class='col-xs-3'>					
-					<div class='panel panel-default'>
-						<div class='panel-heading'>Utilisateurs</div>
-						<div class='panel-body'>
-							<ul class='list-group'>
-								<div id='userlist'>
+					<div id='userlist' class='list-group'>
 
-								</div>
-							</ul>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -129,8 +122,8 @@
 
 				// Les données du message
 				var messageData = {
-					'pseudo': user,
-					'message': $('input#msg').val()
+					user: user,
+					message: $('input#msg').val()
 				};
 
 				// On signale au serveur que l'on envoie un message
@@ -140,25 +133,34 @@
 
 			// L'acion à déclencher à la réception d'un message
 			socket.on('chat message', function (data) {
-				console.log('efsfesfs');
 				$('#messages').append($('<tr><td class="smallTD"><span class="hidden-sm hidden-xs">' + data.datetime + ' - </span><strong>' + data.pseudo + '</strong></td><td>' + data.message + '</td></tr>'));
 				$("#messageContainer").scrollTop($("#messageContainer")[0].scrollHeight);
 			});
 
+			// L'action à déclencher à la réception de la Userlist
+			socket.on('userlist', function (data) {
+				$.each(data, function(index, value) {
+					appendUser(value);
+				});
+			});
+
 			// L'action à déclencher lorsque un utilisateur se connecte
 			socket.on('userjoin', function (data) {
-				console.log(data);
-				if (data.role === 'user') {
-					$('#userlist').append($('<a class="list-group-item" href="' + profilePath + '/' + data.id + '">' + data.pseudo + '</a>'));
-				} else if (data.role === 'admin') {
-					$('#userlist').prepend($('<a class="list-group-item list-group-item-warning" href="' + profilePath + '/' + data.id + '"><span class="glyphicon glyphicon-star"></span>' + data.pseudo + '</a>'));
-				}
+				appendUser(data);
 			});
 
 			// L'action à déclencher lorsque un utilisateur se déconnecte
 			socket.on('userleft', function (data) {
-				console.log(data);
+				$('#' + data).remove();
 			});
+
+			function appendUser(data) {
+				if (data.role === 'user') {
+					$('#userlist').append($('<a id=' + data.socketId + ' class="list-group-item" href="' + profilePath + '/' + data.id + '">' + data.pseudo + '</a>'));
+				} else if (data.role === 'admin') {
+					$('#userlist').prepend($('<a id=' + data.socketId + ' class="list-group-item list-group-item-warning" href="' + profilePath + '/' + data.id + '"><span class="glyphicon glyphicon-star"></span>' + data.pseudo + '</a>'));
+				}
+			}
 		}
 
 	</script>

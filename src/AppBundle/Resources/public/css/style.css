@@ -52,6 +52,13 @@ div#messageContainer {
 	padding: 0px;
 }
 
+div#userlist.list-group {
+	overflow-y: auto;
+	overflow-x: hidden;
+	height: 250px;
+	padding: 0px;
+}
+
 .smallTD {
 	width: 15%;
 }
