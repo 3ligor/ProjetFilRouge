@@ -1,14 +1,9 @@
-{% extends "AppBundle::layout.html.twig" %}
+{% extends "::base.html.twig" %}
 
-{% block content %}
-
-   
+{% block body %}
     {% if error %}
         <div>{{ error.message }}</div>
     {% endif %}
-
-
-
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4">
@@ -31,5 +26,5 @@
             </form>
         </div>
         <div class="col-md-4"></div>
-
-    {% endblock content%}{# empty Twig template #}
+	</div>	
+{% endblock body%}
