@@ -1,6 +1,6 @@
 {% extends "AppBundle::layout.html.twig" %}
 {% block content %}
-	{% include "AppBundle:Admin:menuAdmin.html.twig" with {'default' : 'user'}%}
+	{% include "AppBundle:Admin:menuAdmin.html.twig" with {'active' : 'user'}%}
 	<div class="row">
 		<table class="table table-condensed table-hover">
 			<thead>
@@ -48,7 +48,7 @@
 						<span class="badge badge-primary">
 							{% set currentp = 0 %}
 							{% for userProject in user.userProjects %}
-								{% if userProject.project.status == 4 %}
+								{% if userProject.status == 4 %}
 									{% set currentp = currentp+1 %}
 								{% endif %}
 							{% endfor %}
@@ -59,7 +59,7 @@
 						<span class="badge badge-info">
 							{% set endedp = 0 %}
 							{% for userProject in user.userProjects %}
-								{% if userProject.project.status >= 6 %}
+								{% if userProject.status >= 6 %}
 									{% set endedp = endedp+1 %}
 								{% endif %}
 							{% endfor %}

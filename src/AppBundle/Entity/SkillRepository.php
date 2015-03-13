@@ -19,4 +19,12 @@ class SkillRepository extends EntityRepository {
 		return $query->getQuery()->getResult();
 	}
 
+	public function getSearchUserSkill($skillId, $userId){
+		$query = $this->createQueryBuilder('us')
+				->where('us.skill=:skillId')
+                ->setParameter('skillId', $skillId)
+				->where('us.user=:userId')
+				->setParameter('userId', $userId);
+		return $query->getQuery()->getResult();
+	}
 }

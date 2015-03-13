@@ -1,7 +1,6 @@
 {% extends "AppBundle::layout.html.twig" %}
-
 {% block content %}
-	{% include "AppBundle:Admin:menuAdmin.html.twig" with {'default' : 'skill'}%}
+	{% include "AppBundle:Admin:menuAdmin.html.twig" with {'active' : 'skill'}%}
 	<div class="row">
 		<div class="panel panel-default">
 			<div class="panel-heading">Ajouter une compétence ou une catégorie</div>
@@ -17,13 +16,14 @@
 						<label class="" for="selectCat">Catégorie :</label>
 						{#		MENU DÉROULANT				#}
 						<select class="form-control" name="selectCat" placeholder="Catégorie">
+							<option value="-1" selected >Ajouter une catégorie</option>
 							{% for skill in skills %}
 								{% if skill.parent == null %}
 									{#		OPTIONS DU MENU							#}
 									<option value="{{skill.id}}">{{ skill.title }}</option>
 								{% endif %}
 							{% endfor %}
-							<option value="-1">Ajouter une catégorie</option>
+
 						</select>
 						{#		FIN MENU DÉROULANT								#}
 					</div>
@@ -32,7 +32,6 @@
 				</form>
 				{#					FIN FORMULAIRE D'AJOUT DE COMPÉTENCE		#}
 			</div>
-			<div class="panel-footer small">Choisir "Ajouter une catégorie" pour ajouter une nouvelle catégorie.</div>
 		</div>
 	</div>
 	<div class="row">
@@ -41,11 +40,12 @@
 				<div class="list-group col-lg-3">
 					<ul>
 						<li class="list-group-item active">
-							<div class="row category">
-								<div id="title{{skill.id}}" class="col-lg-8">{{ skill.title }}</div>
-								<div id="cat-buttons{{skill.id}}" class="col-lg-4 text-right">
+							{#		DIV DISPLAY						#}
+							<div class="row category" id="displaySkill{{ skill.id }}">
+								<div id="title{{ skill.id }}" class="col-lg-8">{{ skill.title }}</div>
+								<div id="cat-buttons{{ skill.id }}" class="col-lg-4 text-right">
 									{#		EDIT CATEGORY BUTTON							#}
-									<a href="" enable="true" class="editskillbtn " id="{{skill.id}}">
+									<a href="" enable="true" class="editskillbtn" id="{{ skill.id }}">
 										<span class="glyphicon glyphicon-edit small white"></span>
 									</a>
 									{% if skill.childs|length < 1 %}
@@ -56,20 +56,43 @@
 									{% endif %}
 								</div>
 							</div>
+							{#		DIV EDITING								#}
+							<div id="editSkill{{ skill.id }}" class="hidden">
+								<form class="form" action="Javascript:saveEditSkill({{ skill.id }})">
+									<div class="input-group">
+										<input class="form-control" id="skillName{{ skill.id }}" value="">
+										<span class="input-group-btn">
+											<button class="btn btn-primary" id="save" type="submit">Valider</button>
+										</span>
+									</div>
+								</form>
+							</div>
 						</li>
 						{% if skill.childs|length > 0 %}
 							{% for childSkill in skill.childs %}
 								<li class="list-group-item">
-									<div class="row skill{{childSkill.id}}">
+									{#			DIV DISPLAY						#}
+									<div class="row skill-list" id="displaySkill{{childSkill.id}}">
 										<div id="title{{childSkill.id}}" class="col-lg-8">{{ childSkill.title }}</div>
 										<div class="col-lg-4 text-right">
 											{#		EDIT BUTTON			#}
 											<a href="" enable="true" class="editskillbtn " id="{{childSkill.id}}"><span class="glyphicon glyphicon-edit small"></span></a>
-												{#      DELETE BUTTON		#}					
+												{#      DELETE BUTTON		#}				
 											<a href="{{path('admin_delete_skill',{'id' : childSkill.id })}}">
 												<span class="glyphicon glyphicon-remove small"></span>
 											</a>
 										</div>
+									</div>
+									{#			DIV EDITING								#}
+									<div id="editSkill{{childSkill.id}}" class="hidden">
+										<form class="form" action="Javascript:saveEditSkill({{childSkill.id}});">
+											<div class="input-group">
+												<input class="form-control" id="skillName{{childSkill.id}}" value="">
+												<span class="input-group-btn">
+													<button class="btn btn-primary" id="save" type="submit">Valider</button>
+												</span>
+											</div>
+										</form>
 									</div>
 								</li>
 							{% endfor %}
@@ -82,31 +105,8 @@
 {% endblock content %}
 {% block javascripts %}
 	{{ parent() }}
-	<script language="JavaScript">
-
-		$('.editskillbtn').click(function (e) {
-			e.preventDefault();
-			// Get the id of the current ahref
-			id = this.id;
-			// Save the content of the div "title" with the same id of the ahref
-			content = $('#title' + id).html();
-			// If the ahref has the attribut "enable" to true
-			if ($(this).attr('enable') === "true") {
-		{# Replace the content of the div by an input and a validate button into a form #}
-					$('.row .skill' + id).html(
-							'<div class="col-lg-12">' + '<form class="form">' + '<div class="input-group">' + '<input class="form-control" value="' + content + '"></input>' + '<span class="input-group-btn">' + '<button class="btn btn-primary" type="submit">Valider</button></div></span>' + '</form></div>'
-							);
-					// Disable all the others editing skill button 
-					$('.category .editskillbtn').each(function () {
-						console.log($(this).attr('enable'));
-						$(this).attr('enable', 'false');
-					});
-					// Disable all the others editing category button
-					$('.skill-list .editskillbtn').each(function () {
-						$(this).attr('enable', 'false');
-					});
-				}
-				;
-			});
+	<script src='{{ asset('bundles/app/js/editSkill.js') }}'></script>
+	<script>
+		var ajaxPath = '{{ path('admin_update_skill') }}';
 	</script>
-{% endblock %}
+{% endblock javascripts %}
