@@ -1,14 +1,10 @@
-{% extends "AppBundle::layout.html.twig" %}
+{% extends "::base.html.twig" %}
 
-{% block content %}
-
-   
+{% block body %}
     {% if error %}
         <div>{{ error.message }}</div>
     {% endif %}
-
-
-
+	<div class='page-header'><h1>PFR</h1></div>
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4">
@@ -27,9 +23,10 @@
                         <input class="form-control" type="password" id="password" name="_password" />
                     </div>
                 </div>
-                <button type="submit" class="btn btn-success" >Login</button>
+					<hr>
+					<div class="text-center"><button type="submit" class="btn btn-success" >Login</button></div>
             </form>
         </div>
         <div class="col-md-4"></div>
-
-    {% endblock content%}{# empty Twig template #}
+	</div>	
+{% endblock body%}

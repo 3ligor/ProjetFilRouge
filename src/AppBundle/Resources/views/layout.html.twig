@@ -1,6 +1,24 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+	
+			<ul class="nav navbar-nav navbar-right">
+				<li role="présentation"><a href="{{ path('user_profile', {'id': app.user.id}) }}"><img src="" alt=""/>Bonjour, {{ app.user.username }} {{ app.user.lastname }}</a></li>
+				{% if is_granted('ROLE_USER') %}
+						<li role="présentation"><a href="{{ path('logout') }}">Se déconnecter</a>
+				{% else %}
+						<li role="présentation"><a href="{{ path('login') }}">Connexion</a>
+
+				{% endif %}
+				<li></li>
+			</ul>
+	
+	</nav>
+			<br>
+			<br>
+			<br>
+	
 	<nav role='navigation'>
 		<ul class='nav nav-tabs'>
 			{% block menu %}
@@ -25,6 +43,7 @@
 			{% endblock menu %}
 		</ul>
 	</nav>
+
 	<div class='page-header'><h1>PFR</h1></div>
 	{% block content %}
 	{% endblock content %}
