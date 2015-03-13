@@ -222,6 +222,7 @@
 	<script src='{{ asset('bundles/app/js/projectDetail.js') }}'></script>
 	<script>
 		var ajaxPath = '{{ path('project_editSkill') }}';
-		var projectId = {{ project.id }};
+		var projectId
+		= {{ project.id }};
 	</script>
 {% endblock %}
