@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\User;
 
 class ProjectController extends Controller {
 
@@ -22,7 +23,20 @@ class ProjectController extends Controller {
 	}
 
 	public function myProjectsAction() {
-		return $this->render('AppBundle:Project:myProjects.html.twig');
+		$id = $this->getUser()->getId();
+		
+		$em = $this->getDoctrine()->getManager();
+		
+		$repoP1 = $em->getRepository('AppBundle:Project');
+		$projects1 = $repoP1->findProjectsEager();
+		
+		$repoP = $em->getRepository('AppBundle:Project');
+		$projects = $repoP->findProjectUserEager($id);
+		
+		return $this->render('AppBundle:Project:myProjects.html.twig', array(
+					'projects' => $projects,
+					'userPro' => $projects1
+		));
 	}
 
 	public function detailAction($id) {

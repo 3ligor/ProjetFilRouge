@@ -26,6 +26,18 @@ class ProjectRepository extends EntityRepository {
 		return $query->getQuery()->getResult();
 	}
 
+	public function findProjectUserEager($id){
+		$query = $this->createQueryBuilder('p')
+				->leftJoin('p.userProjects', 'up')
+				->addSelect('up')
+				->leftJoin('p.categories', 'c')
+				->addSelect('c')
+				->where('up.user = :id')
+				->setParameter('id', $id);
+				
+		return $query->getQuery()->getResult();
+	}
+
 	public function findNewListIndexProject() {
 		$query = $this->createQueryBuilder('p')
 				->leftJoin('p.userProjects', 'up')
