@@ -15,7 +15,7 @@
 				<div class='col-xs-9' id='messageContainer'>
 					<table class="table table-condensed table-striped">
 						<tbody id='messages'>
-							
+
 						</tbody>
 					</table>
 				</div>
@@ -50,20 +50,23 @@
 		</div>
 	</div>
 	<div class="row">
-
 		<div class="col-sm-6">
 			<h4>Les nouveaux projets</h4>
 			<table class="table table-bordered">
-
 				{% for project in fiveProject|slice(0,5) %}
-
 					<tr>
-						<td class="text-center"><strong>{{ project.startDate|date('d-m-Y')}}</strong></td>
-						<td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
-					<tr>
-						</a>
-					{% endfor %}
-
+						<td class="text-center">
+							<strong>
+								{{ project.startDate|date('d-m-Y')}}
+							</strong>
+						</td>
+						<td>
+							<a href="{{ path('project_detail', { id: project.id }) }}">
+								{{ project.title }}
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
 			</table>
 		</div>
 		<div class="col-sm-6">
@@ -75,13 +78,14 @@
 						<tr>
 							<td class="text-center"><span class="glyphicon glyphicon-user"></span> {{ lastPlaces }}</td>
 							<td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
+						</tr>
+					{% else %}
 						<tr>
-						{% else %}
 							<td class="text-center"><span class="glyphicon glyphicon-user"></span></td>
 							<td>{{ 'Aucun projet ne nécessite de nouveaux colaborateurs'}}</td>
-
-						{% endif %}
-					{% endfor %}
+						</tr>
+					{% endif %}
+				{% endfor %}
 			</table>
 		</div>
 	</div>
@@ -103,7 +107,7 @@
 		});
 		socket.on('chat message', function (data) {
 			console.log(data);
-			$('#messages').append($('<tr><td class="smallTD"><span class="hidden-sm hidden-xs">'+data.datetime+' - </span><strong>'+data.pseudo+'</strong></td><td>'+data.message+'</td></tr>'));
+			$('#messages').append($('<tr><td class="smallTD"><span class="hidden-sm hidden-xs">' + data.datetime + ' - </span><strong>' + data.pseudo + '</strong></td><td>' + data.message + '</td></tr>'));
 			$("#messageContainer").scrollTop($("#messageContainer")[0].scrollHeight);
 		});
 	</script>
