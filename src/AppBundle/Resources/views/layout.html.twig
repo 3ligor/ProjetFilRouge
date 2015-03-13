@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-	<div id="navbar" class="navbar-collapse collapse">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
 	
 			<ul class="nav navbar-nav navbar-right">
 				<li role="présentation"><a href="{{ path('user_profile', {'id': app.user.id}) }}"><img src="" alt=""/>Bonjour, {{ app.user.username }} {{ app.user.lastname }}</a></li>
@@ -11,10 +11,14 @@
 						<li role="présentation"><a href="{{ path('login') }}">Connexion</a>
 
 				{% endif %}
+				<li></li>
 			</ul>
 	
-	</div>
-	<hr>
+	</nav>
+			<br>
+			<br>
+			<br>
+	
 	<nav role='navigation'>
 		<ul class='nav nav-tabs'>
 			{% block menu %}
@@ -39,6 +43,7 @@
 			{% endblock menu %}
 		</ul>
 	</nav>
+
 	<div class='page-header'><h1>PFR</h1></div>
 	{% block content %}
 	{% endblock content %}
