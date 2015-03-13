@@ -1,7 +1,7 @@
 {% block menuAdmin %}
 	<div class="row">
 		<ul class="nav nav-tabs">
-			<li role="presentation" {{ active=="index" ? 'class="active"' }}><a href="{{ path('admin_home') }}">Statistiques</a></li>
+			<li role="presentation" {{ active=="home" ? 'class="active"' }}><a href="{{ path('admin_home') }}">Statistiques</a></li>
 			<li role="presentation" {{ active=="project" ? 'class="active"' }}><a href="{{ path('admin_project') }}">Projets</a></li>
 			<li role="presentation" {{ active=="user" ? 'class="active"' }}><a href="{{ path('admin_user') }}">Utilisateurs</a></li>
 			<li role="presentation" {{ active=="skill" ? 'class="active"' }}><a href="{{ path('admin_skill') }}">Compétences</a></li>
