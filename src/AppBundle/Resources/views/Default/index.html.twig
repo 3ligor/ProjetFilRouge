@@ -4,7 +4,7 @@
 {% block content %}
 	<div class="panel panel-default chatbox">				
 		<div class="panel-heading" role="tab" id="headingOne">
-			<a data-toggle="collapse" href="#chat" aria-expanded="false" aria-controls="chat">
+			<a id='chatBtn' data-toggle="collapse" href="#chat" aria-expanded="false" aria-controls="chat">
 				<h4 class="panel-title">
 					Chat Box
 				</h4>
@@ -22,7 +22,16 @@
 				<div class='col-xs-3'>					
 					<div class='panel panel-default'>
 						<div class='panel-heading'>Utilisateurs</div>
-						<div class='panel-body'></div>
+						<div class='panel-body'>
+							<ul class='list-group'>
+								<div id='adminlist'>
+
+								</div>
+								<div id='userlist'>
+
+								</div>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -95,20 +104,62 @@
 	{{ parent() }}
 	<script src='{{ asset('bundles/app/js/socket.io.js') }}'></script>
 	<script>
-		var socket = io('http://localhost:3000');
-		$('form').submit(function () {
-			var data = {
-				'pseudo': 'Jack',
-				'message': $('input#msg').val()
+		var profilePath = "{{ path('user_profile') }}";
+
+		$('#chatBtn').click(chatManager);
+
+		function chatManager() {
+			// On détache l'évenement du bouton, afin d'éviter d'initialiser la connexion serveur plusieurs fois.
+			$('#chatBtn').unbind('click');
+
+			// On crée la connexion au serveur
+			var socket = io('http://localhost:3000');
+
+			// Les données de l'utilisateur utiles au chat
+			var user = {
+				pseudo: 'Jack',
+				id: '1',
+				role: 'admin'
 			};
-			socket.emit('chat message', data);
-			$('input#msg').val('');
-			return false;
-		});
-		socket.on('chat message', function (data) {
-			console.log(data);
-			$('#messages').append($('<tr><td class="smallTD"><span class="hidden-sm hidden-xs">' + data.datetime + ' - </span><strong>' + data.pseudo + '</strong></td><td>' + data.message + '</td></tr>'));
-			$("#messageContainer").scrollTop($("#messageContainer")[0].scrollHeight);
-		});
+
+			// On signale au serveur que l'on se connecte au chat en lui envoyant les données de l'utilisateur
+			socket.emit('customConnection', user);
+
+			// L'action d'envoie d'un message
+			$('form').submit(function (e) {
+				e.preventDefault();
+
+				// Les données du message
+				var messageData = {
+					'pseudo': user,
+					'message': $('input#msg').val()
+				};
+
+				// On signale au serveur que l'on envoie un message
+				socket.emit('chat message', messageData);
+				$('input#msg').val('');
+			});
+
+			// L'acion à déclencher à la réception d'un message
+			socket.on('chat message', function (data) {
+				$('#messages').append($('<tr><td class="smallTD"><span class="hidden-sm hidden-xs">' + data.datetime + ' - </span><strong>' + data.pseudo + '</strong></td><td>' + data.message + '</td></tr>'));
+				$("#messageContainer").scrollTop($("#messageContainer")[0].scrollHeight);
+			});
+
+			// L'action à déclencher lorsque un utilisateur se connecte
+			socket.on('userjoin', function (data) {
+				if (data.role === 'user') {
+					$('#userlist').append($('<a class="list-group-item" href="' + profilePath + '/' + data.id + '">' + data.pseudo + '</a>'));
+				} else if (data.role === 'admin') {
+					$('#adminlist').append($('<a class="list-group-item list-group-item-warning" href="' + profilePath + '/' + data.id + '"><span class="glyphicon glyphicon-star"></span>' + data.pseudo + '</a>'));
+				}
+			});
+
+			// L'action à déclencher lorsque un utilisateur se déconnecte
+			socket.on('userleft', function (data) {
+				console.log(data);
+			});
+		}
+
 	</script>
 {% endblock javascripts %}

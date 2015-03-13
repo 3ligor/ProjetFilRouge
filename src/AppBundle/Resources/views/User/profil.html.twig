@@ -129,11 +129,11 @@
 													{% if userSkill.skill.title == child.title %}
 														<div id="{{ userSkill.id }}">
 															<div id="{{ userSkill.id }}">
-																<select id="{{ child.id }}" >
+																<select id="{{ child.id }}" style="background-color: rgb(158, 215, 158)" >
 																	<option>0</option>
 																	{% for i in 1..5 %}
 																		{% if i == userSkill.value %}
-																			<option selected="selected" >{{ i }}</option>
+																			<option selected="selected">{{ i }}</option>
 																		{% else %}
 																			<option>{{ i }}</option>
 																		{% endif %}
@@ -243,13 +243,22 @@
 		});
 
 		$('select').change(function (e) {
-
-
+			
+		
 			var id = e.currentTarget.id;
 			var value = e.target.value;
 			var userId = {{ user.id }};
 			var userSkillId = e.currentTarget.parentElement.id;
-
+			
+			if(value == 0){
+				$('#'+ id +'').css('background-color','rgb(242, 165, 165)');
+			}	
+			else{
+				$('#'+ id +'').css('background-color','rgb(158, 215, 158)');
+			}
+			
+			
+			
 			console.log(id);
 			console.log(value);
 			console.log(userId);
