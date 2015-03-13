@@ -145,28 +145,24 @@ class UserController extends Controller {
 				)));
 				
 			} else {
-				$skillId = $skill->getParent();
+				$skillId = $skill->getParent()->getId();
 				$userId = $req->request->get('userId');
+				
 				$repoUserParentSkill = $em->getRepository('AppBundle:UserSkill');
-				$userSkill = $repoUserParentSkill->getSearchUserSkill($skillId, $userId);
+				$userParentSkill = $repoUserParentSkill->getUserSkillBySkillAndUser($skillId, $userId);	
 				
 				$em->remove($userSkill);
+				$em->remove($userParentSkill);
 				
-
 				$response = new Response(json_encode(array(
-							'status' => 'remove skill & parent',
+							'status' => $userParentSkill->getId(),
 				)));
 			}
-			
-			
+
 		}
 		$em->flush();
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;
-	}
-	
-	public function searchUserSkill($skill, $user){
-		
 	}
 
 }
