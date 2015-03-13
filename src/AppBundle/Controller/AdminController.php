@@ -138,4 +138,5 @@ class AdminController extends Controller {
             throw $this->createNotFoundException('Skill N°' . $id . ' introuvable');
         }
     }
+
 }
