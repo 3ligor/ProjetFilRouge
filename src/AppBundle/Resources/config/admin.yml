@@ -1,6 +1,6 @@
 admin_home:
     path:   /
-    defaults: { _controller: AppBundle:Admin:index }
+    defaults: { _controller: AppBundle:Admin:home }
     
 admin_project:
     path: /project

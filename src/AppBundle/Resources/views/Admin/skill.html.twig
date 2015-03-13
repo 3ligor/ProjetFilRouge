@@ -1,112 +1,112 @@
 {% extends "AppBundle::layout.html.twig" %}
 {% block content %}
-	{% include "AppBundle:Admin:menuAdmin.html.twig" with {'active' : 'skill'}%}
-	<div class="row">
-		<div class="panel panel-default">
-			<div class="panel-heading">Ajouter une compétence ou une catégorie</div>
-			<div class="panel-body text-center">
-				{#				FORMULAIRE D'AJOUT DE COMPÉTENCE         #}
-				<form class="form-inline" action="{{path('admin_add_skill')}}" method="POST">
-					<div class="form-group">
-						<label class="sr-only" for="inputSkill">Nom de la catégorie ou de la compétence</label>
-						{#		CHAMP INTITULÉ DE COMPÉTENCE				#}
-						<input type="text" class="form-control" id="inputSkill" placeholder="Intitulé" name="title" required="required">
-					</div>
-					<div class="form-group">
-						<label class="" for="selectCat">Catégorie :</label>
-						{#		MENU DÉROULANT				#}
-						<select class="form-control" name="selectCat" placeholder="Catégorie">
-							<option value="-1" selected >Ajouter une catégorie</option>
-							{% for skill in skills %}
-								{% if skill.parent == null %}
-									{#		OPTIONS DU MENU							#}
-									<option value="{{skill.id}}">{{ skill.title }}</option>
-								{% endif %}
-							{% endfor %}
+    {% include "AppBundle:Admin:menuAdmin.html.twig" with {'active' : 'skill'}%}
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">Ajouter une compétence ou une catégorie</div>
+            <div class="panel-body text-center">
+                {#				FORMULAIRE D'AJOUT DE COMPÉTENCE         #}
+                <form class="form-inline" action="{{path('admin_add_skill')}}" method="POST">
+                    <div class="form-group">
+                        <label class="sr-only" for="inputSkill">Nom de la catégorie ou de la compétence</label>
+                        {#		CHAMP INTITULÉ DE COMPÉTENCE				#}
+                        <input type="text" class="form-control" id="inputSkill" placeholder="Intitulé" name="title" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label class="" for="selectCat">Catégorie :</label>
+                        {#		MENU DÉROULANT				#}
+                        <select class="form-control" name="selectCat" placeholder="Catégorie">
+                            <option value="-1" selected >Ajouter une catégorie</option>
+                            {% for skill in skills %}
+                                {% if skill.parent == null %}
+                                    {#		OPTIONS DU MENU							#}
+                                    <option value="{{skill.id}}">{{ skill.title }}</option>
+                                {% endif %}
+                            {% endfor %}
 
-						</select>
-						{#		FIN MENU DÉROULANT								#}
-					</div>
-					{#		BOUTON D'ENVOI			#}
-					<button type="submit" class="btn btn-primary">Ajouter</button>
-				</form>
-				{#					FIN FORMULAIRE D'AJOUT DE COMPÉTENCE		#}
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		{% for skill in skills %}
-			{% if skill.parent == null %}
-				<div class="list-group col-lg-3">
-					<ul>
-						<li class="list-group-item active">
-							{#		DIV DISPLAY						#}
-							<div class="row category" id="displaySkill{{ skill.id }}">
-								<div id="title{{ skill.id }}" class="col-lg-8">{{ skill.title }}</div>
-								<div id="cat-buttons{{ skill.id }}" class="col-lg-4 text-right">
-									{#		EDIT CATEGORY BUTTON							#}
-									<a href="" enable="true" class="editskillbtn" id="{{ skill.id }}">
-										<span class="glyphicon glyphicon-edit small white"></span>
-									</a>
-									{% if skill.childs|length < 1 %}
-										{#			DELETE CATEGORY BUTTON				#}
-										<a href="{{path('admin_delete_skill',{'id' : skill.id })}}">
-											<span class="glyphicon glyphicon-remove small white"></span>
-										</a>
-									{% endif %}
-								</div>
-							</div>
-							{#		DIV EDITING								#}
-							<div id="editSkill{{ skill.id }}" class="hidden">
-								<form class="form" action="Javascript:saveEditSkill({{ skill.id }})">
-									<div class="input-group">
-										<input class="form-control" id="skillName{{ skill.id }}" value="">
-										<span class="input-group-btn">
-											<button class="btn btn-primary" id="save" type="submit">Valider</button>
-										</span>
-									</div>
-								</form>
-							</div>
-						</li>
-						{% if skill.childs|length > 0 %}
-							{% for childSkill in skill.childs %}
-								<li class="list-group-item">
-									{#			DIV DISPLAY						#}
-									<div class="row skill-list" id="displaySkill{{childSkill.id}}">
-										<div id="title{{childSkill.id}}" class="col-lg-8">{{ childSkill.title }}</div>
-										<div class="col-lg-4 text-right">
-											{#		EDIT BUTTON			#}
-											<a href="" enable="true" class="editskillbtn " id="{{childSkill.id}}"><span class="glyphicon glyphicon-edit small"></span></a>
-												{#      DELETE BUTTON		#}				
-											<a href="{{path('admin_delete_skill',{'id' : childSkill.id })}}">
-												<span class="glyphicon glyphicon-remove small"></span>
-											</a>
-										</div>
-									</div>
-									{#			DIV EDITING								#}
-									<div id="editSkill{{childSkill.id}}" class="hidden">
-										<form class="form" action="Javascript:saveEditSkill({{childSkill.id}});">
-											<div class="input-group">
-												<input class="form-control" id="skillName{{childSkill.id}}" value="">
-												<span class="input-group-btn">
-													<button class="btn btn-primary" id="save" type="submit">Valider</button>
-												</span>
-											</div>
-										</form>
-									</div>
-								</li>
-							{% endfor %}
-						{% endif %}
-					</ul>
-				</div>
-			{% endif %}		
-		{% endfor %}
-	</div>
+                        </select>
+                        {#		FIN MENU DÉROULANT								#}
+                    </div>
+                    {#		BOUTON D'ENVOI			#}
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                </form>
+                {#					FIN FORMULAIRE D'AJOUT DE COMPÉTENCE		#}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        {% for skill in skills %}
+            {% if skill.parent == null %}
+                <div class="list-group col-lg-3">
+                    <ul>
+                        <li class="list-group-item active">
+                            {#		DIV DISPLAY						#}
+                            <div class="row category" id="displaySkill{{ skill.id }}">
+                                <div id="title{{ skill.id }}" class="col-lg-8">{{ skill.title }}</div>
+                                <div id="cat-buttons{{ skill.id }}" class="col-lg-4 text-right">
+                                    {#		EDIT CATEGORY BUTTON							#}
+                                    <a href="" enable="true" class="editskillbtn" id="{{ skill.id }}">
+                                        <span class="glyphicon glyphicon-edit small white"></span>
+                                    </a>
+                                    {% if skill.childs|length < 1 %}
+                                        {#			DELETE CATEGORY BUTTON				#}
+                                        <a href="{{path('admin_delete_skill',{'id' : skill.id })}}">
+                                            <span class="glyphicon glyphicon-remove small white"></span>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {#		DIV EDITING								#}
+                            <div id="editSkill{{ skill.id }}" class="hidden">
+                                <form class="form" action="Javascript:saveEditSkill({{ skill.id }})">
+                                    <div class="input-group">
+                                        <input class="form-control" id="skillName{{ skill.id }}" value="">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" id="save" type="submit">Valider</button>
+                                        </span>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                        {% if skill.childs|length > 0 %}
+                            {% for childSkill in skill.childs %}
+                                <li class="list-group-item">
+                                    {#			DIV DISPLAY						#}
+                                    <div class="row skill-list" id="displaySkill{{childSkill.id}}">
+                                        <div id="title{{childSkill.id}}" class="col-lg-8">{{ childSkill.title }}</div>
+                                        <div class="col-lg-4 text-right">
+                                            {#		EDIT BUTTON			#}
+                                            <a href="" enable="true" class="editskillbtn " id="{{childSkill.id}}"><span class="glyphicon glyphicon-edit small"></span></a>
+                                                {#      DELETE BUTTON		#}				
+                                            <a href="{{path('admin_delete_skill',{'id' : childSkill.id })}}">
+                                                <span class="glyphicon glyphicon-remove small"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    {#			DIV EDITING								#}
+                                    <div id="editSkill{{childSkill.id}}" class="hidden">
+                                        <form class="form" action="Javascript:saveEditSkill({{childSkill.id}});">
+                                            <div class="input-group">
+                                                <input class="form-control" id="skillName{{childSkill.id}}" value="">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-primary" id="save" type="submit">Valider</button>
+                                                </span>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endif %}		
+        {% endfor %}
+    </div>
 {% endblock content %}
 {% block javascripts %}
-	{{ parent() }}
-	<script src='{{ asset('bundles/app/js/editSkill.js') }}'></script>
-	<script>
-		var ajaxPath = '{{ path('admin_update_skill') }}';
-	</script>
+    {{ parent() }}
+    <script src='{{ asset('bundles/app/js/editSkill.js') }}'></script>
+    <script>
+        var ajaxPath = '{{ path('admin_update_skill') }}';
+    </script>
 {% endblock javascripts %}

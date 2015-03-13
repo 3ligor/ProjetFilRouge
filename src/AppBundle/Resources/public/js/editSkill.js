@@ -18,10 +18,8 @@ jQuery(document).ready(function () {
 });
 
 function saveEditSkill(id) {
-	var that = this;
 	var skillName = $('#skillName' + id).val();
 	var id = id;
-	console.log(ajaxPath);
 	$.ajax({
 		url: ajaxPath,
 		type: 'POST',
