@@ -2,6 +2,7 @@
 {% block title %}{{ parent() }} - Bienvenue{% endblock title %}
 
 {% block content %}
+
 	<div class="panel panel-default chatbox">				
 		<div class="panel-heading" role="tab" id="headingOne">
 			<a id='chatBtn' data-toggle="collapse" href="#chat" aria-expanded="false" aria-controls="chat">
@@ -20,18 +21,8 @@
 					</table>
 				</div>
 				<div class='col-xs-3'>					
-					<div class='panel panel-default'>
-						<div class='panel-heading'>Utilisateurs</div>
-						<div class='panel-body'>
-							<ul class='list-group'>
-								<div id='adminlist'>
+					<div id='userlist' class='list-group'>
 
-								</div>
-								<div id='userlist'>
-
-								</div>
-							</ul>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -117,9 +108,9 @@
 
 			// Les données de l'utilisateur utiles au chat
 			var user = {
-				pseudo: 'Jack',
-				id: '1',
-				role: 'admin'
+				pseudo: '{{ app.user.pseudo }}',
+				id: '{{ app.user.id }}',
+				role: "{{ is_granted('ROLE_ADMIN') ? 'admin' : 'user' }}"
 			};
 
 			// On signale au serveur que l'on se connecte au chat en lui envoyant les données de l'utilisateur
@@ -131,8 +122,8 @@
 
 				// Les données du message
 				var messageData = {
-					'pseudo': user,
-					'message': $('input#msg').val()
+					user: user,
+					message: $('input#msg').val()
 				};
 
 				// On signale au serveur que l'on envoie un message
@@ -146,19 +137,30 @@
 				$("#messageContainer").scrollTop($("#messageContainer")[0].scrollHeight);
 			});
 
+			// L'action à déclencher à la réception de la Userlist
+			socket.on('userlist', function (data) {
+				$.each(data, function(index, value) {
+					appendUser(value);
+				});
+			});
+
 			// L'action à déclencher lorsque un utilisateur se connecte
 			socket.on('userjoin', function (data) {
-				if (data.role === 'user') {
-					$('#userlist').append($('<a class="list-group-item" href="' + profilePath + '/' + data.id + '">' + data.pseudo + '</a>'));
-				} else if (data.role === 'admin') {
-					$('#adminlist').append($('<a class="list-group-item list-group-item-warning" href="' + profilePath + '/' + data.id + '"><span class="glyphicon glyphicon-star"></span>' + data.pseudo + '</a>'));
-				}
+				appendUser(data);
 			});
 
 			// L'action à déclencher lorsque un utilisateur se déconnecte
 			socket.on('userleft', function (data) {
-				console.log(data);
+				$('#' + data).remove();
 			});
+
+			function appendUser(data) {
+				if (data.role === 'user') {
+					$('#userlist').append($('<a id=' + data.socketId + ' class="list-group-item" href="' + profilePath + '/' + data.id + '">' + data.pseudo + '</a>'));
+				} else if (data.role === 'admin') {
+					$('#userlist').prepend($('<a id=' + data.socketId + ' class="list-group-item list-group-item-warning" href="' + profilePath + '/' + data.id + '"><span class="glyphicon glyphicon-star"></span>' + data.pseudo + '</a>'));
+				}
+			}
 		}
 
 	</script>
