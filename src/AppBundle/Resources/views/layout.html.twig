@@ -1,11 +1,18 @@
 {% extends '::base.html.twig' %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	{% if enableChat is defined %}
+		<link rel="stylesheet" href="{{ asset('bundles/app/css/jquery-ui.custom.css') }}">
+		<link rel="stylesheet" href="{{ asset('bundles/app/css/jquery-ui.structure.css') }}">
+	{% endif %}
+{% endblock stylesheets %}
 {% block body %}
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		{% if enableChat is defined %}
 			<ul class="nav navbar-nav navbar-left">
 				<button id="chatBtn" type="button" class="btn btn-primary navbar-btn" data-toggle="collapse" href="#chat" aria-expanded="false" aria-controls="chat">
-					Chat&nbsp;<span id="userInChat" class="badge">2</span>
+					Chat&nbsp;<span id="userInChat" class="badge"></span>
 				</button>
 			</ul>
 		{% endif %}
@@ -53,21 +60,21 @@
 		</div>
 	</div>
 	{% if enableChat is defined %}
-		<div id="chat" class="panel panel-collapse collapse box" role="tabpanel" aria-labelledby="headingOne">
-			<div id="chatContainer" class="panel-body ui-resizable">
-				<div class="col-xs-9" id="messageContainer">
-					<table class="table table-condensed table-striped">
-						<tbody id="messages">
-
-						</tbody>
-					</table>
-				</div>
-				<div class="col-xs-3" id="userContainer">					
-					<div id="userlist" class="list-group">
-
+		<div class="row">
+			<div id="chat" class="panel panel-collapse collapse box col-xs-12" role="tabpanel" aria-labelledby="headingOne">
+				<div id="chatContainer" class="panel-body">
+					<div class="col-xs-9" id="messageContainer">
+						<table class="table table-condensed table-striped">
+							<tbody id="messages">
+							</tbody>
+						</table>
+					</div>
+					<div class="col-xs-3" id="userContainer">					
+						<div id="userlist" class="list-group">
+						</div>
 					</div>
 				</div>
-				<div class="panel-footer">    
+				<div id="chatInput" class="panel-footer">    
 					<form class="form" action="">
 						<div class="input-group">
 							<input id="msg" class="form-control" autocomplete="off">
@@ -83,3 +90,18 @@
 	{% block content %}
 	{% endblock content %}
 {% endblock body %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		{% if app.user.pseudo is defined %}
+			username = '{{ app.user.pseudo }}';
+		{% else %}
+			username = '{{ app.user.firstname }}' + +'{{ app.user.lastname }}';
+		{% endif %}
+	</script>
+	<script src='{{ asset('bundles/app/js/jquery-ui.custom.js') }}'></script>
+	<script src='{{ asset('bundles/app/js/socket.io.js') }}'></script>
+	<script src='{{ asset('bundles/app/js/chatClient.js') }}'></script>
+{% endblock javascripts %}
+

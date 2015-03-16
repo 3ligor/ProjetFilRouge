@@ -658,6 +658,15 @@ class User implements UserInterface {
         return $this->userProjects;
     }
 	
+	public function getStatusInProject(Project $project) {
+		foreach ($this->getUserProjects() as $userProject) {
+			if ($userProject->getProject() === $project) {
+				return $userProject->getStatus();
+			}
+		}
+		return false;
+	}
+	
 	public function eraseCredentials(){
     }
 	

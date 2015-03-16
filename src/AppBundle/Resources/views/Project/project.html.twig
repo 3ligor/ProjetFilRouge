@@ -104,7 +104,9 @@
 							<strong>{{ project.title }}</strong>
 						</div>
 						<div class='col-xs-2 text-right'>
-							<a href='{{ path('project_update', {'id': project.id }) }}'><span class='glyphicon glyphicon-edit'></span> Modifier</a>
+							{% if app.user.statusInProject(project) == 4 %}
+								<a href='{{ path('project_update', {'id': project.id }) }}'><span class='glyphicon glyphicon-edit'></span> Modifier</a>
+							{% endif %}
 						</div>
 					</div>
 				</div>
@@ -114,10 +116,19 @@
 					</div>
 					{{ project.longDescription }}
 				</div>
-				<div class='panel-footer'>
-					<button type="button" class="btn btn-primary btn-block"><strong>Rejoindre le projet</strong></button>
-					<button type="button" class="btn btn-primary btn-block"><strong>Abandoner le projet</strong></button>
-				</div>
+				{% if app.user.statusInProject(project) != 4 %}
+					<div class='panel-footer'>
+						{% if app.user.statusInProject(project) == 3 %}
+							<a href='{{ path('project_userleave', {userId: app.user.id, projectId: project.id}) }}' type="button" class="btn btn-danger btn-block"><strong>Abandonner le projet</strong></a>
+						{% elseif app.user.statusInProject(project) == 2 %}
+							<a href='{{ path('project_userleave', {userId: app.user.id, projectId: project.id}) }}' type="button" class="btn btn-warning btn-block"><strong>Annuler la candidature</strong></a>
+						{% elseif app.user.statusInProject(project) == 1 %}
+							<a href='{{ path('project_userleave', {userId: app.user.id, projectId: project.id}) }}' type="button" class="btn btn-warning btn-block"><strong>Refuser l'invitation</strong></a>
+						{% else %}
+							<a href='{{ path('project_userjoin', {type: 'p',userId: app.user.id, projectId: project.id}) }}' type="button" class="btn btn-primary btn-block"><strong>Rejoindre le projet</strong></a>
+						{% endif %}
+					</div>
+				{% endif %}
 			</div>
 		</div>	
 	</div>
@@ -130,7 +141,9 @@
 							<strong>Compétences recherchées</strong>
 						</div>
 						<div class='col-xs-2 text-right'>
-							<a href='#' id="editSkillButton"><span class='glyphicon glyphicon-edit'></span> Modifier</a>
+							{% if app.user.statusInProject(project) == 4 %}
+								<a href='#' id="editSkillButton"><span class='glyphicon glyphicon-edit'></span> Modifier</a>
+							{% endif %}
 						</div>
 					</div>
 				</div>
@@ -222,7 +235,6 @@
 	<script src='{{ asset('bundles/app/js/projectDetail.js') }}'></script>
 	<script>
 		var ajaxPath = '{{ path('project_editSkill') }}';
-		var projectId
-		= {{ project.id }};
+		var projectId = '{{ project.id }}';
 	</script>
 {% endblock %}
