@@ -39,6 +39,7 @@ class ProjectController extends Controller {
 		));
 	}
 
+
 	public function detailAction($id) {
 		$em = $this->getDoctrine()->getManager();
 		$repoP = $em->getRepository('AppBundle:Project');

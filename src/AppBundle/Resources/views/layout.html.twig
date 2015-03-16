@@ -3,15 +3,16 @@
 {% block body %}
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		{% if enableChat is defined %}
-		<ul class="nav navbar-nav navbar-left">
-			<button id="chatBtn" type="button" class="btn btn-primary navbar-btn" data-toggle="collapse" href="#chat" aria-expanded="false" aria-controls="chat">
-				Chat&nbsp;<span id="userInChat" class="badge">2</span>
-			</button>
-		</ul>
+			<ul class="nav navbar-nav navbar-left">
+				<button id="chatBtn" type="button" class="btn btn-primary navbar-btn" data-toggle="collapse" href="#chat" aria-expanded="false" aria-controls="chat">
+					Chat&nbsp;<span id="userInChat" class="badge">2</span>
+				</button>
+			</ul>
 		{% endif %}
 		<ul class="nav navbar-nav navbar-right">
+			<li><img src="{{app.user.image.url}}" alt="{{app.user.image.alt}}" height="50"/><li>
 			<li role="présentation"><a href="{{ path('user_profile', {'id': app.user.id}) }}"><img src="" alt=""/>Bonjour, {{ app.user.firstname }} {{ app.user.lastname }}</a></li>
-				{% if is_granted('ROLE_USER') %}
+					{% if is_granted('ROLE_USER') %}
 				<li role="présentation"><a href="{{ path('logout') }}">Se déconnecter</a></li>
 				{% else %}
 				<li role="présentation"><a href="{{ path('login') }}">Connexion</a></li>
@@ -52,32 +53,32 @@
 		</div>
 	</div>
 	{% if enableChat is defined %}
-	<div id="chat" class="panel panel-collapse collapse box" role="tabpanel" aria-labelledby="headingOne">
-		<div id="chatContainer" class="panel-body ui-resizable">
-			<div class="col-xs-9" id="messageContainer">
-				<table class="table table-condensed table-striped">
-					<tbody id="messages">
+		<div id="chat" class="panel panel-collapse collapse box" role="tabpanel" aria-labelledby="headingOne">
+			<div id="chatContainer" class="panel-body ui-resizable">
+				<div class="col-xs-9" id="messageContainer">
+					<table class="table table-condensed table-striped">
+						<tbody id="messages">
 
-					</tbody>
-				</table>
-			</div>
-			<div class="col-xs-3" id="userContainer">					
-				<div id="userlist" class="list-group">
+						</tbody>
+					</table>
+				</div>
+				<div class="col-xs-3" id="userContainer">					
+					<div id="userlist" class="list-group">
 
+					</div>
+				</div>
+				<div class="panel-footer">    
+					<form class="form" action="">
+						<div class="input-group">
+							<input id="msg" class="form-control" autocomplete="off">
+							<span class="input-group-btn">
+								<button class="btn btn-primary">Envoyer</button>
+							</span>
+						</div>
+					</form>
 				</div>
 			</div>
-			<div class="panel-footer">    
-				<form class="form" action="">
-					<div class="input-group">
-						<input id="msg" class="form-control" autocomplete="off">
-						<span class="input-group-btn">
-							<button class="btn btn-primary">Envoyer</button>
-						</span>
-					</div>
-				</form>
-			</div>
 		</div>
-	</div>
 	{% endif %}
 	{% block content %}
 	{% endblock content %}

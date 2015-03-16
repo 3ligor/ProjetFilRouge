@@ -2,13 +2,46 @@ body {
 	background-color: #E2E2E2;
 }
 
+th {
+	color: #48b9c7;
+}
+
+hr {
+	border-color: #48b9c7;
+}
+
 h4 {
+	font-style: bold;
 	color: #FFC90E;
 	padding: 15px;
 }
 
 a {
 	color: #000;
+}
+
+.list-group-item.active {
+	color: #FFF;
+	background-color: #FFC90E;
+	border-color: #FFF;
+}
+
+.table>tbody>tr>td {
+		border-color: #48b9c7;
+}
+	
+.table>thead>tr>th {
+	vertical-align: bottom;
+	border-bottom: 2px solid #48b9c7;
+}
+
+.btn-primary{
+	background-color: #48b9c7;
+}
+
+#updateSkill {
+	padding: 20px;
+	color: #48b9c7;
 }
 
 .box {
@@ -55,9 +88,6 @@ div.edit li.inactiveSkill {
 	background-color: rgba(200, 100, 100, 0.9);
 }
 
-.list-group-item.active {
-	background-color: #337ab7 !important;
-}
 
 .chatbox form input { 
 	border: 1; 

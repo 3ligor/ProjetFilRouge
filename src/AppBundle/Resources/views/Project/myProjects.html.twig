@@ -14,7 +14,7 @@
 					<th class="text-center">Lancement</th>
 					<th class="text-center">Fin</th>
 					<th class="text-center">Nombre</th>
-					<th class="text-right">...</th>
+					
 					</thead>
 
 					{% set cpt = 0 %}
@@ -27,7 +27,7 @@
 										{{ category.title }}
 									{% endfor %}
 								</td>
-								<td class="text-left">{{ project.title }}</td>
+								<td class="text-left"><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
 								<td class="text-center">
 									<div class="progress">
 										<div class="progress-bar 
@@ -50,7 +50,7 @@
 								<td class="text-center">{{ project.startDate.format('d-m-Y') }}</td>
 								<td class="text-center">{{ project.endDate.format('d-m-Y') }}</td>
 								<td class="text-center">{{ project.userProjects | length }} <span class="glyphicon glyphicon-user"></span></td>
-								<td class="text-right"><a href="{{ path('project_detail', { id: project.id }) }}">Details</a></td>
+								
 							</tr>
 
 						{% endif %}
@@ -70,7 +70,7 @@
 					<th class="text-center">Lancement</th>
 					<th class="text-center">Fin</th>
 					<th class="text-center">Nombre</th>
-					<th class="text-right">...</th>
+				
 					</thead>
 					{% set cptt = 0 %}
 					{% for project in projects %}
@@ -83,7 +83,7 @@
 										{{ category.title }}
 									{% endfor %}
 								</td>
-								<td>{{ project.title }}</td>
+								<td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
 								<td class="text-left">
 									<div class="progress">
 										<div class="progress-bar 
@@ -106,7 +106,7 @@
 								<td class="text-center">{{ project.startDate.format('d-m-Y') }}</td>
 								<td class="text-center">{{ project.endDate.format('d-m-Y') }}</td>
 								<td class="text-center">{{ project.userProjects | length }} <span class="glyphicon glyphicon-user"></span></td>
-								<td class="text-right"><a href="{{ path('project_detail', { id: project.id }) }}">Details</a></td>
+							
 							</tr>
 						{% endif %}	
 					{% endfor %}
@@ -126,7 +126,7 @@
 					<th class="text-center">Lancement</th>
 					<th class="text-center">Fin</th>
 					<th class="text-center">Nombre</th>
-					<th class="text-right">...</th>
+				
 					</thead>
 					{% set cpttt = 0 %}
 					{% for project in projects %}
@@ -138,7 +138,7 @@
 										{{ category.title }}
 									{% endfor %}
 								</td>
-								<td class="text-left">{{ project.title }}</td>
+								<td class="text-left"><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
 								<td class="text-center">
 									<div class="progress">
 										<div class="progress-bar 
@@ -161,7 +161,7 @@
 								<td class="text-center">{{ project.startDate.format('d-m-Y') }}</td>
 								<td class="text-center">{{ project.endDate.format('d-m-Y') }}</td>
 								<td class="text-center">{{ project.userProjects | length }} <span class="glyphicon glyphicon-user"></span></td>
-								<td class="text-right"><a href="{{ path('project_detail', { id: project.id }) }}">Details</a></td>
+							
 							</tr>
 
 						{% endif %}
