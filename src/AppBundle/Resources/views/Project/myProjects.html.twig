@@ -8,28 +8,27 @@
 				<h4>Mes projets en attente</h4>
 				<table class="table table-hover">
 					<thead>
-					<th>Type</th>
-					<th>Intitulé du projet</th>
-					<th>Avancement</th>
-					<th>Lancement</th>
-					<th>Fin</th>
-					<th>Nombre</th>
-					<th>..</th>
+					<th class="text-left"> Type</th>
+					<th class="text-left" >Intitulé du projet</th>
+					<th class="text-center">Avancement</th>
+					<th class="text-center">Lancement</th>
+					<th class="text-center">Fin</th>
+					<th class="text-center">Nombre</th>
+					<th class="text-right">...</th>
 					</thead>
 
 					{% set cpt = 0 %}
 					{% for project in projects %}
-						{% set cpt = cpt+1 %}
 						{% if project.status == -1 or project.status == 0%}
-
+							{% set cpt = cpt+1 %}
 							<tr>
-								<td>
+								<td class="text-left">
 									{% for category in project.categories %} 
 										{{ category.title }}
 									{% endfor %}
 								</td>
-								<td>{{ project.title }}</td>
-								<td>
+								<td class="text-left">{{ project.title }}</td>
+								<td class="text-center">
 									<div class="progress">
 										<div class="progress-bar 
 											 {% if project.getProgress.term <= 33 %}}
@@ -48,45 +47,44 @@
 										</div>
 									</div>
 								</td>
-								<td>{{ project.startDate.format('d-m-Y') }}</td>
-								<td>{{ project.endDate.format('d-m-Y') }}</td>
-								<td>{{ project.userProjects | length }} <span class="glyphicon glyphicon-user"></span></td>
-								<td><a href="{{ path('project_detail', { id: project.id }) }}">Details</a></td>
+								<td class="text-center">{{ project.startDate.format('d-m-Y') }}</td>
+								<td class="text-center">{{ project.endDate.format('d-m-Y') }}</td>
+								<td class="text-center">{{ project.userProjects | length }} <span class="glyphicon glyphicon-user"></span></td>
+								<td class="text-right"><a href="{{ path('project_detail', { id: project.id }) }}">Details</a></td>
 							</tr>
 
 						{% endif %}
-						{% if cpt == 0 %}
-							<tr><td colspan=7"> Vous avez aucun projet en cours</td></tr>
-						{% endif %}
-
 					{% endfor %}
+					{% if cpt == 0 %}
+							<tr><td colspan=7"> Vous avez aucun projet en attente</td></tr>
+					{% endif %}
 				</table>
 			</div>
 			<div class="box">
 				<h4>Mes projets en cours</h4>
 				<table class="table table-hover">
 					<thead>
-					<th>Type</th>
-					<th>Intitulé du projet</th>
-					<th>Avancement</th>
-					<th>Lancement</th>
-					<th>Fin</th>
-					<th>Nombre</th>
-					<th>..</th>
+					<th class="text-left">Type</th>
+					<th class="text-left">Intitulé du projet</th>
+					<th class="text-center">Avancement</th>
+					<th class="text-center">Lancement</th>
+					<th class="text-center">Fin</th>
+					<th class="text-center">Nombre</th>
+					<th class="text-right">...</th>
 					</thead>
-
+					{% set cptt = 0 %}
 					{% for project in projects %}
 
 						{% if project.status == 4 %}
-
+							{% set cptt = cpt+1 %}
 							<tr>
-								<td> 
+								<td class="text-left"> 
 									{% for category in project.categories %} 
 										{{ category.title }}
 									{% endfor %}
 								</td>
 								<td>{{ project.title }}</td>
-								<td>
+								<td class="text-left">
 									<div class="progress">
 										<div class="progress-bar 
 											 {% if project.getProgress.term <= 33 %}}
@@ -112,6 +110,9 @@
 							</tr>
 						{% endif %}	
 					{% endfor %}
+					{% if cptt == 0 %}
+							<tr><td colspan=7"> Vous avez aucun projet en cours</td></tr>
+					{% endif %}
 				</table>
 			</div>
 
@@ -125,10 +126,12 @@
 					<th class="text-center">Lancement</th>
 					<th class="text-center">Fin</th>
 					<th class="text-center">Nombre</th>
-					<th class="text-center">..</th>
+					<th class="text-right">...</th>
 					</thead>
+					{% set cpttt = 0 %}
 					{% for project in projects %}
 						{% if project.status != -1 and project.status != 0 and project.status != 4 %}
+							{% set cpttt = cpt+1 %}
 							<tr>
 								<td class="text-left">
 									{% for category in project.categories %} 
@@ -164,6 +167,9 @@
 						{% endif %}
 
 					{% endfor %}
+					{% if cpttt == 0 %}
+							<tr><td colspan=7"> Vous avez aucun projet archivés</td></tr>
+					{% endif %}
 					</tr>
 				</table>
 			</div>
