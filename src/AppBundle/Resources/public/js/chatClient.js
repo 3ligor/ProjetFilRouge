@@ -15,7 +15,7 @@ $(document).ready(function ($) {
 		var windowState = 'focus';
 		var pageTitle = document.title;
 		var nbUnread = 0;
-		var socket = io('http://localhost:3000');
+		var socket = io('http://rage-inside.fr:3001');
 		var user = {
 			pseudo: username
 		};
@@ -116,7 +116,7 @@ $(document).ready(function ($) {
 
 	function userInChat() {
 		$.ajax({
-			url: 'http://localhost:3000/nb'
+			url: 'http://rage-inside.fr:3001/nb'
 		}).done(function (data) {
 			displayUserInChat(data.nb);
 		});
