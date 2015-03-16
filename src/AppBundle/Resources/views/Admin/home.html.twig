@@ -5,28 +5,107 @@
     <div class="panel panel-success">
         <div class="panel-heading">Utilisateurs</div>
         <div class="panel-body">
-            Utilisateurs enregistrés : 126 <br/>
-            Utilisateurs connectés : 23
+            Utilisateurs enregistrés : {{ users|length }} | Utilisateurs connectés : 23
         </div>
     </div>
     <div class="panel panel-info">
         <div class="panel-heading">Projets</div>
         <div class="panel-body">
-            <div id="chart_div"></div>
+            <div class="col-xs-4 col-md-3">
+                <canvas id="projectPie" width="200" height="200"></canvas>
+            </div>
+            <div class="col-xs-8 col-md-9">
+                <ul>
+                    <li style="color:#F7464A">En cours</li>
+                    <li style="color:#46BFBD">Terminés</li>
+                    <li style="color:#FDB45C">En attente de validation</li>
+                    <li style="color:#4D5360">Archivés</li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="panel panel-warning">
         <div class="panel-heading">Compétences</div>
         <div class="panel-body">
-            Panel content
-        </div>
-    </div>
-{% endblock content %}
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script src='{{ asset('bundles/app/js/googleCharts.js') }}'></script>
-    <script>
+            Catégories : {% set catnb = 0 %}{% set skillnb = 0 %}
+                            {% for skill in skills %}
+                                {% if skill.parent == null %}
+                                    {% set catnb = catnb+1 %}
+                                {% else %}
+                                    {% set skillnb = skillnb+1 %}
+                                {% endif %}
+                            {% endfor %}{{ catnb }} | Compétences : {{ skillnb }}</br>
+                            <div class="col-xs-4 col-md-3">
+                                <canvas id="skillPie" width="200" height="200"></canvas>
+                            </div>
+                            <div class="col-xs-8 col-md-9">
+                                <ul>
+                                    <li>Compétences par catégories :</li>
+                                    {% for skill in skills %}
+                                        {% if skill.parent == null %}
+                                            <li style="color:#F7464A">{{ skill.title }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% endblock content %}
+                        {% block javascripts %}
+                            {{ parent() }}
+                            <script src='{{ asset('bundles/app/js/Chart.min.js') }}'></script>
+                            <script>
+                                var options = {
+                                    //Boolean - Whether we should show a stroke on each segment
+                                    segmentShowStroke: true,
+                                    //String - The colour of each segment stroke
+                                    segmentStrokeColor: "#fff",
+                                    //Number - The width of each segment stroke
+                                    segmentStrokeWidth: 2,
+                                    //Number - The percentage of the chart that we cut out of the middle
+                                    percentageInnerCutout: 50, // This is 0 for Pie charts
+
+                                    //Number - Amount of animation steps
+                                    animationSteps: 100,
+                                    //String - Animation easing effect
+                                    animationEasing: "easeOutBounce",
+                                    //Boolean - Whether we animate the rotation of the Doughnut
+                                    animateRotate: true,
+                                    //Boolean - Whether we animate scaling the Doughnut from the centre
+                                    animateScale: false
+                                }
+
+                                var data = [
+                                    {
+                                        value: 300,
+                                        color: "rgb(247,70,74)",
+                                        highlight: "rgba(247,70,74,0.8)",
+                                        label: "En Cours"
+                                    },
+                                    {
+                                        value: 50,
+                                        color: "#46BFBD",
+                                        highlight: "#5AD3D1",
+                                        label: "Terminés"
+                                    },
+                                    {
+                                        value: 100,
+                                        color: "#FDB45C",
+                                        highlight: "#FFC870",
+                                        label: "En attente de validation"
+                                    },
+                                    {
+                                        value: 100,
+                                        color: "#4D5360",
+                                        highlight: "#616774",
+                                        label: "Archivés"
+                                    }
+                                ]
+                                var ctx = $("#projectPie").get(0).getContext("2d");
+                                var myPieChart = new Chart(ctx).Pie(data, options);
+                            </script>
+
+                            <script>
         var ajaxPath = '{{ path('admin_home') }}';
-    </script>
-{% endblock javascripts %}
+                            </script>
+                        {% endblock javascripts %}
