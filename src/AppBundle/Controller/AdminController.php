@@ -10,7 +10,24 @@ use Symfony\Component\HttpFoundation\Request;
 class AdminController extends Controller {
 
     public function homeAction() {
-        return $this->render('AppBundle:Admin:home.html.twig');
+        $users = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('AppBundle:User')
+                ->findAll();
+        $projects = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('AppBundle:Project')
+                ->findAll();
+        $skills = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('AppBundle:Skill')
+                ->findAll();
+        
+        return $this->render('AppBundle:Admin:home.html.twig', array(
+                    'users' => $users,
+                    'projects'=>$projects,
+                    'skills' => $skills
+        ));
     }
 
     public function skillAction() {
