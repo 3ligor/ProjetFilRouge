@@ -33,7 +33,7 @@
 		</div>
 		<br>
 		<br>
-        <table class="table table-hover">
+        <table class="table table-hover box">
             <thead>
             <th>Disponibilité</th>
             <th>Nom Prénom</th>
@@ -41,14 +41,14 @@
             <th>Compétence 2</th>
             <th>Compétence 3</th>
             <th>Compétence 4</th>
-            <th>..</th>
+       
             </thead>
 
             {%for user in users %}
-
+				
                 <tr>
                     <td>{{ user.available? "Oui" : "Non" }} </td>
-                    <td><strong>{{ user.lastname }}</strong> {{ user.firstname }}</td>
+                    <td><a href="{{ path('user_profile', {'id':user.id}) }}"><strong>{{ user.lastname }}</strong> {{ user.firstname }}</a></td>
                     {% set cpt = 4 %}
 
                     {% for userSkill in user.userSkills %}
@@ -72,8 +72,6 @@
 							<td></td>
 						{% endfor %}                       
                     {% endif %}      
-
-                    <td><a href="{{ path('user_profile', {'id':user.id}) }}"><button>Detail</button></a></td>
                 </tr>
             {% endfor %}
         </table>

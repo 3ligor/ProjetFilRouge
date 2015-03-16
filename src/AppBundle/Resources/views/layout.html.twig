@@ -7,8 +7,6 @@
 		<link rel="stylesheet" href="{{ asset('bundles/app/css/jquery-ui.structure.css') }}">
 	{% endif %}
 {% endblock stylesheets %}
-
-
 {% block body %}
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		{% if enableChat is defined %}
@@ -19,6 +17,7 @@
 			</ul>
 		{% endif %}
 		<ul class="nav navbar-nav navbar-right">
+			<li><img src="{{app.user.image.url}}" alt="{{app.user.image.alt}}" height="50"/><li>
 			<li role="présentation"><a href="{{ path('user_profile', {'id': app.user.id}) }}"><img src="" alt=""/>Bonjour, {{ app.user.firstname }} {{ app.user.lastname }}</a></li>
 					{% if is_granted('ROLE_USER') %}
 				<li role="présentation"><a href="{{ path('logout') }}">Se déconnecter</a></li>
@@ -67,13 +66,11 @@
 					<div class="col-xs-9" id="messageContainer">
 						<table class="table table-condensed table-striped">
 							<tbody id="messages">
-
 							</tbody>
 						</table>
 					</div>
 					<div class="col-xs-3" id="userContainer">					
 						<div id="userlist" class="list-group">
-
 						</div>
 					</div>
 				</div>
@@ -89,20 +86,15 @@
 				</div>
 			</div>
 		</div>
-{% endif %}
-{% block content %}
-{% endblock content %}
+	{% endif %}
+	{% block content %}
+	{% endblock content %}
 {% endblock body %}
-
 {% block javascripts %}
 	{{ parent() }}
-	{% if enableChat is defined %}
-		<script src='{{ asset('bundles/app/js/socket.io.js') }}'></script>
-		<script src='{{ asset('bundles/app/js/jquery-ui.custom.js') }}'></script>
-		<script>
-			var profilePath = "{{ path('user_profile') }}";
-			var username = "{{ app.user.pseudo }}";
-		</script>
-		<script src='{{ asset('bundles/app/js/chatClient.js') }}'></script>
-	{% endif %}
+	<script src='{{ asset('bundles/app/js/jquery-ui.custom.js') }}'></script>
+	<script src='{{ asset('bundles/app/js/socket.io.js') }}'></script>
+	<script src='{{ asset('bundles/app/js/chatClient.js') }}'></script>
+	
 {% endblock javascripts %}
+
