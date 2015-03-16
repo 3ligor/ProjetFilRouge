@@ -1,3 +1,21 @@
+body {
+	background-color: #E2E2E2;
+}
+
+h4 {
+	color: #FFC90E;
+	margin-left: 15px;
+	margin-top: 10px;
+}
+
+a {
+	color: #000;
+}
+
+.box {
+	background-color: #FFF;
+}
+
 .badge-danger {
 	background-color: #d9534f;
 }
