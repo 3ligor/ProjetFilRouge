@@ -16,8 +16,10 @@
 
         </div>
         <div class="col-sm-6 col-xs-6" id="profil">
-			<div class="text-right" id="updateProfil"><a href="{{ path('user_update', { id: user.id }) }}"><span class="glyphicon glyphicon-edit"></span> Modifier</a></div>
-
+			{% if user.email == app.user.email %}
+				<div class="text-right" id="updateProfil"><a href="{{ path('user_update', { id: user.id }) }}"><span class="glyphicon glyphicon-edit"></span> Modifier</a></div>
+			{% endif %}
+			
 			<dl class="dl-horizontal">
 				<dt>Prénom</dt>
 				<dd><div>{{ user.firstname }}</div></dd>
@@ -30,7 +32,7 @@
 
 				{{ user.publicBirthdate == 1 ? ('<dt>Age </dt><dd>' ~ age ~ ' ans </dd>')|raw : "" }}
 				{{ user.publicCity == 1 ? ('<dt>Ville</dt><dd>' ~ user.city ~ '</dd>')|raw : "" }}
-				{{ user.publicCity == 1 ? ('<dt>E-mail</dt><dd>'~user.email~'</dd>')|raw : "" }}
+				{{ user.publicCity == 1 ? ('<dt id="email">E-mail</dt><dd>'~user.email~'</dd>')|raw : "" }}
 				{{ user.publicCity == 1 ? ('<dt>Téléphone</dt><dd>'~user.tel~'</dd>')|raw : "" }}
 				<dt>Promotion</dt>
 				<dd>
@@ -100,8 +102,9 @@
     <hr>
 
     <div class="row">
-		<div class="text-right"><a href="#" id="updateSkill"><span class="glyphicon glyphicon-edit"></span> Modifier</a></div>
-
+		{% if user.email == app.user.email %}
+			<div class="text-right"><a href="#" id="updateSkill"><span class="glyphicon glyphicon-edit"></span> Modifier</a></div>
+		{% endif %}
 		<a href="{{ path('user_profile', { id: user.id }) }}"><button type="submit" class="btn btn-primary btn-xs btn-block hidden" id="valider">Valider</button></a>
 		<br>
 
