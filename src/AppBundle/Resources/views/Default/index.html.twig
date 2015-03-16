@@ -54,20 +54,23 @@
 	<div class="row">
 		<div class="col-sm-6 box">
 			<h4>Les nouveaux projets</h4>
+
 			<table class="table">
 				{% for project in fiveProject|slice(0,5) %}
-					<tr>
-						<td class="text-center">
-							<strong>
-								{{ project.startDate|date('d-m-Y')}}
-							</strong>
-						</td>
-						<td>
-							<a href="{{ path('project_detail', { id: project.id }) }}">
-								{{ project.title }}
-							</a>
-						</td>
-					</tr>
+					{% if fiveProject|length > 0 %}
+						<tr>
+							<td class="text-center">
+								<strong>
+									{{ project.startDate|date('d-m-Y')}}
+								</strong>
+							</td>
+							<td>
+								<a href="{{ path('project_detail', { id: project.id }) }}">
+									{{ project.title }}
+								</a>
+							</td>
+						</tr>
+					{% endif %}
 				{% endfor %}
 			</table>
 		</div>
@@ -92,7 +95,7 @@
 		</div>
 	</div>
 {% endblock content %}
-	
+
 {% block javascripts %}
 	{{ parent() }}
 	<script src='{{ asset('bundles/app/js/socket.io.js') }}'></script>
@@ -141,7 +144,7 @@
 
 			// L'action à déclencher à la réception de la Userlist
 			socket.on('userlist', function (data) {
-				$.each(data, function(index, value) {
+				$.each(data, function (index, value) {
 					appendUser(value);
 				});
 			});
