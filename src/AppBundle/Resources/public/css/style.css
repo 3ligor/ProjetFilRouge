@@ -1,3 +1,53 @@
+body {
+	background-color: #E2E2E2;
+}
+
+th {
+	color: #48b9c7;
+}
+
+hr {
+	border-color: #48b9c7;
+}
+
+h4 {
+	font-style: bold;
+	color: #FFC90E;
+	padding: 15px;
+}
+
+a {
+	color: #000;
+}
+
+.list-group-item.active {
+	color: #FFF;
+	background-color: #FFC90E;
+	border-color: #FFF;
+}
+
+.table>tbody>tr>td {
+		border-color: #48b9c7;
+}
+	
+.table>thead>tr>th {
+	vertical-align: bottom;
+	border-bottom: 2px solid #48b9c7;
+}
+
+.btn-primary{
+	background-color: #48b9c7;
+}
+
+#updateSkill {
+	padding: 20px;
+	color: #48b9c7;
+}
+
+.box {
+	background-color: #FFF;
+}
+
 .badge-danger {
 	background-color: #d9534f;
 }
@@ -38,22 +88,37 @@ div.edit li.inactiveSkill {
 	background-color: rgba(200, 100, 100, 0.9);
 }
 
-.list-group-item.active {
-	background-color: #337ab7 !important;
+
+div#chat {
+
 }
 
-.chatbox form input { border: 1; padding: 10px; width: 90%; margin-right: .5%; }
-.chatbox form input[type='submit'] { width: 9%; border: none; padding: 10px; }
+div#chatContainer {
+	margin: 5px;
+	padding: 5px;
+	height: 250px;
+	border-bottom: 1px solid #ccc;
+}
 
-div#messageContainer {
+div#userContainer, div#messageContainer {
+	margin: 0px;
+	padding: 5px;
 	overflow-y: auto;
 	overflow-x: hidden;
-	height: 250px;
-	padding: 0px;
+	height: 100%;
+	background-color: #fff;
+}
+
+#chatInput {
+	background-color: #fff;
 }
 
 .smallTD {
 	width: 15%;
+}
+
+#chatBtn {
+	margin-left: 15px;
 }
 
 ::-webkit-scrollbar {

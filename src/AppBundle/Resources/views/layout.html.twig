@@ -1,24 +1,35 @@
 {% extends '::base.html.twig' %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	{% if enableChat is defined %}
+		<link rel="stylesheet" href="{{ asset('bundles/app/css/jquery-ui.custom.css') }}">
+		<link rel="stylesheet" href="{{ asset('bundles/app/css/jquery-ui.structure.css') }}">
+	{% endif %}
+{% endblock stylesheets %}
 {% block body %}
 	<nav class="navbar navbar-inverse navbar-fixed-top">
-	
-			<ul class="nav navbar-nav navbar-right">
-				<li role="présentation"><a href="{{ path('user_profile', {'id': app.user.id}) }}"><img src="" alt=""/>Bonjour, {{ app.user.username }} {{ app.user.lastname }}</a></li>
-				{% if is_granted('ROLE_USER') %}
-						<li role="présentation"><a href="{{ path('logout') }}">Se déconnecter</a>
-				{% else %}
-						<li role="présentation"><a href="{{ path('login') }}">Connexion</a>
-
-				{% endif %}
-				<li></li>
+		{% if enableChat is defined %}
+			<ul class="nav navbar-nav navbar-left">
+				<button id="chatBtn" type="button" class="btn btn-primary navbar-btn" data-toggle="collapse" href="#chat" aria-expanded="false" aria-controls="chat">
+					Chat&nbsp;<span id="userInChat" class="badge"></span>
+				</button>
 			</ul>
-	
+		{% endif %}
+		<ul class="nav navbar-nav navbar-right">
+			<li><img src="{{app.user.image.url}}" alt="{{app.user.image.alt}}" height="50"/><li>
+			<li role="présentation"><a href="{{ path('user_profile', {'id': app.user.id}) }}"><img src="" alt=""/>Bonjour, {{ app.user.firstname }} {{ app.user.lastname }}</a></li>
+					{% if is_granted('ROLE_USER') %}
+				<li role="présentation"><a href="{{ path('logout') }}">Se déconnecter</a></li>
+				{% else %}
+				<li role="présentation"><a href="{{ path('login') }}">Connexion</a></li>
+				{% endif %}
+			<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+		</ul>
 	</nav>
-			<br>
-			<br>
-			<br>
-	
+	<br>
+	<br>
+	<br>
 	<nav role='navigation'>
 		<ul class='nav nav-tabs'>
 			{% block menu %}
@@ -43,8 +54,54 @@
 			{% endblock menu %}
 		</ul>
 	</nav>
-
-	<div class='page-header'><h1>PFR</h1></div>
+	<div class='page-header row'>
+		<div class='col-xs-8'>
+			<h1>PFR</h1>
+		</div>
+	</div>
+	{% if enableChat is defined %}
+		<div class="row">
+			<div id="chat" class="panel panel-collapse collapse box col-xs-12" role="tabpanel" aria-labelledby="headingOne">
+				<div id="chatContainer" class="panel-body">
+					<div class="col-xs-9" id="messageContainer">
+						<table class="table table-condensed table-striped">
+							<tbody id="messages">
+							</tbody>
+						</table>
+					</div>
+					<div class="col-xs-3" id="userContainer">					
+						<div id="userlist" class="list-group">
+						</div>
+					</div>
+				</div>
+				<div id="chatInput" class="panel-footer">    
+					<form class="form" action="">
+						<div class="input-group">
+							<input id="msg" class="form-control" autocomplete="off">
+							<span class="input-group-btn">
+								<button class="btn btn-primary">Envoyer</button>
+							</span>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	{% endif %}
 	{% block content %}
 	{% endblock content %}
 {% endblock body %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		{% if app.user.pseudo is defined %}
+			username = '{{ app.user.pseudo }}';
+		{% else %}
+			username = '{{ app.user.firstname }}' + +'{{ app.user.lastname }}';
+		{% endif %}
+	</script>
+	<script src='{{ asset('bundles/app/js/jquery-ui.custom.js') }}'></script>
+	<script src='{{ asset('bundles/app/js/socket.io.js') }}'></script>
+	<script src='{{ asset('bundles/app/js/chatClient.js') }}'></script>
+{% endblock javascripts %}
+

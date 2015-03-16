@@ -1,75 +1,179 @@
 {% extends "AppBundle::layout.html.twig" %}
 
 {% block content %}
-    <h3>Mes projets en attente</h3>
-    <div class="row">
-		<table class="table table-hover">
-			<thead>
-			<th>Type</th>
-			<th>Intitulé du projet</th>
-			<th>Avancement</th>
-			<th>Lancement</th>
-			<th>Fin</th>
-			<th>Nombre</th>
-			<th>..</th>
-			</thead>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-		</table>
-    </div>
-    <h3>Mes projets en cours</h3>
-    <div class="row">
-		<table class="table table-hover">
-			<thead>
-			<th>Type</th>
-			<th>Intitulé du projet</th>
-			<th>Avancement</th>
-			<th>Lancement</th>
-			<th>Fin</th>
-			<th>Nombre</th>
-			<th>..</th>
-			</thead>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-		</table>
-    </div>
-    <h3>Mes projets en archivés</h3>
-    <div class="row">
 
-		<table class="table table-hover">
-			<thead>
-			<th>Type</th>
-			<th>Intitulé du projet</th>
-			<th>Avancement</th>
-			<th>Lancement</th>
-			<th>Fin</th>
-			<th>Nombre</th>
-			<th>..</th>
-			</thead>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-		</table>
-    </div>
+    <div class="row">
+		<div class="table-responsive">
+			<div class="box">
+				<h4>Mes projets en attente</h4>
+				<table class="table table-hover">
+					<thead>
+					<th class="text-left"> Type</th>
+					<th class="text-left" >Intitulé du projet</th>
+					<th class="text-center">Avancement</th>
+					<th class="text-center">Lancement</th>
+					<th class="text-center">Fin</th>
+					<th class="text-center">Nombre</th>
+					
+					</thead>
+
+					{% set cpt = 0 %}
+					{% for project in projects %}
+						{% if project.status == -1 or project.status == 0%}
+							{% set cpt = cpt+1 %}
+							<tr>
+								<td class="text-left">
+									{% for category in project.categories %} 
+										{{ category.title }}
+									{% endfor %}
+								</td>
+								<td class="text-left"><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
+								<td class="text-center">
+									<div class="progress">
+										<div class="progress-bar 
+											 {% if project.getProgress.term <= 33 %}}
+												 progress-bar-danger
+											 {% elseif project.getProgress.term <= 67%}
+												 progress-bar-warning
+											 {% else %}
+												 progress-bar-success
+											 {% endif %}" 
+											 role="progressbar" 
+											 aria-valuenow="{{ project.getProgress.term }}" 
+											 aria-valuemin="0" 
+											 aria-valuemax="100" 
+											 style="width: {{ project.getProgress.term }}%;">
+											<strong>{{ project.getProgress.term }}%</strong>
+										</div>
+									</div>
+								</td>
+								<td class="text-center">{{ project.startDate.format('d-m-Y') }}</td>
+								<td class="text-center">{{ project.endDate.format('d-m-Y') }}</td>
+								<td class="text-center">{{ project.userProjects | length }} <span class="glyphicon glyphicon-user"></span></td>
+								
+							</tr>
+
+						{% endif %}
+					{% endfor %}
+					{% if cpt == 0 %}
+							<tr><td colspan=7"> Vous avez aucun projet en attente</td></tr>
+					{% endif %}
+				</table>
+			</div>
+			<div class="box">
+				<h4>Mes projets en cours</h4>
+				<table class="table table-hover">
+					<thead>
+					<th class="text-left">Type</th>
+					<th class="text-left">Intitulé du projet</th>
+					<th class="text-center">Avancement</th>
+					<th class="text-center">Lancement</th>
+					<th class="text-center">Fin</th>
+					<th class="text-center">Nombre</th>
+				
+					</thead>
+					{% set cptt = 0 %}
+					{% for project in projects %}
+
+						{% if project.status == 4 %}
+							{% set cptt = cpt+1 %}
+							<tr>
+								<td class="text-left"> 
+									{% for category in project.categories %} 
+										{{ category.title }}
+									{% endfor %}
+								</td>
+								<td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
+								<td class="text-left">
+									<div class="progress">
+										<div class="progress-bar 
+											 {% if project.getProgress.term <= 33 %}}
+												 progress-bar-danger
+											 {% elseif project.getProgress.term <= 67%}
+												 progress-bar-warning
+											 {% else %}
+												 progress-bar-success
+											 {% endif %}" 
+											 role="progressbar" 
+											 aria-valuenow="{{ project.getProgress.term }}" 
+											 aria-valuemin="0" 
+											 aria-valuemax="100" 
+											 style="width: {{ project.getProgress.term }}%;">
+											<strong>{{ project.getProgress.term }}%</strong>
+										</div>
+									</div>
+								</td>
+								<td class="text-center">{{ project.startDate.format('d-m-Y') }}</td>
+								<td class="text-center">{{ project.endDate.format('d-m-Y') }}</td>
+								<td class="text-center">{{ project.userProjects | length }} <span class="glyphicon glyphicon-user"></span></td>
+							
+							</tr>
+						{% endif %}	
+					{% endfor %}
+					{% if cptt == 0 %}
+							<tr><td colspan=7"> Vous avez aucun projet en cours</td></tr>
+					{% endif %}
+				</table>
+			</div>
+
+			<div class="box">
+				<h4>Mes projets archivés</h4>
+				<table class="table table-hover">
+					<thead>
+					<th class="text-left">Type</th>
+					<th class="text-left">Intitulé du projet</th>
+					<th class="text-center">Avancement</th>
+					<th class="text-center">Lancement</th>
+					<th class="text-center">Fin</th>
+					<th class="text-center">Nombre</th>
+				
+					</thead>
+					{% set cpttt = 0 %}
+					{% for project in projects %}
+						{% if project.status != -1 and project.status != 0 and project.status != 4 %}
+							{% set cpttt = cpt+1 %}
+							<tr>
+								<td class="text-left">
+									{% for category in project.categories %} 
+										{{ category.title }}
+									{% endfor %}
+								</td>
+								<td class="text-left"><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
+								<td class="text-center">
+									<div class="progress">
+										<div class="progress-bar 
+											 {% if project.getProgress.term <= 33 %}}
+												 progress-bar-danger
+											 {% elseif project.getProgress.term <= 67%}
+												 progress-bar-warning
+											 {% else %}
+												 progress-bar-success
+											 {% endif %}" 
+											 role="progressbar" 
+											 aria-valuenow="{{ project.getProgress.term }}" 
+											 aria-valuemin="0" 
+											 aria-valuemax="100" 
+											 style="width: {{ project.getProgress.term }}%;">
+											<strong>{{ project.getProgress.term }}%</strong>
+										</div>
+									</div>
+								</td>
+								<td class="text-center">{{ project.startDate.format('d-m-Y') }}</td>
+								<td class="text-center">{{ project.endDate.format('d-m-Y') }}</td>
+								<td class="text-center">{{ project.userProjects | length }} <span class="glyphicon glyphicon-user"></span></td>
+							
+							</tr>
+
+						{% endif %}
+
+					{% endfor %}
+					{% if cpttt == 0 %}
+							<tr><td colspan=7"> Vous avez aucun projet archivés</td></tr>
+					{% endif %}
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
 {% endblock content %}
 

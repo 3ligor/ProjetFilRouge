@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * UserProject
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="UserProjectRepository")
  */
 class UserProject {
 
@@ -77,10 +77,10 @@ class UserProject {
 	/**
 	 * Set user
 	 *
-	 * @param \AppBundle\Entity\User $user
+	 * @param User $user
 	 * @return UserProject
 	 */
-	public function setUser(\AppBundle\Entity\User $user = null) {
+	public function setUser(User $user) {
 		$this->user = $user;
 		$user->addUserProject($this);
 		return $this;
@@ -89,7 +89,7 @@ class UserProject {
 	/**
 	 * Get user
 	 *
-	 * @return \AppBundle\Entity\User 
+	 * @return User 
 	 */
 	public function getUser() {
 		return $this->user;
@@ -98,10 +98,10 @@ class UserProject {
 	/**
 	 * Set project
 	 *
-	 * @param \AppBundle\Entity\Project $project
+	 * @param Project $project
 	 * @return UserProject
 	 */
-	public function setProject(\AppBundle\Entity\Project $project = null) {
+	public function setProject(Project $project = null) {
 		$this->project = $project;
 		return $this;
 	}
@@ -109,7 +109,7 @@ class UserProject {
 	/**
 	 * Get project
 	 *
-	 * @return \AppBundle\Entity\Project 
+	 * @return Project 
 	 */
 	public function getProject() {
 		return $this->project;
