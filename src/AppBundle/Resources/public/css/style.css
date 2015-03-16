@@ -60,29 +60,28 @@ div.edit li.inactiveSkill {
 	background-color: #337ab7 !important;
 }
 
-.chatbox form input { 
-	border: 1; 
-	padding: 10px; 
-	width: 90%; 
-	margin-right: .5%; 
-}
-.chatbox form input[type='submit'] { 
-	width: 9%; border: none; 
-	padding: 10px; 
+div#chat {
+
 }
 
-div#messageContainer {
-	overflow-y: auto;
-	overflow-x: hidden;
+div#chatContainer {
+	margin: 5px;
+	padding: 5px;
 	height: 250px;
-	padding: 0px;
+	border-bottom: 1px solid #ccc;
 }
 
-div#userlist.list-group {
+div#userContainer, div#messageContainer {
+	margin: 0px;
+	padding: 5px;
 	overflow-y: auto;
 	overflow-x: hidden;
-	height: 250px;
-	padding: 0px;
+	height: 100%;
+	background-color: #fff;
+}
+
+#chatInput {
+	background-color: #fff;
 }
 
 .smallTD {

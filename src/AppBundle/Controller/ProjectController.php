@@ -46,7 +46,6 @@ class ProjectController extends Controller {
 		$project = $repoP->findProjectEager($id);
 		$skills = $repoS->getSkillsWithChilds();
 
-
 		return $this->render('AppBundle:Project:project.html.twig', array(
 					'project' => $project,
 					'skills' => $skills
