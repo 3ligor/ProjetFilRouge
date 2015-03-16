@@ -27,15 +27,18 @@ project_editSkill:
     defaults: { _controller: AppBundle:Project:editProjectSkill}
     requirements:
         _method:  POST
-        
-project_userinvit:
-    path: /userInvit
-    defaults: { _controller: AppBundle:Project:userInvit, id: -1}
-    requirements:
-        id: \d+
-        
+
 project_userjoin:
-    path: /userJoin
-    defaults: { _controller: AppBundle:Project:userJoin, id: -1}
+    path: /{projectId}/userJoin/{type}-{userId}
+    defaults: { _controller: AppBundle:Project:userJoin, type: 'invit', projectId: -1, userId: -1}
     requirements:
-        id: \d+
+        projectId: \d+
+        userId: \d+
+        type: \w
+        
+project_userleave:
+    path: /{projectId}/userLeave/{userId}
+    defaults: { _controller: AppBundle:Project:userLeave, projectId: -1, userId: -1}
+    requirements:
+        projectId: \d+
+        userId: \d+

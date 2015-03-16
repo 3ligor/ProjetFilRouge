@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Project;
+use AppBundle\Entity\UserProject;
 use AppBundle\Form\ProjectType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -24,15 +25,12 @@ class ProjectController extends Controller {
 
 	public function myProjectsAction() {
 		$id = $this->getUser()->getId();
-		
 		$em = $this->getDoctrine()->getManager();
-		
-		$repoP1 = $em->getRepository('AppBundle:Project');
-		$projects1 = $repoP1->findProjectsEager();
-		
+
 		$repoP = $em->getRepository('AppBundle:Project');
+		$projects1 = $repoP->findProjectsEager();
 		$projects = $repoP->findProjectUserEager($id);
-		
+
 		return $this->render('AppBundle:Project:myProjects.html.twig', array(
 					'projects' => $projects,
 					'userPro' => $projects1
@@ -174,6 +172,46 @@ class ProjectController extends Controller {
 		$em->flush();
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;
+	}
+
+	public function userJoinAction($projectId, $userId, $type) {
+		$em = $this->getDoctrine()->getManager();
+		$repoU = $em->getRepository('AppBundle:User');
+		$repoP = $em->getRepository('AppBundle:Project');
+		$user = $repoU->find($userId);
+		$project = $repoP->find($projectId);
+
+		$userProject = (new UserProject())->setUser($user)->setProject($project);
+
+		$type === 'i' ? $userProject->setStatus(1) : $userProject->setStatus(2);
+
+		$em->persist($userProject);
+		$em->flush();
+
+		if ($type === 'p') {
+			return $this->redirect($this->generateUrl('project_detail', array(
+								'id' => $projectId,
+							))
+			);
+		} else {
+			return $this->redirect($this->generateUrl('user_profile', array(
+								'id' => $userId,
+							))
+			);
+		}
+	}
+
+	public function userLeaveAction($projectId, $userId) {
+		$em = $this->getDoctrine()->getManager();
+		$repoUp = $em->getRepository('AppBundle:UserProject');
+		$userProject = $repoUp->getUserProjectByProjectAndUser($projectId, $userId);
+		$em->remove($userProject);
+		$em->flush();
+
+		return $this->redirect($this->generateUrl('project_detail', array(
+							'id' => $projectId,
+						))
+		);
 	}
 
 }
