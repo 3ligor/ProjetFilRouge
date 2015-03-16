@@ -100,7 +100,7 @@ $(document).ready(function ($) {
 			$('#userlist').append(newUser);
 			$('#' + socket.id).addClass('list-group-item-success');
 			newUser.show('slide', {
-				easing: 'easeInExpo',
+				easing: 'easeInExpo'
 			});
 			newUser.click(function (e) {
 				e.preventDefault();

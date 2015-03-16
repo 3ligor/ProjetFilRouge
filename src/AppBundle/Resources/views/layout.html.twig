@@ -90,11 +90,18 @@
 	{% block content %}
 	{% endblock content %}
 {% endblock body %}
+
 {% block javascripts %}
 	{{ parent() }}
+	<script>
+		{% if app.user.pseudo is defined %}
+			username = '{{ app.user.pseudo }}';
+		{% else %}
+			username = '{{ app.user.firstname }}' + +'{{ app.user.lastname }}';
+		{% endif %}
+	</script>
 	<script src='{{ asset('bundles/app/js/jquery-ui.custom.js') }}'></script>
 	<script src='{{ asset('bundles/app/js/socket.io.js') }}'></script>
 	<script src='{{ asset('bundles/app/js/chatClient.js') }}'></script>
-	
 {% endblock javascripts %}
 
