@@ -10,6 +10,9 @@ class NotificationController extends Controller {
 	public function sendNotificationAction($recipients, $message, $type) {
 		$em = $this->getDoctrine()->getManager();
 		
+		foreach ($recipients as $recipient) {
+			$notification = new Notification();
+		}
 		
 	}
 
