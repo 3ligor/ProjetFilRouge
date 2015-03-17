@@ -6,18 +6,13 @@
 {% endblock %}
 
 {% block content %}
-
     <div class="row" id="row">
         <div class="col-sm-2 col-xs-6 text-center">
 			<div class="text-right"><a href="#"><span class="glyphicon glyphicon-edit"></span></a></div>
 			<img src="{{ user.image.url }}"  alt="{{ user.image.alt }}" class="img-thumbnail "/><br>
-
         </div>
         <div class="col-sm-6 col-xs-6" id="profil">
-			
-			
 			{{ form_start(userform) }}  
-			
 			<dl class="dl-horizontal">
 				<dt>Prénom</dt>
 				<dd><div>{{ user.firstname }}</div></dd>
@@ -51,9 +46,7 @@
 				<dd>	{{ form_widget(userform.available)}}</dd>
 			</dl>
 			{{ form_end(userform) }}
-				
         </div>
-
         <div class="col-sm-4 col-xs-6">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
@@ -101,40 +94,26 @@
             </div>
         </div>
     </div>
-
     <hr>
-
     <div class="row">
-		
-
 		{%for userSkill in user.userSkills %}
-
 			{% if userSkill.skill.parent == null %}
-
-
 				<div class='col-xs-6 col-sm-4 col-md-3'>
-
 					<ul class='list-group'>
 						<li class='list-group-item active'>
 							{{ userSkill.skill.title }}
 						</li>
 						{% for childSkill in userSkill.skill.childs %}
-
 							{% if childSkill.existInUser(user) %}
-
 								<li class='list-group-item'>
 									<div class="row">
 										<div class="col-xs-6">{{ childSkill.title }}</div>
-
 										<div class="text-right col-xs-6">
 											{% for childUserSkill in childSkill.userSkills%}
 												{% if  childUserSkill.user == user %}
-
-
 													{% for i in 1..childUserSkill.value %}
 														<span class="glyphicon glyphicon-star"></span>
 													{% endfor%}
-
 													{% if childUserSkill.value != 5 %} 
 														{% for i in childUserSkill.value..4 %}
 															<span class="glyphicon glyphicon-star-empty"></span>
@@ -145,21 +124,16 @@
 										</div>
 									</div>
 								</li>
-
-
 							{% endif%}
 						{% endfor %}
 					</ul>
 				</div>
 			{% endif%}
 		{% endfor%}
-
 	</div>
-
 {% endblock content %}
 
 {% block javascripts %}
-
     <script src='{{ asset('bundles/app/js/jquery-2.1.1.js') }}'></script>
     <script src='{{ asset('bundles/app/js/bootstrap.min.js') }}'></script>
     <script src='{{ asset('bundles/app/js/bootstrap-switch.min.js') }}'></script>

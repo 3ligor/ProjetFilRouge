@@ -452,6 +452,7 @@ class User implements UserInterface {
 		$this->promo = new ArrayCollection();
 		$this->userSkills = new ArrayCollection();
 		$this->userProjects = new ArrayCollection();
+		$this->notifications = new ArrayCollection();
 	}
 
 	/**

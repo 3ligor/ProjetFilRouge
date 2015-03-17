@@ -37,7 +37,6 @@ class ProjectController extends Controller {
 		));
 	}
 
-
 	public function detailAction($id) {
 		$em = $this->getDoctrine()->getManager();
 		$repoP = $em->getRepository('AppBundle:Project');
@@ -188,6 +187,28 @@ class ProjectController extends Controller {
 
 		$em->persist($userProject);
 		$em->flush();
+
+		// Notification
+		if ($type === 'i') {
+			$notificationType = 'Invitation';
+			$notificationMessage = 'Vous avez été invité à rejoindre un projet : ' . $project->getTitle() . '.';
+			$notificationRecipients = array($user);		
+		} elseif ($type === 'p') {
+			$notificationType = 'Postulation';
+			$notificationMessage = $user->getFirstname() . ' ' . $user->getLastname() . ' a postulé à votre projet : ' . $project->getTitle() . '.';
+			$notificationRecipients = array();	
+			foreach ($project->getUserProjects() as $userProject) {
+				if ($userProject->getStatus() === 4) {
+					$notificationRecipients[] = $userProject->getUser();
+				}
+			}
+		}
+		$this->forward('notification:sendNotificationAction', array(
+			'recipients' => $notificationRecipients,
+			'type' => $notificationType,
+			'message' => $notificationMessage,
+			'em' => $em
+		));
 
 		if ($type === 'p') {
 			return $this->redirect($this->generateUrl('project_detail', array(

@@ -45,6 +45,7 @@ a {
 }
 
 .box {
+	padding: 5px;
 	background-color: #FFF;
 }
 
@@ -88,9 +89,9 @@ div.edit li.inactiveSkill {
 	background-color: rgba(200, 100, 100, 0.9);
 }
 
-
-div#chat {
-
+#notifContainer {
+	max-height: 250px;
+	overflow-y: auto;
 }
 
 div#chatContainer {

@@ -1,22 +1,12 @@
 {% extends "AppBundle::layout.html.twig" %}
 
-{% block stylesheets %}
-	{{ parent() }}
-    <link rel="stylesheet" href="{{ asset('bundles/app/css/bootstrap-switch.min.css') }}">                           
-{% endblock %}
-
 {% block content %}
-
     <div class="row" id="row">
-        <div class="col-sm-2 col-xs-6 text-center">
+        <div class="col-sm-2 hidden-xs text-center">
 			<div class="text-right"><a href="#"><span class="glyphicon glyphicon-edit"></span></a></div>
 			<img src="{{ user.image.url }}"  alt="{{ user.image.alt }}" class="img-thumbnail "/><br>
-
-
-
         </div>
-
-        <div class="col-sm-6 col-xs-6" id="profil">
+        <div class="col-sm-6 col-xs-12" id="profil">
 			{% if user.email == app.user.email %}
 				<div class="text-right" id="updateProfil">
 					<a href="{{ path('user_update', { id: user.id }) }}"><span class="glyphicon glyphicon-edit"></span> Modifier</a>
@@ -27,7 +17,6 @@
 						<span class="glyphicon glyphicon-hand-right"></span> Invitation
 					</button>
 				</div>
-
 				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -39,29 +28,18 @@
 								<span id="spanProjectInvitation">Dans quel projet souhaitez-vous inviter <strong>{{ user.firstname }} {{ user.lastname }}</strong> ?<br></span>
 								<span id="spanProjectNoInvitation" class="hidden"><p>{{ user.firstname }} {{ user.lastname }} est déjà présent dans tous vos projets.</p></span>
 								<ul id="ulProjectList">
-									
 									{% for project in projects %}
-
 										{% for userProject in project.userProjects %}
 											{% if userProject.user.email == app.user.email  %}
-												
 												{% if userProject.status == 4 and user.getStatusInProject(project) == false  %}
-													
 													<li>
 														<a href="{{ path('project_userjoin', { type: 'i', userId: user.id , projectId : project.id}) }}">{{ project.title }}</a>
 													</li>
-													
 												{% endif %}
-												
 											{% endif %}
 										{% endfor %}
-
 									{% endfor %}
-									
-										
-									
 								</ul>
-
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
@@ -70,7 +48,6 @@
 					</div>
 				</div>
 			{% endif %}
-
 			<dl class="dl-horizontal">
 				<dt>Prénom</dt>
 				<dd><div>{{ user.firstname }}</div></dd>
@@ -79,12 +56,10 @@
 				<dt>Pseudo</dt>
 				<dd><div>{{ user.pseudo }}</div></dd>
 				{% set age = "now"|date("Y") - user.birthDate|date('Y')%}
-
-
 				{{ user.publicBirthdate == 1 ? ('<dt>Age </dt><dd>' ~ age ~ ' ans </dd>')|raw : "" }}
 				{{ user.publicCity == 1 ? ('<dt>Ville</dt><dd>' ~ user.city ~ '</dd>')|raw : "" }}
-				{{ user.publicCity == 1 ? ('<dt id="email">E-mail</dt><dd>'~user.email~'</dd>')|raw : "" }}
-				{{ user.publicCity == 1 ? ('<dt>Téléphone</dt><dd>'~user.tel~'</dd>')|raw : "" }}
+				{{ user.publicMail == 1 ? ('<dt id="email">E-mail</dt><dd>'~user.email~'</dd>')|raw : "" }}
+				{{ user.publicTel == 1 ? ('<dt>Téléphone</dt><dd>'~user.tel~'</dd>')|raw : "" }}
 				<dt>Promotion</dt>
 				<dd>
 					{% for promo in user.promo %}
@@ -98,88 +73,61 @@
 				<dt>Disponibilité</dt>
 				<dd>{{ user.available == 1 ? "Oui" : "Non" }}</dd>
 			</dl>
-
-
 		</div>
-
-		<div class="col-sm-4 col-xs-6">
-			<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-				<div class="panel panel-default">
-					<div class="panel-heading" role="tab" id="headingOne">
-						<h4 class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-								Notification 1
-							</a>
-						</h4>
-					</div>
-					<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-						<div class="panel-body">
-							Skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, 
+		{% if user.email == app.user.email %}
+			<div id='notifContainer' class="col-sm-4 col-xs-12">
+				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+					{% for notification in notifications %}
+						<div class="panel panel-default">
+							<div class="panel-heading" role="tab" id="heading{{ loop.index }}">
+								<div class='row'>
+									<div class='col-xs-8'>
+										<a class='collapsed' data-toggle="collapse" data-parent="#accordion" href="#collapse{{ loop.index }}" aria-expanded="false" aria-controls="collapse{{ loop.index }}">
+											{{ notification.type }}
+										</a>
+									</div>
+									<div class='col-xs-4 text-right'>
+										<a href=''>
+										<span class="glyphicon glyphicon-trash"></span>
+										</a>
+									</div>
+								</div>
+										
+							</div>
+							<div id="collapse{{ loop.index }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ loop.index }}">
+								<div class="panel-body">
+									{{ notification.message }}
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" role="tab" id="headingTwo">
-						<h4 class="panel-title">
-							<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-								Notification 2
-							</a>
-						</h4>
-					</div>
-					<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-						<div class="panel-body">
-							Skateboard et. Nihil anim keffiyeh helvetica, nth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" role="tab" id="headingThree">
-						<h4 class="panel-title">
-							<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-								Notification 3
-							</a>
-						</h4>
-					</div>
-					<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-						<div class="panel-body">
-							Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-						</div>
-					</div>
+					{% endfor %}
 				</div>
 			</div>
-		</div>
+		{% endif %}
 	</div>
-
 	<hr />
-
 	<div class="row box">
 		{% if user.email == app.user.email %}
 			<div class="text-right"><a href="#" id="updateSkill"><span class="glyphicon glyphicon-edit"></span> Modifier</a></div>
+			<a href="{{ path('user_profile', { id: user.id }) }}"><button type="submit" class="btn btn-primary btn-xs btn-block hidden" id="valider">Valider</button></a>
 		{% endif %}
-		<a href="{{ path('user_profile', { id: user.id }) }}"><button type="submit" class="btn btn-primary btn-xs btn-block hidden" id="valider">Valider</button></a>
 		<br>
-
 		{%for skill in skills %}
 			{#On va chercher les categories #}
 			{% if skill.parent == null %}	
 				{#On regarde si la categorie existe sur l'user#}
 				{% if skill.existInUser(user) %}
-
 					<div class='col-xs-6 col-sm-4 col-md-3'>
-
 						<ul class='list-group'>
 							<li class='list-group-item active'>	
 								{{ skill.title}}
-
 								{% for child in skill.childs %}
 									{% if child.existInUser(user) %}
 									<li class='list-group-item visible'>
 										<div class="row">
 											<div class="col-xs-6">{{ child.title }}</div>
-
 											<div class="text-right col-xs-6 editSkill hidden"> 
 												{% for userSkill in user.userSkills %}
-
 													{% if userSkill.skill.title == child.title %}
 														<div id="{{ userSkill.id }}">
 															<div id="{{ userSkill.id }}">
@@ -197,10 +145,7 @@
 														</div>
 													{% endif %}
 												{% endfor %}
-
 											</div>
-
-
 											<div class="text-right col-xs-6 valueSkill">
 												{% for userSkill in user.userSkills %}
 													{% if userSkill.skill.title == child.title %}
@@ -214,7 +159,6 @@
 														{% endif %}
 													{% endif %}
 												{% endfor %}
-
 											</div>
 										</div>
 									</li>
@@ -260,11 +204,9 @@
 												<option>5</option>
 											</select>
 										</div>
-
 									</div>
 								</li>
 							{% endfor %}
-
 						</ul>
 					</div>
 				{% endif %}
@@ -274,24 +216,21 @@
 	<hr />
 	<div class="row">
 		<div class="col-sm-12 box">
-			<h4>Mes projets</h4>
+			<h4>Projets</h4>
 			<table class="table">
 				{% for project in projects %}
 					{% if project.status == 4 %}
 						<tr>
-
 							<td class="col-sm-1 text-center">
 								{% for userProject in project.userProjects %}
 									{% if userProject.user.email == app.user.email  %}
 										{% if userProject.status == 4 %}
-											<span class="glyphicon glyphicon-star">
-											{% else %}
-												<span class="glyphicon glyphicon-user">
-												{% endif %}
-											{% endif %}
-										{% endfor %}
-
-									</span>
+											<span class="glyphicon glyphicon-star"></span>
+										{% else %}
+											<span class="glyphicon glyphicon-user"></span>
+										{% endif %}
+									{% endif %}
+								{% endfor %}
 							</td>
 							<td class="col-sm-2"><div class="progress">
 									<div class="progress-bar 
@@ -321,25 +260,20 @@
 {% endblock content %}
 
 {% block javascripts %}
-
 	<script src='{{ asset('bundles/app/js/jquery-2.1.1.js') }}'></script>
 	<script src='{{ asset('bundles/app/js/bootstrap.min.js') }}'></script>
 	<script src='{{ asset('bundles/app/js/bootstrap-switch.min.js') }}'></script>
-
 	<script>
-		
-		if($('#ulProjectList').has( "li" ).length === 0){
+		if ($('#ulProjectList').has("li").length === 0) {
 			$('#spanProjectInvitation').removeClass('visible').addClass('hidden');
 			$('#spanProjectNoInvitation').removeClass('hidden').addClass('visible');
 		}
-		
+
 		$('#myModal').on('shown.bs.modal', function () {
 			$('#myInput').focus();
 		});
 
-
 		$('#updateSkill').click(function () {
-
 			// Utilise la class pour le each plutot qu'un id
 			$('.inactiveSkill ').each(function () {
 				$(this).removeClass('hidden').addClass('visible');
@@ -348,32 +282,19 @@
 			$('#valider').removeClass('hidden').addClass('visible');
 			$('.editSkill').removeClass('hidden').addClass('visible');
 			$('.valueSkill').removeClass('visible').addClass('hidden');
-
-
 		});
 
 		$('select').change(function (e) {
-
-
 			var id = e.currentTarget.id;
 			var value = e.target.value;
-			var userId
-			= {{ user.id }};
-					var userSkillId = e.currentTarget.parentElement.id;
-
+			var userId = '{{ user.id }}';
+			var userSkillId = e.currentTarget.parentElement.id;
 			if (value == 0) {
 				$('#' + id + '').css('background-color', 'rgb(242, 165, 165)');
 			}
 			else {
 				$('#' + id + '').css('background-color', 'rgb(158, 215, 158)');
 			}
-
-
-
-			console.log(id);
-			console.log(value);
-			console.log(userId);
-			console.log(userSkillId);
 			$.ajax({
 				url: "{{ path('user_addSkillUser') }}",
 				type: 'POST',
@@ -382,13 +303,6 @@
 			}).success(function (data) {
 				console.log(data);
 			});
-
-
 		});
-
-
-
-
 	</script>
-
 {% endblock %}

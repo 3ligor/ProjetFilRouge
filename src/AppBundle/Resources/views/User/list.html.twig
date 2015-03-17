@@ -1,7 +1,6 @@
 {% extends "AppBundle::layout.html.twig" %}
 
 {% block content %}
-
     <h3>Liste des utilisateurs</h3>
     <br>
     <br>
@@ -17,7 +16,6 @@
                     <option>Non</option>
                 </select>
             </div>
-
             {% for i in 0..2 %}
                 <div class="col-sm-3 col-xs-6">
                     <label for='typeProjet'>Type de compétence</label>
@@ -41,31 +39,21 @@
             <th>Compétence 2</th>
             <th>Compétence 3</th>
             <th>Compétence 4</th>
-       
             </thead>
-
             {%for user in users %}
-				
                 <tr>
                     <td>{{ user.available? "Oui" : "Non" }} </td>
                     <td><a href="{{ path('user_profile', {'id':user.id}) }}"><strong>{{ user.lastname }}</strong> {{ user.firstname }}</a></td>
                     {% set cpt = 4 %}
-
                     {% for userSkill in user.userSkills %}
 						{% if userSkill.skill.parent != null %}
-
 							{% if cpt > 0 %}
-
 								{% set cpt = cpt - 1 %}
 								<td>
 									{{ userSkill.skill.title }}
-									
 								</td>
-
 							{% endif %}
-
 						{% endif%}
-
                     {% endfor %}
 					{% if cpt > 0 %}
 						{% for i in 1..cpt %}
@@ -75,9 +63,6 @@
                 </tr>
             {% endfor %}
         </table>
-
     </div>
-
-
 {% endblock content %}
 

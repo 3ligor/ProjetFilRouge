@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Notification
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="NotificationRepository")
  */
 class Notification
 {
@@ -52,7 +52,7 @@ class Notification
     /**
      * @var User
      * 
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="nofications")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="notifications")
      */
     private $user;
 

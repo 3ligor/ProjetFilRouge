@@ -26,20 +26,22 @@ class UserController extends Controller {
 	}
 
 	public function profileAction($id) {
-
 		$em = $this->getDoctrine()->getManager();
 		$repoUser = $em->getRepository('AppBundle:User');
 		$repoSkill = $em->getRepository('AppBundle:Skill');
 		$repoProjet = $em->getRepository('AppBundle:Project');
-		$oneUser = $repoUser->findOneUserEager($id);
+		$repoNotif = $em->getRepository('AppBundle:Notification');
+		
 		$skills = $repoSkill->getSkillsWithChilds();
-		$idUser = $this->getUser()->getId();
-		$projects = $repoProjet->findProjectUserEager($idUser);
+		$user = $repoUser->findOneUserEager($id);
+		$projects = $repoProjet->findProjectUserEager($id);
+		$notifications = $repoNotif->findUserNotifications($id);
 		
 		return $this->render('AppBundle:User:profil.html.twig', array(
-					'user' => $oneUser,
+					'user' => $user,
 					'skills' => $skills,
-					'projects'=> $projects
+					'projects'=> $projects,
+					'notifications' => $notifications
 		));
 	}
 
@@ -66,7 +68,6 @@ class UserController extends Controller {
 		$form = $this->createForm(new UserEditSkillType(), $user, array(
 			'action' => $this->generateUrl('user_updateskill', array('id' => $user->getId()))
 		));
-
 		$form->handleRequest($req); //permet d'ajouter les valeurs 
 
 		if ($form->isValid()) {
@@ -82,7 +83,6 @@ class UserController extends Controller {
 	}
 
 	public function addSkillUserAction(Request $req) {
-
 		$em = $this->getDoctrine()->getManager();
 		$repoUser = $em->getRepository('AppBundle:User');
 		$user = $repoUser->find($req->request->get('userId'));
@@ -96,15 +96,12 @@ class UserController extends Controller {
 		$value = $req->request->get('skillValue'); 
 
 		if($value > 0){
-			
 			if($skill->existInUser($user)){
-				
 				$userSkill->setValue($value);
 				$response = new Response(json_encode(array(
 							'status' => 'update',
 				)));
 			} else{
-				
 				if( $skill->getParent()->existInUser($user) ){
 
 					$newSkill = new UserSkill();
@@ -128,11 +125,8 @@ class UserController extends Controller {
 					$em->persist($newParentSkill);
 				}
 			}
-
 		} else {
-			
 			$cpt = 0;
-				
 			foreach( $skill->getParent()->getChilds() as $child) {
 				if($child->existInUser($user)){
 					$cpt ++;
@@ -140,8 +134,6 @@ class UserController extends Controller {
 			}
 			
 			if($cpt >= 2){
-				
-				
 				$em->remove($userSkill);
 				
 				$response = new Response(json_encode(array(
@@ -162,11 +154,9 @@ class UserController extends Controller {
 							'status' => $userParentSkill->getId(),
 				)));
 			}
-
 		}
 		$em->flush();
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;
 	}
-
 }
