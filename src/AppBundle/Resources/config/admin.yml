@@ -1,6 +1,12 @@
 admin_home:
     path:   /
     defaults: { _controller: AppBundle:Admin:home }
+
+admin_statistics:
+    path:	/statistics
+    defaults: { _controller: AppBundle:Admin:statistics }
+    requirements:
+         _method: GET
     
 admin_project:
     path: /project

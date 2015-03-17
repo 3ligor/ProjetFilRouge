@@ -6,11 +6,43 @@ use AppBundle\Entity\Skill;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Serializer;
+
 
 class AdminController extends Controller {
 
     public function homeAction() {
-        return $this->render('AppBundle:Admin:home.html.twig');
+        $users = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('AppBundle:User')
+                ->findAll();
+        $projects = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('AppBundle:Project')
+                ->findAll();
+        $skills = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('AppBundle:Skill')
+                ->findAll();
+
+        return $this->render('AppBundle:Admin:home.html.twig', array(
+                    'users' => $users,
+                    'projects' => $projects,
+                    'skills' => $skills
+        ));
+    }
+
+    public function statisticsAction(Request $req) {
+        $projects = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('AppBundle:Project')
+                ->findAll();
+        $response = new JsonResponse();
+        $response->setData($projects);
+        return $response;
     }
 
     public function skillAction() {

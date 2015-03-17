@@ -1,0 +1,77 @@
+	<script>
+	
+		{% if app.user.pseudo is defined %}
+			username = '{{ app.user.pseudo }}';
+		{% else %}
+			username = '{{ app.user.firstname }}' + +'{{ app.user.lastname }}';
+		{% endif %}
+	</script>
+	<script src='{{ asset('bundles/app/js/jquery-ui.custom.js') }}'></script>
+	<script src='{{ asset('bundles/app/js/socket.io.js') }}'></script>
+	<script src='{{ asset('bundles/app/js/chatClient.js') }}'></script>
+	<script src='{{ asset('bundles/app/js/jquery.autocomplete.js') }}'></script>
+	<script>
+		var profilePath = '{{ path('user_profile') }}' + '/';
+		var projectPath = '{{ path('project_detail') }}' + '/';
+				var userList = {
+			{% for user in searchUsers %}
+				{{ user.id }}: '{{ user.firstname }} {{ user.pseudo }} {{ user.lastname }}' , 
+			{% endfor %}
+			};
+			
+				var userDetails = {
+			{% for user in searchUsers %}
+				'{{ user.firstname }} {{ user.pseudo }} {{ user.lastname }}': {
+					id: {{ user.id}},
+					imgUrl: '{{ user.image.url }}',
+				}, 
+			{% endfor %}
+			};
+				
+				var projectList = {
+			{% for project in searchProjects %}
+					{{ project.id }} : "{{ project.title }}",
+			{% endfor %}
+			};
+			
+			
+				var projectDetails = {
+			{% for project in searchProjects %}
+				'{{ project.title }}': {
+					id: {{ project.id}}
+				}, 
+			{% endfor %}
+			};
+						
+			var user = $.map(userList, function(result){
+				return {value: result, data: {category: 'Utilisateurs'}};
+			});
+			
+			var project = $.map(projectList, function (result) {
+				return {value: result, data: {category: 'Projects'}};
+			});
+			var result =user.concat(project);
+			
+			$('#autocomplete').autocomplete({
+				lookup: result,
+				minChars: 3,
+				onSelect: function(suggestion){
+					$('#selection').html('You selected: ' + suggestion.value + ', ' + suggestion.data.category);
+					
+					if(suggestion.data.category === 'Utilisateurs'){
+						window.location.replace(profilePath+userDetails[suggestion.value].id);
+					} else{
+						window.location.replace(projectPath+projectDetails[suggestion.value].id);
+					}
+					
+				},
+				showNoSuggestionNotice: true,
+				noSuggestionNotice: 'Aucun résultat',
+				groupBy: 'category'
+			});
+
+	</script>
+
+
+
+
