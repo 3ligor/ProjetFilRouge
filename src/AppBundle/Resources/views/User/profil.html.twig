@@ -321,11 +321,7 @@
 {% endblock content %}
 
 {% block javascripts %}
-
-	<script src='{{ asset('bundles/app/js/jquery-2.1.1.js') }}'></script>
-	<script src='{{ asset('bundles/app/js/bootstrap.min.js') }}'></script>
-	<script src='{{ asset('bundles/app/js/bootstrap-switch.min.js') }}'></script>
-
+	{{ parent() }}
 	<script>
 		
 		if($('#ulProjectList').has( "li" ).length === 0){
@@ -357,11 +353,10 @@
 
 			var id = e.currentTarget.id;
 			var value = e.target.value;
-			var userId
-			= {{ user.id }};
-					var userSkillId = e.currentTarget.parentElement.id;
+			var userId = '{{ user.id }}';
+			var userSkillId = e.currentTarget.parentElement.id;
 
-			if (value == 0) {
+			if (value === 0) {
 				$('#' + id + '').css('background-color', 'rgb(242, 165, 165)');
 			}
 			else {
