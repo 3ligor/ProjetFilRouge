@@ -42,9 +42,9 @@
 				<div class="col-sm-3 col-md-3 pull-right">
 					<form class="navbar-form" role="search" action='#' method='POST'>
 						<div class="input-group">
-							<input type="text" class="form-control" placeholder="Recherche" name="search">
+							<input id="autocomplete" type="text" class="form-control" placeholder="Recherche" name="search">
 							<div class="input-group-btn">
-								<button class="btn btn-default" type="submit">
+								<button id="searchButton" class="btn btn-default" type="submit">
 									<span class="glyphicon glyphicon-search"></span>
 								</button>
 							</div>
@@ -78,6 +78,7 @@
 					<form class="form" action="">
 						<div class="input-group">
 							<input id="msg" class="form-control" autocomplete="off">
+
 							<span class="input-group-btn">
 								<button class="btn btn-primary">Envoyer</button>
 							</span>
@@ -93,15 +94,5 @@
 
 {% block javascripts %}
 	{{ parent() }}
-	<script>
-		{% if app.user.pseudo is defined %}
-			username = '{{ app.user.pseudo }}';
-		{% else %}
-			username = '{{ app.user.firstname }}' + +'{{ app.user.lastname }}';
-		{% endif %}
-	</script>
-	<script src='{{ asset('bundles/app/js/jquery-ui.custom.js') }}'></script>
-	<script src='{{ asset('bundles/app/js/socket.io.js') }}'></script>
-	<script src='{{ asset('bundles/app/js/chatClient.js') }}'></script>
+	{{ render(controller('AppBundle:Default:getSearchContent')) }}
 {% endblock javascripts %}
-
