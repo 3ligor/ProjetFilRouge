@@ -54,19 +54,6 @@
 {% block javascripts %}
     {{ parent() }}
     <script src='{{ asset('bundles/app/js/Chart.min.js') }}'></script>
-    {% set projectsData = {
-        enCours : 0 ,
-        termines : 0,
-        enAttente : 0,
-        archives : 0
-    } %}
-    {% for project in projects %}
-        {% if project.status == 1 %}
-            {% set projectsData.enCours = projectsData.enCours+1 %}
-        {% endif %}
-    {% endfor %}
-    <script>
-        console.log(projectsData);
-    </script>
+    <script>var ajaxPath = '{{ path('admin_statistics') }}';</script>
     <script src='{{ asset('bundles/app/js/statistics.js') }}'></script>
 {% endblock javascripts %}

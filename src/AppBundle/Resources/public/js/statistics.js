@@ -1,5 +1,12 @@
 (function displayPie() {
-        console.log(myProjects);
+    jQuery(document).ready(function () {
+        $.ajax({
+            url: ajaxPath,
+            type: 'GET'
+        }).done(function (data) {
+            console.log(data);
+        });
+    });
 
     var options = {
         //Boolean - Whether we should show a stroke on each segment
@@ -49,5 +56,4 @@
     ]
     var ctx = $("#projectPie").get(0).getContext("2d");
     var myPieChart = new Chart(ctx).Pie(data, options);
-    console.log(myProjects);
 })();
