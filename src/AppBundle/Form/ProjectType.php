@@ -51,9 +51,7 @@ class ProjectType extends AbstractType {
 				->add('creationDate', 'date', array(
 					'disabled' => true,
 				))
-				->add('status', 'hidden', array(
-					'data' => 0,
-				))
+
 				->add('Brouillon', 'submit')
 				->add('Valider', 'submit');
 	}

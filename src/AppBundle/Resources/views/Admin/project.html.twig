@@ -11,7 +11,7 @@
 			<th class="text-center">Date de fin</th>
 			<th class="text-center">Validation</th>
 				{% for project in projects %}
-				<tr>
+				<tr class='{% if project.status < 4 %} projectIsNotValid {% else %} projectIsValid {% endif %}	'>
 					<td>
 						{% for categorie in project.categories %}
 							{{ loop.last ? categorie.title : categorie.title~' - ' }}
@@ -31,12 +31,14 @@
 					</td>
 					<td class="text-center">
 						{% if project.status < 4 %}
-							<a href="{{path('admin_validate_project',{'id': project.id})}}"><span class="glyphicon glyphicon-check text-success"></span></a>
-							<span class="glyphicon glyphicon-remove text-danger"></span>
-						{% elseif project.status >= 4 %}
-							<span class="glyphicon glyphicon-ok text-success"></span>
-							<a href="{{path('admin_validate_project',{'id': project.id})}}"><span class="glyphicon glyphicon-remove-circle text-danger"></span></a>
-							{% endif %}	
+							<a href="{{path('admin_validate_project',{'id': project.id})}}" data-toggle="tooltip" data-placement="top" title='Valider'>
+								<span class="glyphicon glyphicon-check text-success"></span>
+							</a>
+						{% else %}
+							<a href="{{path('admin_validate_project',{'id': project.id})}}">
+								<span class="glyphicon glyphicon-remove-circle text-danger"></span>
+							</a>
+						{% endif %}	
 					</td>
 				</tr>
 			{% endfor %}
@@ -44,3 +46,11 @@
 	</div>
 {% endblock content %}
 
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+	$('[data-toggle="tooltip"]').tooltip({
+		animated: 'fade'
+	});
+	</script>
+{% endblock javascripts %}

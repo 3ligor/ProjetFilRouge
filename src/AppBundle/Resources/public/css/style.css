@@ -122,6 +122,13 @@ div#userContainer, div#messageContainer {
 	margin-left: 15px;
 }
 
+tr.projectIsValid {
+	background-color: rgba(190,255,190,0.5);
+}
+tr.projectIsNotValid {
+	background-color: rgba(255,190,190,0.5);
+}
+
 ::-webkit-scrollbar {
     width: 8px;
 }

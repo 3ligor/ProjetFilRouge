@@ -712,5 +712,5 @@ class User implements UserInterface {
 	public function getNotifications() {
 		return $this->notifications;
 	}
-
+	
 }
