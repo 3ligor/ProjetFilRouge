@@ -28,16 +28,13 @@
 								<span id="spanProjectInvitation">Dans quel projet souhaitez-vous inviter <strong>{{ user.firstname }} {{ user.lastname }}</strong> ?<br></span>
 								<span id="spanProjectNoInvitation" class="hidden"><p>{{ user.firstname }} {{ user.lastname }} est déjà présent dans tous vos projets.</p></span>
 								<ul id="ulProjectList">
-									{% for project in projects %}
-										{% for userProject in project.userProjects %}
-											{% if userProject.user.email == app.user.email  %}
-												{% if userProject.status == 4 and user.getStatusInProject(project) == false  %}
-													<li>
-														<a href="{{ path('project_userjoin', { type: 'i', userId: user.id , projectId : project.id}) }}">{{ project.title }}</a>
-													</li>
-												{% endif %}
-											{% endif %}
-										{% endfor %}
+									{% for projectsModale in projectsModales %}
+										
+										{% if  user.getStatusInProject(projectsModale.project)%}
+												{{ projectsModale.project.title }}
+										{% else %}
+												{{ 'Null' }}
+										{% endif %}
 									{% endfor %}
 								</ul>
 							</div>
@@ -262,10 +259,10 @@
 {% block javascripts %}
 	{{ parent() }}
 	<script>
-		if ($('#ulProjectList').has("li").length === 0) {
+	{#	if ($('#ulProjectList').has("li").length === 0) {
 			$('#spanProjectInvitation').removeClass('visible').addClass('hidden');
 			$('#spanProjectNoInvitation').removeClass('hidden').addClass('visible');
-		}
+		}#}
 
 		$('#myModal').on('shown.bs.modal', function () {
 			$('#myInput').focus();

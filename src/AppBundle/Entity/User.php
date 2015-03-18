@@ -686,10 +686,10 @@ class User implements UserInterface {
 	/**
 	 * Add notification
 	 *
-	 * @param \AppBundle\Entity\Notification $notification
+	 * @param Notification $notification
 	 * @return User
 	 */
-	public function addNotification(\AppBundle\Entity\Notification $notification) {
+	public function addNotification(Notification $notification) {
 		$this->notifications[] = $notification;
 
 		return $this;
@@ -700,14 +700,14 @@ class User implements UserInterface {
 	 *
 	 * @param \AppBundle\Entity\Notifications $notification
 	 */
-	public function removeNotification(\AppBundle\Entity\Notification $notification) {
+	public function removeNotification(Notification $notification) {
 		$this->notifications->removeElement($notification);
 	}
 
 	/**
 	 * Get notifications
 	 *
-	 * @return \Doctrine\Common\Collections\Collection 
+	 * @return Collection 
 	 */
 	public function getNotifications() {
 		return $this->notifications;

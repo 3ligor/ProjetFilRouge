@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
-use AppBundle\Entity\UserSkill;
 use AppBundle\Form\UserEditSkillType;
 use AppBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -29,18 +28,21 @@ class UserController extends Controller {
 		$em = $this->getDoctrine()->getManager();
 		$repoUser = $em->getRepository('AppBundle:User');
 		$repoSkill = $em->getRepository('AppBundle:Skill');
+		$repoUserProjet = $em->getRepository('AppBundle:UserProject');
 		$repoProjet = $em->getRepository('AppBundle:Project');
 		$repoNotif = $em->getRepository('AppBundle:Notification');
 		
 		$skills = $repoSkill->getSkillsWithChilds();
 		$user = $repoUser->findOneUserEager($id);
 		$projects = $repoProjet->findProjectUserEager($id);
+		$projectsModales = $repoUserProjet->getProjectInvitationModale($this->getUser()->getId());
 		$notifications = $repoNotif->findUserNotifications($id);
 		
 		return $this->render('AppBundle:User:profil.html.twig', array(
 					'user' => $user,
 					'skills' => $skills,
 					'projects'=> $projects,
+					'projectsModales' => $projectsModales,
 					'notifications' => $notifications
 		));
 	}
