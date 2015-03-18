@@ -36,12 +36,14 @@ class UserController extends Controller {
 		$user = $repoUser->findOneUserEager($id);
 		$projects = $repoProjet->findProjectUserEager($id);
 		$notifications = $repoNotif->findUserNotifications($id);
+		$inviteList = $repoProjet->findProjectsUserIsNotIn($id);
 		
 		return $this->render('AppBundle:User:profil.html.twig', array(
 					'user' => $user,
 					'skills' => $skills,
 					'projects'=> $projects,
-					'notifications' => $notifications
+					'notifications' => $notifications,
+					'inviteList' => $inviteList
 		));
 	}
 

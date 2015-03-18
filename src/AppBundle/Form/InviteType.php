@@ -20,8 +20,8 @@ class InviteType extends AbstractType {
 					'choices' => array(
 						'4' => 'Chef de projet',
 						'3' => 'Membre',
-						'2' => 'Candidat',
-						'1' => 'Invité',
+//						'2' => 'Candidat',
+//						'1' => 'Invité',
 					)
 		));
 	}

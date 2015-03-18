@@ -51,18 +51,23 @@ class ProjectController extends Controller {
 	}
 
 	public function addAction(Request $req) {
+
 		$em = $this->getDoctrine()->getManager();
-		$project = new Project();
-//		$project->addUserProject((new UserProject())->setUser($this->user)->setStatus(4));
+		$project = (new Project())->addUserProject((new UserProject())->setUser($this->getUser())->setStatus(4));
 		$form = $this->createForm(new ProjectType(), $project, array(
 			'action' => $this->generateUrl('project_add')
 		));
 
 		$form->handleRequest($req);
 		if ($form->isValid()) {
-			if ($project->getId() === null) {
-				$em->persist($project);
+			if ($form->get('Brouillon')->isClicked()) {
+				$project->setStatus(-1);
+			} elseif ($form->get('Valider')->isClicked() && $project->getStatus() == NULL) {
+				$project->setStatus(0);
 			}
+
+				$em->persist($project);
+
 			$em->flush();
 			$id = $project->getId();
 			// Redirection vers le projet crée
@@ -73,7 +78,8 @@ class ProjectController extends Controller {
 		}
 		// Aucun formulaire envoyé
 		return $this->render('AppBundle:Project:add.html.twig', array(
-					'form' => $form->createView()
+					'form' => $form->createView(),
+					'project' => $project
 		));
 	}
 
@@ -100,7 +106,6 @@ class ProjectController extends Controller {
 
 		$form->handleRequest($req);
 		if ($form->isValid()) {
-
 			// On supprime les étapes ayant été supprimé du projet
 			foreach ($originalStages as $stage) {
 				if ($project->getStages()->contains($stage) == false) {
@@ -192,11 +197,11 @@ class ProjectController extends Controller {
 		if ($type === 'i') {
 			$notificationType = 'Invitation';
 			$notificationMessage = 'Vous avez été invité à rejoindre un projet : ' . $project->getTitle() . '.';
-			$notificationRecipients = array($user);		
+			$notificationRecipients = array($user);
 		} elseif ($type === 'p') {
 			$notificationType = 'Postulation';
 			$notificationMessage = $user->getFirstname() . ' ' . $user->getLastname() . ' a postulé à votre projet : ' . $project->getTitle() . '.';
-			$notificationRecipients = array();	
+			$notificationRecipients = array();
 			foreach ($project->getUserProjects() as $userProject) {
 				if ($userProject->getStatus() === 4) {
 					$notificationRecipients[] = $userProject->getUser();

@@ -26,7 +26,7 @@ class ProjectRepository extends EntityRepository {
 		return $query->getQuery()->getResult();
 	}
 
-	public function findProjectUserEager($id){
+	public function findProjectUserEager($id) {
 		$query = $this->createQueryBuilder('p')
 				->leftJoin('p.userProjects', 'up')
 				->addSelect('up')
@@ -34,7 +34,7 @@ class ProjectRepository extends EntityRepository {
 				->addSelect('c')
 				->where('up.user = :id')
 				->setParameter('id', $id);
-				
+
 		return $query->getQuery()->getResult();
 	}
 
@@ -89,4 +89,13 @@ class ProjectRepository extends EntityRepository {
 				->orderBy('p.creationDate', 'DESC');
 		return $query->getQuery()->getResult();
 	}
+
+	public function findProjectsUserIsNotIn($id) {
+		$query = $this->createQueryBuilder('p')
+				->leftJoin('p.userProjects', 'up')
+				->where('up.user != :id')
+				->setParameter('id', $id);
+		return $query->getQuery()->getResult();
+	}
+
 }

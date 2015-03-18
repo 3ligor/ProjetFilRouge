@@ -12,6 +12,7 @@ jQuery(document).ready(function () {
 		return regex.test(jQuery(elem)[attr.method](attr.property));
 	};
 
+	// Stage Manager
 	var collectionHolderStage = $('div.stages');
 	var $addStageLink = $('<div class="col-xs-6 col-sm-4 col-md-3 text-center"><a href="#" class="add_stage_link"><button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus"></span></button></a></div>');
 	var $newLinkDiv = $('<span></span>').append($addStageLink);
@@ -44,36 +45,58 @@ jQuery(document).ready(function () {
 		});
 	}
 
-	var collectionHolderInvite = $('ul.invites');
-	var $addInviteLink = $('<a href="#" class="add_invite_link list-group-item text-center"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></button></a>');
-	var $newLinkUl = $('<span></span>').append($addInviteLink);
-
-	collectionHolderInvite.append($newLinkUl);
-	collectionHolderInvite.find('li.invite').each(function () {
-		addInviteFormDeleteLink($(this));
+	$('.stages').keyup(function () {
+		totalStageVolume();
 	});
 
-	$addInviteLink.on('click', function (e) {
-		e.preventDefault();
-		addInviteForm(collectionHolderInvite, $newLinkUl);
-	});
-
-	function addInviteForm(collectionHolderInvite, $newLinkUl) {
-		var prototype = collectionHolderInvite.attr('data-prototype');
-		var newForm = prototype.replace(/__name__/g, collectionHolderInvite.children().length);
-		var $newFormUl = $('<li class="list-group-item"></li>').append(newForm);
-		$newLinkUl.before($newFormUl);
-
-		addInviteFormDeleteLink($newFormUl);
-	}
-
-	function addInviteFormDeleteLink($inviteFormDiv) {
-		var $removeFormA = $('<br /><a href="#"><button type="button" class="btn btn-default btn-xs btn-block"><span class="glyphicon glyphicon-remove"></span></button></a>');
-		$inviteFormDiv.append($removeFormA);
-		$removeFormA.on('click', function (e) {
-			e.preventDefault();
-			$inviteFormDiv.remove();
+	(totalStageVolume = function () {
+		var sum = 0;
+		$(".stage input:regex(id, *_volume)").each(function () {
+			sum += +Math.abs($(this).val());
 		});
+		if (sum < 100 && sum >= 0) {
+			$("#total").html(': <span class="label label-info">' + sum + '%');
+		} else if (sum === 100) {
+			$("#total").html(': <span class="label label-success">' + sum + '%</span>');
+		} else {
+			$("#total").html(': <span class="label label-danger">' + sum + '%</span>');
+		}
+	})();
+	// Stage Manager
+
+	if (userRole === 'admin') {
+		// UserProject Manager
+		var collectionHolderInvite = $('ul.invites');
+		var $addInviteLink = $('<a href="#" class="add_invite_link list-group-item text-center"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></button></a>');
+		var $newLinkUl = $('<span></span>').append($addInviteLink);
+
+		collectionHolderInvite.append($newLinkUl);
+		collectionHolderInvite.find('li.invite').each(function () {
+			addInviteFormDeleteLink($(this));
+		});
+
+		$addInviteLink.on('click', function (e) {
+			e.preventDefault();
+			addInviteForm(collectionHolderInvite, $newLinkUl);
+		});
+
+		function addInviteForm(collectionHolderInvite, $newLinkUl) {
+			var prototype = collectionHolderInvite.attr('data-prototype');
+			var newForm = prototype.replace(/__name__/g, collectionHolderInvite.children().length);
+			var $newFormUl = $('<li class="list-group-item"></li>').append(newForm);
+			$newLinkUl.before($newFormUl);
+
+			addInviteFormDeleteLink($newFormUl);
+		}
+
+		function addInviteFormDeleteLink($inviteFormDiv) {
+			var $removeFormA = $('<br /><a href="#"><button type="button" class="btn btn-default btn-xs btn-block"><span class="glyphicon glyphicon-remove"></span></button></a>');
+			$inviteFormDiv.append($removeFormA);
+			$removeFormA.on('click', function (e) {
+				e.preventDefault();
+				$inviteFormDiv.remove();
+			});
+		}
 	}
 
 	$(".invites select:regex(id, *_status)").each(function () {
@@ -100,22 +123,7 @@ jQuery(document).ready(function () {
 			node.parentNode.parentNode.setAttribute('class', 'list-group-item list-group-item-warning');
 		}
 	}
+	// UserProject Manager
 
-	$('.stages').keyup(function () {
-		totalStageVolume();
-	});
 
-	(totalStageVolume = function () {
-		var sum = 0;
-		$(".stage input:regex(id, *_volume)").each(function () {
-			sum += +Math.abs($(this).val());
-		});
-		if (sum < 100 && sum >= 0) {
-			$("#total").html(': <span class="label label-info">' + sum + '%');
-		} else if (sum === 100) {
-			$("#total").html(': <span class="label label-success">' + sum + '%</span>');
-		} else {
-			$("#total").html(': <span class="label label-danger">' + sum + '%</span>');
-		}
-	})();
 });

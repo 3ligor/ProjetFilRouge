@@ -28,7 +28,7 @@
 								<span id="spanProjectInvitation">Dans quel projet souhaitez-vous inviter <strong>{{ user.firstname }} {{ user.lastname }}</strong> ?<br></span>
 								<span id="spanProjectNoInvitation" class="hidden"><p>{{ user.firstname }} {{ user.lastname }} est déjà présent dans tous vos projets.</p></span>
 								<ul id="ulProjectList">
-									{% for project in projects %}
+									{% for project in inviteList %}
 										{% for userProject in project.userProjects %}
 											{% if userProject.user.email == app.user.email  %}
 												{% if userProject.status == 4 and user.getStatusInProject(project) == false  %}

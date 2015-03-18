@@ -6,7 +6,7 @@
 	{{ form_start(form) }}
 	<h3>Ajouter un projet</h3>
 	{% if message is defined %}
-	<div class="alert alert-danger" role="alert">{{ message }}</div>
+		<div class="alert alert-danger" role="alert">{{ message }}</div>
 	{% endif %}
 	<div class='row'>
 		<div class='col-xs-12'>
@@ -30,11 +30,6 @@
 				<div  class='panel-heading'>Effectif</div>
 				<div class='panel-body'>
 					<ul class='list-group invites' data-prototype="<div class='form-group'>{{ form_widget(form.userProjects.vars.prototype.children.user)|e }}<br />{{ form_widget(form.userProjects.vars.prototype.children.status)|e }}</div>">
-{#						<li class='list-group-item list-group-item-warning' data-toggle="tooltip" data-placement="top" title='Chef de Projet'>
-							<span class="glyphicon glyphicon-star"></span>
-							<strong>Pseudo</strong><br />
-							Prénom Nom
-						</li>#}
 						{% for userProject in form.userProjects %}
 							<li class="list-group-item invite">
 								<div class='form-group'>
@@ -67,11 +62,12 @@
 							{{ form_row(form.startDate) }}
 							{{ form_row(form.endDate) }}
 						</div>
-
 					</div>
 				</div>
 				<div class='panel-footer'>
+					{% if project.status < 4 %}
 					{{ form_row(form.Brouillon, {'label': 'Sauvegarder le brouillon', 'attr': {'class': 'btn btn-primary btn-block'}} ) }}
+					{% endif %}
 					{{ form_row(form.Valider, {'label': 'Proposer le projet', 'attr': {'class': 'btn btn-primary btn-block'}} ) }}
 				</div>
 			</div>
@@ -82,7 +78,10 @@
 	</div>
 {% endblock content %}
 {% block javascripts %}
-	<script src="{{ asset('bundles/app/js/jquery-2.1.1.min.js') }}"></script>
 	{{ parent() }}
+	<script>
+		var userRole =
+		{% if is_granted('ROLE_ADMIN') %} 'admin'; {% else %} 'user'; {% endif %}
+	</script>
 	<script src="{{ asset('bundles/app/js/addProject.js') }}"></script>
 {% endblock javascripts %}
