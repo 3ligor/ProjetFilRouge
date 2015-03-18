@@ -50,6 +50,8 @@ class UserRepository extends EntityRepository
 		$query = $this->createQueryBuilder('u')
 				->leftjoin('u.userProjects', 'up')
 				->addSelect('up')
+				->leftjoin('up.project', 'p')
+				->addSelect('p')
 				->orderBy('u.lastname', 'DESC');
 		return $query->getQuery()->getResult();
 	}

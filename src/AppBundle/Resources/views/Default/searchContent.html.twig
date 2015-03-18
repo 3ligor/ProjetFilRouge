@@ -53,7 +53,7 @@
 			
 			$('#autocomplete').autocomplete({
 				lookup: result,
-				minChars: 3,
+				minChars: 2,
 				onSelect: function(suggestion){
 					$('#selection').html('You selected: ' + suggestion.value + ', ' + suggestion.data.category);
 					

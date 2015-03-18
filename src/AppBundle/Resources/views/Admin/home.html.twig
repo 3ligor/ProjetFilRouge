@@ -2,13 +2,13 @@
 
 {% block content %}
     {% include "AppBundle:Admin:menuAdmin.html.twig" with {'active' : 'home'} %}
-    <div class="panel panel-success">
+    <div class="panel panel-success box">
         <div class="panel-heading">Utilisateurs</div>
         <div class="panel-body">
             Utilisateurs enregistrés : {{ users|length }} | Utilisateurs connectés : 23
         </div>
     </div>
-    <div class="panel panel-info">
+    <div class="panel panel-info box">
         <div class="panel-heading">Projets</div>
         <div class="panel-body">
             <div class="col-xs-4 col-md-3">
@@ -24,7 +24,7 @@
             </div>
         </div>
     </div>
-    <div class="panel panel-warning">
+    <div class="panel panel-warning box">
         <div class="panel-heading">Compétences</div>
         <div class="panel-body">
             Catégories : {% set catnb = 0 %}{% set skillnb = 0 %}

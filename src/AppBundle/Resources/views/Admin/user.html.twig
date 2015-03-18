@@ -1,7 +1,7 @@
 {% extends "AppBundle::layout.html.twig" %}
 {% block content %}
 	{% include "AppBundle:Admin:menuAdmin.html.twig" with {'active' : 'user'}%}
-	<div class="row">
+	<div class="row box">
 		<table class="table table-condensed table-hover">
 			<thead>
 			<th>Rôles</th>
@@ -29,17 +29,9 @@
 							{% endif %}
 							{{ loop.last ? '' : '-' }}
 						{% endfor %}
-						{#		Is the user project leader ?		#}	
-						{% set check = true %}
-						{% for userProject in user.userProjects if check %}
-							{#		If the user is project leader		#}
-							{% if userProject.status == 4 %}
-								{#		Display the status		#}
-								{{ ' - Chef de Projet'  }}
-								{#		Set the check to false for one iteration			#}
-								{% set check = false %}
-							{% endif %}
-						{% endfor %}
+						
+						
+						
 					</td>
 					<td>
 						<a href="{{path('user_profile',{'id':user.id})}}">{{ user.firstname }} {{ user.lastname }} - "{{user.pseudo}}"</a>
@@ -48,7 +40,7 @@
 						<span class="badge badge-primary">
 							{% set currentp = 0 %}
 							{% for userProject in user.userProjects %}
-								{% if userProject.status == 4 %}
+								{% if userProject.project.status == 4 %}
 									{% set currentp = currentp+1 %}
 								{% endif %}
 							{% endfor %}
@@ -57,13 +49,15 @@
 					</td>
 					<td class="text-center">
 						<span class="badge badge-info">
-							{% set endedp = 0 %}
+				
+							
+							{% set projetTerminer = 0 %}
 							{% for userProject in user.userProjects %}
-								{% if userProject.status >= 6 %}
-									{% set endedp = endedp+1 %}
+								{% if userProject.project.status != 4 %}
+									{% set projetTerminer = projetTerminer+1 %}
 								{% endif %}
 							{% endfor %}
-							{{ endedp }}
+							{{ projetTerminer }}
 						</span>
 					</td>
 				</tr>
