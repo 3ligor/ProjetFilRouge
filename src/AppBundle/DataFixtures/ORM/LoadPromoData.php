@@ -15,19 +15,19 @@ class LoadPromoData extends AbstractFixture implements OrderedFixtureInterface {
 	public function load(ObjectManager $manager) {
 
 		$promo1 = new Promo();
-		$promo1->setTitle('DL-10');
+		$promo1->setTitle('NANTES-DL10');
 
 		$promo2 = new Promo();
-		$promo2->setTitle('TSRIT-8');
+		$promo2->setTitle('NANTES-TSRIT8');
 
 		$promo3 = new Promo();
-		$promo3->setTitle('T2SI-12');
+		$promo3->setTitle('NANTES-T2SI12');
 
 		$promo4 = new Promo();
-		$promo4->setTitle('CDI-6');
+		$promo4->setTitle('RENNES-CDI9');
 
 		$promo5 = new Promo();
-		$promo5->setTitle('CDPN-11');
+		$promo5->setTitle('NANTES-CDPN10');
 
 		$manager->persist($promo1);
 		$manager->persist($promo2);

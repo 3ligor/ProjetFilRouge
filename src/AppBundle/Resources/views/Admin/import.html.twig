@@ -4,19 +4,12 @@
     {% include "AppBundle:Admin:menuAdmin.html.twig" with {'active' : 'import'} %}
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading">Importation du fichier xls pour remplir la base</div>
+            <div class="panel-heading">Importation d'un fichier .csv pour remplir la base</div>
             <div class="panel-body">
                 <div class="col-lg-12">
-                    <form class="form-inline" action="{{ path('admin_import') }}" ENCTYPE="multipart/form-data" method="POST">
-                        <div class="input-group">            
-                            <span class="input-group-btn">
-                                <input class="btn btn-default" name="csv" type="file">
-                            </span>
-                            <span class="input-group-btn">
-                                <input class="btn btn-default" type="submit" value="Envoyer">
-                            </span>
-                        </div>
-                    </form>
+					<form action="" method="post" {{ form_enctype(form) }}>
+						{{ form_widget(form) }}
+					</form>
                 </div>
             </div>
         </div>

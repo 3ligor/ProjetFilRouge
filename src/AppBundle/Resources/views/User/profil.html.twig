@@ -3,8 +3,16 @@
 {% block content %}
     <div class="row" id="row">
         <div class="col-sm-2 hidden-xs text-center">
-			<div class="text-right"><a href="#"><span class="glyphicon glyphicon-edit"></span></a></div>
-			<img src="{{ user.image.url }}"  alt="{{ user.image.alt }}" class="img-thumbnail "/><br>
+			<div class="text-right">
+				<a href="#"><span class="glyphicon glyphicon-edit"></span></a>
+			</div>
+			{% if user.image.url is defined %}
+				<img src="{{ user.image.url }}"  
+					 {% if user.image.alt is defined %}
+						 alt="{{ user.image.alt }}" 
+					 {% endif %}
+					 class="img-thumbnail "/><br>
+			{% endif %}
         </div>
         <div class="col-sm-6 col-xs-12" id="profil">
 			{% if user.email == app.user.email %}

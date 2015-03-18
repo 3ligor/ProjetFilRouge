@@ -13,13 +13,11 @@ use Doctrine\ORM\EntityRepository;
 class UserRepository extends EntityRepository {
 
 	public function findUsersEager() {
-
 		$query = $this->createQueryBuilder('u')
 				->leftJoin('u.userSkills', 'us')
 				->addSelect('us')
 				->leftJoin('us.skill', 's')
 				->addSelect('s');
-
 		return $query->getQuery()->getResult();
 	}
 
@@ -49,4 +47,12 @@ class UserRepository extends EntityRepository {
 				->orderBy('u.lastname', 'DESC');
 		return $query->getQuery()->getResult();
 	}
+
+	public function findUserByMail($mail) {
+		$query = $this->createQueryBuilder('u')
+				->where('u.email = :mail')
+				->setParameter('mail', $mail);
+		return $query->getQuery()->getOneOrNullResult();
+	}
+
 }
