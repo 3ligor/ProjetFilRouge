@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class UserProjectRepository extends EntityRepository
 {
 	
-   public function getUserProjectByProjectAndUser($projectId, $userId){
+    public function getUserProjectByProjectAndUser($projectId, $userId){
 		$query = $this->createQueryBuilder('up')
 				->andWhere('up.project=:projectId')
                 ->setParameter('projectId', $projectId)
@@ -21,4 +21,16 @@ class UserProjectRepository extends EntityRepository
 				->setParameter('userId', $userId);
 		return $query->getQuery()->getOneOrNullResult();
 	}
+	
+	public function getProjectInvitationModale($id){
+		$query = $this->createQueryBuilder('up')
+				->leftJoin('up.project', 'p')
+				->addSelect('p')
+				->andWhere('up.user=:userId')
+				->setParameter('userId', $id)
+				->andWhere('up.status = 4');
+		
+		return $query->getQuery()->getResult();
+	}
+
 }

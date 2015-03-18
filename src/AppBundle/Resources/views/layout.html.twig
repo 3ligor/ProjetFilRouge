@@ -4,7 +4,7 @@
 	{{ parent() }}
 	{% if enableChat is defined %}
 		<link rel="stylesheet" href="{{ asset('bundles/app/css/jquery-ui.custom.css') }}">
-		<link rel="stylesheet" href="{{ asset('bundles/app/css/jquery-ui.structure.css') }}">
+			<link rel="stylesheet" href="{{ asset('bundles/app/css/jquery-ui.structure.css') }}">
 	{% endif %}
 {% endblock stylesheets %}
 {% block body %}
@@ -48,11 +48,8 @@
 					<form class="navbar-form" role="search" action='#' method='POST'>
 						<div class="input-group">
 							<input id="autocomplete" type="text" class="form-control" placeholder="Recherche" name="search">
-							<div class="input-group-btn">
-								<button id="searchButton" class="btn btn-default" type="submit">
-									<span class="glyphicon glyphicon-search"></span>
-								</button>
-							</div>
+		
+							
 						</div>
 					</form>
 				</div>

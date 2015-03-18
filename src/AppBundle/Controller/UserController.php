@@ -181,11 +181,4 @@ class UserController extends Controller {
 		return $response;
 	}
 
-	public function whoIsOnlineAction() {
-		$users = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->getActive();
-		return $this->render('AppBundle:User:whoIsOnline.html.twig', array(
-					'usersOnline' => $users
-		));
-	}
-
 }
