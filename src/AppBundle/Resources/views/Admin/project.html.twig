@@ -35,7 +35,7 @@
 								<span class="glyphicon glyphicon-check text-success"></span>
 							</a>
 						{% else %}
-							<a href="{{path('admin_validate_project',{'id': project.id})}}">
+							<a href="{{path('admin_validate_project',{'id': project.id})}}" data-toggle="tooltip" data-placement="top" title='Schtroumpfer'>
 								<span class="glyphicon glyphicon-remove-circle text-danger"></span>
 							</a>
 						{% endif %}	

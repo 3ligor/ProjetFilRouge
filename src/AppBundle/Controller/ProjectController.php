@@ -149,7 +149,8 @@ class ProjectController extends Controller {
 		}
 
 		return $this->render('AppBundle:Project:add.html.twig', array(
-					'form' => $form->createView()
+					'form' => $form->createView(),
+					'project' => $project
 		));
 	}
 
@@ -235,6 +236,18 @@ class ProjectController extends Controller {
 		$em->remove($userProject);
 		$em->flush();
 
+		return $this->redirect($this->generateUrl('project_detail', array(
+							'id' => $projectId,
+						))
+		);
+	}
+	
+	public function closeAction($projectId) {
+		$em = $this->getDoctrine()->getManager();
+		$repoP = $em->getRepository('AppBundle:Project');
+		$project = $repoP->find($projectId);
+		$project->toggleStatus('terminer');
+		$em->flush();
 		return $this->redirect($this->generateUrl('project_detail', array(
 							'id' => $projectId,
 						))

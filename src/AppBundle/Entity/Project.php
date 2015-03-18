@@ -289,19 +289,19 @@ class Project {
 
 	public function toggleStatus($status) {
 		if ($status === 'valider') {
-			if ($this->getStatus() >= 4) {
+			if ($this->getStatus() >= 4) {															// 4 +
 				$this->setStatus($this->getStatus() - 4);
 			} else {
 				$this->setStatus($this->getStatus() + 4);
 			}
 		} elseif ($status === 'terminer') {
-			if ($this->getStatus() === 2 && $this->getStatus() === 3 && $this->getStatus() >= 6) {
+			if ($this->getStatus() === 2 && $this->getStatus() === 3 && $this->getStatus() >= 6) {	// 2, 3, 6
 				$this->setStatus($this->getStatus() - 2);
 			} else {
 				$this->setStatus($this->getStatus() + 2);
 			}
 		} elseif ($status === 'archiver') {
-			if ($this->getStatus() === 1 && $this->getStatus() === 3 && $this->getStatus() === 5 && $this->getStatus() === 7) {
+			if (($this->getStatus())%2 === 1) {														// 1, 3, 5, 7,
 				$this->setStatus($this->getStatus() - 1);
 			} else {
 				$this->setStatus($this->getStatus() + 1);
