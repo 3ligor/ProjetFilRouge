@@ -40,12 +40,10 @@
             </div>
             <div class="col-xs-8 col-md-9">
                 <ul>
-                    <li>Compétences par catégories :</li>
-                        {% for skill in skills %}
-                            {% if skill.parent == null %}
-                            <li style="color:#F7464A">{{ skill.title }}</li>
-                            {% endif %}
-                        {% endfor %}
+                    <li style="color:#F7464A">Language</li>
+                    <li style="color:#46BFBD">Framework</li>
+                    <li style="color:#FDB45C">CMS</li>
+                    <li style="color:#4D5360">Divers</li>
                 </ul>
             </div>
         </div>
