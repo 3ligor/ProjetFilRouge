@@ -23,7 +23,5 @@ user_addSkillUser:
     defaults: { _controller: AppBundle:User:addSkillUser }
     
 user_notif:
-    path: /{id}/readNotif/{type}-{notifId}
+    path: /notif
     defaults: { _controller: AppBundle:User:notif }
-    requirements:
-        _method: POST

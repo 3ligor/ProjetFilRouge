@@ -161,23 +161,21 @@ class UserController extends Controller {
 		return $response;
 	}
 
-	public function notifAction($id, $notifId, $type) {
-		$this->getUser();
+	public function notifAction(Request $req) {
 		$em = $this->getDoctrine()->getManager();
-		$repoU = $em->getRepository('AppBundle:User');
 		$repoN = $em->getRepository('AppBundle:Notification');
-		$notif = $repoN->find($notifId);
-		$user = $repoU->find($id);
+		$notif = $repoN->find($req->request->get('notifId'));
 		
-		if ($type === 'read') {
+		if ($req->request->get('type') === 'read') {
 			$notif->setStatus(false);
-		} elseif ($type === 'delete') {
+		} elseif ($req->request->get('type') === 'delete') {
 			$em->remove($notif);
 		}
 		$em->flush();
 
 		$response = new Response(json_encode(array(
 					'status' => 'OK',
+					'id' => $req->request->get('notifId')
 		)));
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;
