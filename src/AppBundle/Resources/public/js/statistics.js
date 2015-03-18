@@ -52,8 +52,37 @@
             color: "rgb(77,83,96)",
             highlight: "rgba(77,83,96,0.8)",
             label: "Archivés"
+        }     
+    ]
+    
+     var data2 = [
+        {
+            value: 100,
+            color: "rgb(247,70,74)",
+            highlight: "rgba(247,70,74,0.8)",
+            label: "Language"
+        },
+        {
+            value: 75,
+            color: "rgb(70,191,189)",
+            highlight: "rgba(70,191,189,0.8)",
+            label: "Framework"
+        },
+        {
+            value: 200,
+            color: "rgb(253,180,92)",
+            highlight: "rgba(253,180,92,0.8)",
+            label: "CMS"
+        },
+        {
+            value: 20,
+            color: "rgb(77,83,96)",
+            highlight: "rgba(77,83,96,0.8)",
+            label: "Divers"
         }
     ]
-    var ctx = $("#projectPie").get(0).getContext("2d");
+    var ctx= $("#projectPie").get(0).getContext("2d");
+    var ctx2 = $("#skillPie").get(0).getContext("2d");
     var myPieChart = new Chart(ctx).Pie(data, options);
+    var myPieChart2 = new Chart(ctx2).Pie(data2, options);
 })();
