@@ -41,7 +41,8 @@ class UserController extends Controller {
 					'user' => $user,
 					'skills' => $skills,
 					'projects'=> $projects,
-					'notifications' => $notifications
+					'notifications' => $notifications,
+					'inviteList' => $inviteList
 		));
 	}
 
