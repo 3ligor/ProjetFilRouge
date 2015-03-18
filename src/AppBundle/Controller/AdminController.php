@@ -11,7 +11,6 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
-
 class AdminController extends Controller {
 
     public function homeAction() {
@@ -75,8 +74,14 @@ class AdminController extends Controller {
         ));
     }
 
-    public function importAction() {
-        return $this->render('AppBundle:Admin:import.html.twig');
+    public function importAction(Request $req) {
+        
+        if ($req->request->get('name')!== null) {
+            var_dump("yes");die();
+            return $this->render('AppBundle:Admin:import.html.twig');
+        } else {
+            return $this->render('AppBundle:Admin:import.html.twig');
+        }
     }
 
     public function validateProjectAction($id) {
