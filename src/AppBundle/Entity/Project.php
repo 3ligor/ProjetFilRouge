@@ -449,8 +449,12 @@ class Project {
 			}
 		}
 
-		foreach ($progress as $ii => $cell) {
-			$progress[$ii] = round($cell / $this->getTotalStageVolume() * 100, 1);
+		if ($this->getTotalStageVolume()) {
+			foreach ($progress as $ii => $cell) {
+				$progress[$ii] = round($cell / $this->getTotalStageVolume() * 100, 1);
+			}
+		} else {
+			$progress = 0;
 		}
 		return $progress;
 	}
@@ -459,6 +463,9 @@ class Project {
 		$total = 0;
 		foreach ($this->getStages() as $stage) {
 			$total += $stage->getVolume();
+		}
+		if ($total === 0) {
+			$total = false;
 		}
 		return $total;
 	}

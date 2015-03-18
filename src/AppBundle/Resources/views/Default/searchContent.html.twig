@@ -23,7 +23,6 @@
 			{% for user in searchUsers %}
 				'{{ user.firstname }} {{ user.pseudo }} {{ user.lastname }}': {
 					id: {{ user.id}},
-					imgUrl: '{{ user.image.url }}',
 				}, 
 			{% endfor %}
 			};

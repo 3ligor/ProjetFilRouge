@@ -17,7 +17,12 @@
 			</ul>
 		{% endif %}
 		<ul class="nav navbar-nav navbar-right">
-			<li><img src="{{app.user.image.url}}" alt="{{app.user.image.alt}}" height="50"/><li>
+			<li>
+				<img src="{{app.user.image.url}}" alt="{{app.user.image.alt}}" height="50"/>
+				{% if app.user.notifications |length != 0 %}
+				<span class='badge'>{{ app.user.notifications |length }}</span>
+				{% endif %}
+			<li>
 			<li role="présentation"><a href="{{ path('user_profile', {'id': app.user.id}) }}"><img src="" alt=""/>Bonjour, {{ app.user.firstname }} {{ app.user.lastname }}</a></li>
 					{% if is_granted('ROLE_USER') %}
 				<li role="présentation"><a href="{{ path('logout') }}">Se déconnecter</a></li>

@@ -4,7 +4,7 @@
 
 
 	<div class="row box">
-		
+
 		<div class="col-sm-3 col-xs-6">
 			<label for='typeProjet'>Type de projet</label>
 			<select id='typeProjet' class='form-control' multiple='true'>
@@ -66,24 +66,27 @@
 						</td>
 						<td>
 							<a href='{{ path('project_detail', { id: project.id }) }}'>{{ project.title }}</a>
+						</td>
 						<td>
-							<div class="progress">
-								<div class="progress-bar 
-									 {% if project.getProgress.term <= 33 %}}
-										 progress-bar-danger
-									 {% elseif project.getProgress.term <= 67%}
-										 progress-bar-warning
-									 {% else %}
-										 progress-bar-success
-									 {% endif %}" 
-									 role="progressbar" 
-									 aria-valuenow="{{ project.getProgress.term }}" 
-									 aria-valuemin="0" 
-									 aria-valuemax="100" 
-									 style="width: {{ project.getProgress.term }}%;">
-									<strong>{{ project.getProgress.term }}%</strong>
+							{% if project.getTotalStageVolume %}
+								<div class="progress">
+									<div class="progress-bar 
+										 {% if project.getProgress.term <= 33 %}}
+											 progress-bar-danger
+										 {% elseif project.getProgress.term <= 67%}
+											 progress-bar-warning
+										 {% else %}
+											 progress-bar-success
+										 {% endif %}" 
+										 role="progressbar" 
+										 aria-valuenow="{{ project.getProgress.term }}" 
+										 aria-valuemin="0" 
+										 aria-valuemax="100" 
+										 style="width: {{ project.getProgress.term }}%;">
+										<strong>{{ project.getProgress.term }}%</strong>
+									</div>
 								</div>
-							</div>
+							{% endif %}
 						</td>
 						<td class="hidden-xs">{{ project.startDate.format('d-m-Y') }}</td>
 						<td class="hidden-xs">{{ project.endDate.format('d-m-Y') }}</td>
