@@ -165,7 +165,7 @@ class UserController extends Controller {
 		$em = $this->getDoctrine()->getManager();
 		$repoN = $em->getRepository('AppBundle:Notification');
 		$notif = $repoN->find($req->request->get('notifId'));
-		
+
 		if ($req->request->get('type') === 'read') {
 			$notif->setStatus(false);
 		} elseif ($req->request->get('type') === 'delete') {
@@ -179,6 +179,13 @@ class UserController extends Controller {
 		)));
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;
+	}
+
+	public function whoIsOnlineAction() {
+		$users = $this->getDoctrine()->getManager()->getRepository('AppBundle:User')->getActive();
+		return $this->render('AppBundle:User:whoIsOnline.html.twig', array(
+					'usersOnline' => $users
+		));
 	}
 
 }
