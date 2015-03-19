@@ -137,8 +137,6 @@ class AdminController extends Controller {
 						->setActive(false)
 						->setAvailable(true);
 				
-				
-				
 				// Puis les champs depuis le fichier chargé
 				$image->setUrl('{{asset("bundles/app/img/mignon-hitman.png")}}')
 						->setAlt('Default image');
