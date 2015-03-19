@@ -150,9 +150,9 @@ class AdminController extends Controller {
 				$user->setTel($data[9]);
 				$user->setEmail($data[10]);
 				$user->setBirthdate($this->createDateTimeFromString($data[11]));
+				$user->setPassword($data[12]);
 				$em->persist($image);
 				$em->persist($user);
-				
 				
 				// On flush & clear toutes les 10 lignes du fichier CSV afin de surcharger la mémoire.
 				if ($row % 10 === 0) {
