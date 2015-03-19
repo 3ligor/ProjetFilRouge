@@ -103,7 +103,7 @@
 		{% if app.user.pseudo|length > 1 %}
 			username = '{{ app.user.pseudo }}';
 		{% else %}
-			username = '{{ app.user.firstname }}' + +'{{ app.user.lastname }}';
+			username = '{{ app.user.firstname }}'.substr(0,1) + '.' +'{{ app.user.lastname }}';
 		{% endif %}
 	</script>
 	<script src='{{ asset('bundles/app/js/jquery-ui.custom.js') }}'></script>
