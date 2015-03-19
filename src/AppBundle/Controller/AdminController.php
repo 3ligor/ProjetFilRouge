@@ -138,7 +138,7 @@ class AdminController extends Controller {
 						->setAvailable(true);
 				
 				// Puis les champs depuis le fichier chargé
-				$image->setUrl('{{asset("bundles/app/img/mignon-hitman.png")}}')
+				$image->setUrl('http://tshirtserietv.com/wp-content/uploads/2013/12/min1-logo1.jpg')
 						->setAlt('Default image');
 				$user->setImage($image);
 				$user->addPromo($promo);
