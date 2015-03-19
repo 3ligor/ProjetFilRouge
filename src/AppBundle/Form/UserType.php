@@ -14,7 +14,8 @@ class UserType extends AbstractType {
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options) {
 		
-			$builder->add('publicMail', 'checkbox', array(
+			$builder->add('pseudo', 'text')
+					->add('publicMail', 'checkbox', array(
 				 'label'     => 'Afficher publiquement ?',
 				 'required'  => false,
 				))

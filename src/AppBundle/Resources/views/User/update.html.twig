@@ -19,7 +19,9 @@
 				<dt>Nom</dt>
 				<dd>{{ user.lastname }}</dd>
 				<dt>Pseudo</dt>
-				<dd><div>{{ user.pseudo }}</div></dd>
+				<dd>{{ form_widget(userform.pseudo) }}
+					{{ form_widget(userform.pseudo) }}
+				</dd>
 				<dt>Année de Naissance</dt>
 				<dd>{{ user.birthdate|date("Y") }} 
 					{{ form_widget(userform.publicBirthdate) }} 
