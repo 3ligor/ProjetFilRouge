@@ -13,13 +13,16 @@ hr {
 h4 {
 	font-style: bold;
 	color: #FFC90E;
-	padding: 15px;
+	padding-bottom: 15px;
 }
 
 a {
 	color: #000;
 }
 
+select{
+	margin-bottom: 10px;
+}
 .navbar-inverse{
 	background-color: #77777;
 	border-color: #E2E2E2;

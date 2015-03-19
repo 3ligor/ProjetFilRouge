@@ -45,7 +45,8 @@ class UserType extends AbstractType {
                     'property'=>'title', 
 					'multiple'=>'true',
                 ))
-				->add('Modifier','submit');	
+				->add('Modifier','submit',array(
+					'attr' => array('class' => 'btn btn-primary btn-xs col-xs-12')));	
 	}
 
 	/**
