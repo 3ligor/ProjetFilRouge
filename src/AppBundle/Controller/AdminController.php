@@ -99,11 +99,10 @@ class AdminController extends Controller {
 		if (($handle = fopen($filename, 'r')) !== FALSE) {
 			$row = 0;
 			while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-				if ($row === 0) {
-					$row++;
+				$row++;
+				if ($row === 1) {
 					continue;
 				}
-				$row++;
 
 				// On cherche si l'utilisateur existe déjà, sinon on le crée
 				$user = $repoU->findUserByMail($data[10]);
@@ -119,7 +118,7 @@ class AdminController extends Controller {
 				if (!is_object($promo)) {
 					$promo = new Promo();
 					$promo->setTitle($promoTitle);
-									$em->persist($promo);
+					$em->persist($promo);
 				}
 				
 				// On définit les attributs par défaut :
@@ -128,10 +127,9 @@ class AdminController extends Controller {
 						->setPublicCity(false)
 						->setPublicTel(false)
 						->setPublicBirthdate(false)
-						->setPassword('1234')
 						->setSalt('')
 						->setRoles('ROLE_USER')
-						->setActive(true)
+						->setActive(false)
 						->setAvailable(true);
 				
 				// Puis les champs depuis le fichier chargé
@@ -142,6 +140,7 @@ class AdminController extends Controller {
 				$user->setTel($data[9]);
 				$user->setEmail($data[10]);
 				$user->setBirthdate($this->createDateTimeFromString($data[11]));
+				$user->setPassword($data[12]);
 				$em->persist($user);
 				
 				// On flush & clear toutes les 10 lignes du fichier CSV afin de surcharger la mémoire.
