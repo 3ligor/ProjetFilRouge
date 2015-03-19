@@ -1,14 +1,3 @@
-	<script>
-	
-		{% if app.user.pseudo is defined %}
-			username = '{{ app.user.pseudo }}';
-		{% else %}
-			username = '{{ app.user.firstname }}' + +'{{ app.user.lastname }}';
-		{% endif %}
-	</script>
-	<script src='{{ asset('bundles/app/js/jquery-ui.custom.js') }}'></script>
-	<script src='{{ asset('bundles/app/js/socket.io.js') }}'></script>
-	<script src='{{ asset('bundles/app/js/chatClient.js') }}'></script>
 	<script src='{{ asset('bundles/app/js/jquery.autocomplete.js') }}'></script>
 	<script>
 		var profilePath = '{{ path('user_profile') }}' + '/';
@@ -18,7 +7,7 @@
 				{{ user.id }}: '{{ user.firstname }} {{ user.pseudo }} {{ user.lastname }}' , 
 			{% endfor %}
 			};
-			
+		
 				var userDetails = {
 			{% for user in searchUsers %}
 				'{{ user.firstname }} {{ user.pseudo }} {{ user.lastname }}': {
@@ -43,23 +32,25 @@
 			};
 						
 			var user = $.map(userList, function(result){
-				return {value: result, data: {category: 'Utilisateurs'}};
+				return {value: result, data: {category: '<span class="glyphicon glyphicon-user"></span>  Utilisateurs'}};
 			});
 			
 			var project = $.map(projectList, function (result) {
-				return {value: result, data: {category: 'Projects'}};
+				return {value: result, data: {category:'<span class="glyphicon glyphicon-th-list"></span>  Projects'}};
 			});
 			var result =user.concat(project);
 			
 			$('#autocomplete').autocomplete({
 				lookup: result,
-				minChars: 3,
+				minChars: 2,
 				onSelect: function(suggestion){
 					$('#selection').html('You selected: ' + suggestion.value + ', ' + suggestion.data.category);
+					console.log(profilePath);
+					if(suggestion.data.category === '<span class="glyphicon glyphicon-user"></span>  Utilisateurs'){
 					
-					if(suggestion.data.category === 'Utilisateurs'){
 						window.location.replace(profilePath+userDetails[suggestion.value].id);
 					} else{
+				
 						window.location.replace(projectPath+projectDetails[suggestion.value].id);
 					}
 					

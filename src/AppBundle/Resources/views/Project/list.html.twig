@@ -1,10 +1,7 @@
 {% extends "AppBundle::layout.html.twig" %}
 
 {% block content %}
-
-
-	<div class="row box">
-
+{#	<div class="row box">
 		<div class="col-sm-3 col-xs-6">
 			<label for='typeProjet'>Type de projet</label>
 			<select id='typeProjet' class='form-control' multiple='true'>
@@ -43,7 +40,7 @@
 		<div class='col-xs-12 text-right'>
 			<button type="submit" class="btn btn-default">Filtrer</button>
 		</div>
-	</div>
+	</div>#}
 	<br>
 	<div class="row box">
 		<h4>Liste des projets</h4>
@@ -51,6 +48,7 @@
 			<thead>
 			<th>Catégorie</th>
 			<th>Nom</th>
+			<th>Status</th>
 			<th>Avancement</th>
 			<th >Lancement</th>
 			<th class="hidden-xs">Fin</th>
@@ -66,6 +64,15 @@
 						</td>
 						<td>
 							<a href='{{ path('project_detail', { id: project.id }) }}'>{{ project.title }}</a>
+						</td>
+						<td>
+							{% if project.status == 4 %}
+								{{ 'En cour' }}
+							{% elseif project.status == 0 %}
+								{{ 'En attente' }}
+							{% elseif project.status != 4 and project.status != 1 %}
+								{{ 'Archivé' }}
+							{% endif %}
 						</td>
 						<td>
 							{% if project.getTotalStageVolume %}

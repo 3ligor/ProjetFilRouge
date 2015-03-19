@@ -29,7 +29,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface {
 				->setPassword('1234')
 				->setSalt('')
 				->setRoles('ROLE_ADMIN')
-				->setActive(true)
+				->setActive(false)
 				->setAvailable(true)
 				->addPromo($this->getReference('promo1'))
 				->addPromo($this->getReference('promo5'))
@@ -50,7 +50,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface {
 				->setPassword('1234')
 				->setSalt('')
 				->setRoles('ROLE_USER')
-				->setActive(true)
+				->setActive(false)
 				->setAvailable(false)
 				->addPromo($this->getReference('promo2'))
 				->setImage($this->getReference('image2'));
@@ -109,8 +109,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface {
 				->setPublicBirthdate(true)
 				->setPassword('1234')
 				->setSalt('')
-				->setRoles('ROLE_ADMIN')
-				->setActive(true)
+				->setRoles('ROLE_USER')
+				->setActive(false)
 				->setAvailable(false)
 				->addPromo($this->getReference('promo2'))
 				->setImage($this->getReference('image5'));

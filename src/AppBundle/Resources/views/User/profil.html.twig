@@ -3,8 +3,16 @@
 {% block content %}
     <div class="row" id="row">
         <div class="col-sm-2 hidden-xs text-center">
-			<div class="text-right"><a href="#"><span class="glyphicon glyphicon-edit"></span></a></div>
-			<img src="{{ user.image.url }}"  alt="{{ user.image.alt }}" class="img-thumbnail "/><br>
+			<div class="text-right">
+				<a href="#"><span class="glyphicon glyphicon-edit"></span></a>
+			</div>
+			{% if user.image.url is defined %}
+				<img src="{{ user.image.url }}"  
+					 {% if user.image.alt is defined %}
+						 alt="{{ user.image.alt }}" 
+					 {% endif %}
+					 class="img-thumbnail "/><br>
+			{% endif %}
         </div>
         <div class="col-sm-6 col-xs-12" id="profil">
 			{% if user.email == app.user.email %}
@@ -78,21 +86,20 @@
 			<div id='notifContainer' class="col-sm-4 col-xs-12">
 				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 					{% for notification in notifications %}
-						<div class="panel panel-default">
+						<div id='notif{{ notification.id }}' class="panel panel-{% if notification.status %}primary{% else %}default{% endif %}">
 							<div class="panel-heading" role="tab" id="heading{{ loop.index }}">
 								<div class='row'>
 									<div class='col-xs-8'>
-										<a class='collapsed' data-toggle="collapse" data-parent="#accordion" href="#collapse{{ loop.index }}" aria-expanded="false" aria-controls="collapse{{ loop.index }}">
+										<a id='{{ notification.id }}' href="#collapse{{ loop.index }}" href="#collapse{{ loop.index }}" class='collapsed readNotif' data-toggle="collapse" data-parent="#accordion" aria-expanded="false" aria-controls="collapse{{ loop.index }}">
 											{{ notification.type }}
 										</a>
 									</div>
 									<div class='col-xs-4 text-right'>
-										<a href=''>
-										<span class="glyphicon glyphicon-trash"></span>
+										<a id='{{ notification.id }}' class='deleteNotif {% if notification.status == 1 %}hidden{% endif %}' href='#'>
+											<span class="glyphicon glyphicon-trash"></span>
 										</a>
 									</div>
 								</div>
-										
 							</div>
 							<div id="collapse{{ loop.index }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ loop.index }}">
 								<div class="panel-body">
@@ -106,12 +113,15 @@
 		{% endif %}
 	</div>
 	<hr />
+	{% if user.email == app.user.email %}
+				<div class="text-right"><a href="#" id="updateSkill"><span class="glyphicon glyphicon-edit"></span> Modifier</a></div>
+				<a href="{{ path('user_profile', { id: user.id }) }}"><button type="submit" class="btn btn-primary btn-xs btn-block hidden" id="valider">Valider</button></a>
+	{% endif %}
+			
 	<div class="row box">
-		{% if user.email == app.user.email %}
-			<div class="text-right"><a href="#" id="updateSkill"><span class="glyphicon glyphicon-edit"></span> Modifier</a></div>
-			<a href="{{ path('user_profile', { id: user.id }) }}"><button type="submit" class="btn btn-primary btn-xs btn-block hidden" id="valider">Valider</button></a>
-		{% endif %}
-		<br>
+		
+		<h4>Mes compétences</h4>
+		
 		{%for skill in skills %}
 			{#On va chercher les categories #}
 			{% if skill.parent == null %}	
@@ -213,10 +223,11 @@
 			{% endif %}
 		{% endfor  %}
 	</div>
+		
 	<hr />
 	<div class="row">
 		<div class="col-sm-12 box">
-			<h4>Projets</h4>
+			<h4>Projet en cours</h4>
 			<table class="table">
 				{% for project in projects %}
 					{% if project.status == 4 %}
@@ -257,11 +268,16 @@
 			</table>
 		</div>
 	</div>
+
 {% endblock content %}
 
 {% block javascripts %}
 	{{ parent() }}
 	<script>
+		var pathUserSkill = '{{ path('user_addSkillUser') }}';
+		var pathNotif = '{{ path('user_notif') }}';
+		var userId = '{{ user.id }}';
+
 		if ($('#ulProjectList').has("li").length === 0) {
 			$('#spanProjectInvitation').removeClass('visible').addClass('hidden');
 			$('#spanProjectNoInvitation').removeClass('hidden').addClass('visible');
@@ -285,23 +301,46 @@
 		$('select').change(function (e) {
 			var id = e.currentTarget.id;
 			var value = e.target.value;
-			var userId = '{{ user.id }}';
 			var userSkillId = e.currentTarget.parentElement.id;
-
+			console.log(value);
 			if (value === 0) {
 				$('#' + id + '').css('background-color', 'rgb(242, 165, 165)');
 			}
 			else {
 				$('#' + id + '').css('background-color', 'rgb(158, 215, 158)');
 			}
+
 			$.ajax({
-				url: "{{ path('user_addSkillUser') }}",
+				url: pathUserSkill,
 				type: 'POST',
 				data: {skillId: id, skillValue: value, userId: userId, userSkillId: userSkillId}
-
 			}).success(function (data) {
-				console.log(data);
 			});
 		});
+
+		$('.deleteNotif').click(function (e) {
+			var type = 'delete';
+			$.ajax({
+				url: pathNotif,
+				type: 'POST',
+				data: {type: type, notifId: e.currentTarget.id}
+			}).done(function (data) {
+				$('#notif' + data.id).remove();
+			});
+		});
+
+		$('.readNotif').click(function (e) {
+			var type = 'read';
+			$.ajax({
+				url: pathNotif,
+				type: 'POST',
+				data: {type: type, notifId: e.currentTarget.id}
+			}).done(function (data) {
+				$('.readNotif#' + data.id).unbind('click');
+				$('#notif' + data.id).removeClass('panel-primary').addClass('panel-default');
+				$('#notif' + data.id + ' .deleteNotif').removeClass('hidden');
+			});
+		});
+
 	</script>
 {% endblock %}

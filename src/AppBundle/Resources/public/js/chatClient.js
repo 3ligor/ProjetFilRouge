@@ -1,5 +1,15 @@
 $(document).ready(function ($) {
 
+	var version = '1.1.2';
+	if (localStorage.previousMessages === undefined) {
+		localStorage.previousMessages = JSON.stringify([]);
+	}
+	var previousMessages = JSON.parse(localStorage.previousMessages);
+	var previousMessagesPosition = -1;
+	var windowState = 'focus';
+	var pageTitle = document.title;
+	var nbUnread = 0;
+
 	$('#chatBtn').click(chatManager);
 
 	function chatManager() {
@@ -12,13 +22,15 @@ $(document).ready(function ($) {
 		});
 
 		var destId;
-		var windowState = 'focus';
-		var pageTitle = document.title;
-		var nbUnread = 0;
+
 		var socket = io('http://rage-inside.fr:3001');
 		var user = {
-			pseudo: username
+			pseudo: username,
+			version: version
 		};
+		if (user.pseudo === undefined) {
+			user.pseudo = 'anonymous';
+		}
 
 		socket.emit('customConnection', user);
 
@@ -34,7 +46,30 @@ $(document).ready(function ($) {
 				messageData.destId = destId;
 			}
 			socket.emit('chatMessage', messageData);
+
+			previousMessagesPosition = -1;
+			saveChatMessage($('input#msg').val());
 			$('input#msg').val('');
+		});
+
+		$('form input').keydown(function (e) {
+			if (e.keyCode === 38) {
+				previousMessagesPosition++;
+			} else if (e.keyCode === 40) {
+				previousMessagesPosition--;
+			} else {
+				return;
+			}
+
+			if (previousMessages[previousMessagesPosition] !== undefined) {
+				$('input#msg').val(previousMessages[previousMessagesPosition]);
+			} else if (previousMessagesPosition < -1) {
+				previousMessagesPosition = previousMessages.length - 1;
+				$('input#msg').val(previousMessages[previousMessagesPosition]);
+			} else if (previousMessagesPosition > previousMessages.length - 1 || previousMessagesPosition === -1) {
+				previousMessagesPosition = -1;
+				$('input#msg').val('');
+			}
 		});
 
 		$(window).focus(function () {
@@ -94,7 +129,6 @@ $(document).ready(function ($) {
 			displayUserInChat(data.nb);
 		});
 
-
 		function appendUser(data) {
 			var newUser = $('<a id=' + data.socketId + ' class="list-group-item chatUser" href="#" style="display: none;">' + data.pseudo + '</a>');
 			$('#userlist').append(newUser);
@@ -108,6 +142,17 @@ $(document).ready(function ($) {
 				$('input#msg').val('/pv ');
 			});
 		}
+	}
+
+	function saveChatMessage(msg) {
+		previousMessages = JSON.parse(localStorage.previousMessages);
+		previousMessages.unshift(msg);
+		if (previousMessages.length >= 20) {
+			previousMessages.pop();
+		}
+		localStorage.previousMessages = JSON.stringify(previousMessages);
+
+		return;
 	}
 
 	function scrollToBottom() {

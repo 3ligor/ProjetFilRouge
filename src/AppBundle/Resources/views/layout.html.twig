@@ -8,94 +8,106 @@
 	{% endif %}
 {% endblock stylesheets %}
 {% block body %}
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		{% if enableChat is defined %}
-			<ul class="nav navbar-nav navbar-left">
-				<button id="chatBtn" type="button" class="btn btn-primary navbar-btn" data-toggle="collapse" href="#chat" aria-expanded="false" aria-controls="chat">
-					Chat&nbsp;<span id="userInChat" class="badge"></span>
-				</button>
+	{% if app.user.active == 1 %}
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			{% if enableChat is defined %}
+				<ul class="nav navbar-nav navbar-left">
+					<button id="chatBtn" type="button" class="btn btn-primary navbar-btn" data-toggle="collapse" href="#chat" aria-expanded="false" aria-controls="chat">
+						Chat&nbsp;<span id="userInChat" class="badge"></span>
+					</button>
+				</ul>
+			{% endif %}
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					{% if app.user.image.url is defined %}
+					<img src="{{app.user.image.url}}" alt="{{app.user.image.alt}}" height="50"/>
+					{% endif %}
+					{% if app.user.notifications |length != 0 %}
+						<span class='badge'>{{ app.user.notifications |length }}</span>
+					{% endif %}
+				<li>
+				<li role="présentation"><a href="{{ path('user_profile', {'id': app.user.id}) }}"><img src="" alt=""/>Bonjour, {{ app.user.firstname }} {{ app.user.lastname }}</a></li>
+						{% if is_granted('ROLE_USER') %}
+					<li role="présentation"><a href="{{ path('logout') }}">Se déconnecter</a></li>
+					{% else %}
+					<li role="présentation"><a href="{{ path('login') }}">Connexion</a></li>
+					{% endif %}
+				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>	
 			</ul>
-		{% endif %}
-		<ul class="nav navbar-nav navbar-right">
-			<li>
-				<img src="{{app.user.image.url}}" alt="{{app.user.image.alt}}" height="50"/>
-				{% if app.user.notifications |length != 0 %}
-				<span class='badge'>{{ app.user.notifications |length }}</span>
-				{% endif %}
-			<li>
-			<li role="présentation"><a href="{{ path('user_profile', {'id': app.user.id}) }}"><img src="" alt=""/>Bonjour, {{ app.user.firstname }} {{ app.user.lastname }}</a></li>
-					{% if is_granted('ROLE_USER') %}
-				<li role="présentation"><a href="{{ path('logout') }}">Se déconnecter</a></li>
-				{% else %}
-				<li role="présentation"><a href="{{ path('login') }}">Connexion</a></li>
-				{% endif %}
-			<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-		</ul>
-	</nav>
-	<br>
-	<br>
-	<br>
-	<nav role='navigation'>
-		<ul class='nav nav-tabs'>
-			{% block menu %}
-				<li role='presentation'><a href='{{ path('home') }}'><span class="glyphicon glyphicon-home"></span></a></li>
-				<li role='presentation'><a href='{{ path('user_list') }}'>Utilisateurs</a></li>
-				<li role='presentation'><a href='{{ path('project_list') }}'>Projets</a></li>
-				<li role='presentation'><a href='{{ path('project_myProjects') }}'>Mes projets</a></li>
-				<li role='presentation'><a href='{{ path('project_add') }}'>Nouveau projet</a></li>
-				<li role='presentation'><a href='{{ path('admin_home') }}'>Administration</a></li>
-				<div class="col-sm-3 col-md-3 pull-right">
-					<form class="navbar-form" role="search" action='#' method='POST'>
-						<div class="input-group">
-							<input id="autocomplete" type="text" class="form-control" placeholder="Recherche" name="search">
-							<div class="input-group-btn">
-								<button id="searchButton" class="btn btn-default" type="submit">
-									<span class="glyphicon glyphicon-search"></span>
-								</button>
+		</nav>
+		<br>
+		<br>
+		<br>
+		<nav role='navigation'>
+			<ul class='nav nav-tabs'>
+				{% block menu %}
+					<li role='presentation'><a href='{{ path('home') }}'><span class="glyphicon glyphicon-home"></span></a></li>
+					<li role='presentation'><a href='{{ path('user_list') }}'>Utilisateurs</a></li>
+					<li role='presentation'><a href='{{ path('project_list') }}'>Projets</a></li>
+					<li role='presentation'><a href='{{ path('project_myProjects') }}'>Mes projets</a></li>
+					<li role='presentation'><a href='{{ path('project_add') }}'>Nouveau projet</a></li>
+					<li role='presentation'><a href='{{ path('admin_home') }}'>Administration</a></li>
+					<div class="col-sm-3 col-md-3 pull-right">
+						<form class="navbar-form" role="search" action='#' method='POST'>
+							<div class="input-group">
+								<input id="autocomplete" type="text" class="form-control" placeholder="Recherche" name="search">
+
+
+							</div>
+						</form>
+					</div>
+				{% endblock menu %}
+			</ul>
+		</nav>
+		<div class='page-header row'>
+			<div style="background-image: url({{asset("bundles/app/img/logo-fil-rouge.png")}}); height: 119px; width: 78%; display: inline-block"></div><div style="background-image: url({{asset("bundles/app/img/motif_logo_fil_rouge.png")}}); height: 119px; width: 22%; display: inline-block"></div>
+		</div>
+		{% if enableChat is defined %}
+			<div class="row">
+				<div id="chat" class="panel panel-collapse collapse box col-xs-12" role="tabpanel" aria-labelledby="headingOne">
+					<div id="chatContainer" class="panel-body">
+						<div class="col-xs-9" id="messageContainer">
+							<table class="table table-condensed table-striped">
+								<tbody id="messages">
+								</tbody>
+							</table>
+						</div>
+						<div class="col-xs-3" id="userContainer">					
+							<div id="userlist" class="list-group">
 							</div>
 						</div>
-					</form>
-				</div>
-			{% endblock menu %}
-		</ul>
-	</nav>
-	<div class='page-header row'>
-        <div style="background-image: url({{asset("bundles/app/img/logo-fil-rouge.png")}}); height: 119px; width: 78%; display: inline-block"></div><div style="background-image: url({{asset("bundles/app/img/motif_logo_fil_rouge.png")}}); height: 119px; width: 22%; display: inline-block"></div>
-    </div>
-	{% if enableChat is defined %}
-		<div class="row">
-			<div id="chat" class="panel panel-collapse collapse box col-xs-12" role="tabpanel" aria-labelledby="headingOne">
-				<div id="chatContainer" class="panel-body">
-					<div class="col-xs-9" id="messageContainer">
-						<table class="table table-condensed table-striped">
-							<tbody id="messages">
-							</tbody>
-						</table>
 					</div>
-					<div class="col-xs-3" id="userContainer">					
-						<div id="userlist" class="list-group">
-						</div>
-					</div>
-				</div>
-				<div id="chatInput" class="panel-footer">    
-					<form class="form" action="">
-						<div class="input-group">
-							<input id="msg" class="form-control" autocomplete="off">
+					<div id="chatInput" class="panel-footer">    
+						<form class="form" action="">
+							<div class="input-group">
+								<input id="msg" class="form-control" autocomplete="off">
 
-							<span class="input-group-btn">
-								<button class="btn btn-primary">Envoyer</button>
-							</span>
-						</div>
-					</form>
+								<span class="input-group-btn">
+									<button class="btn btn-primary">Envoyer</button>
+								</span>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
-		</div>
+		{% endif %}
 	{% endif %}
 	{% block content %}
 	{% endblock content %}
+
 {% endblock body %}
 
 {% block javascripts %}
 	{{ parent() }}
+	<script>
+		{% if app.user.pseudo|length > 1 %}
+			username = '{{ app.user.pseudo }}';
+		{% else %}
+			username = '{{ app.user.firstname }}'.substr(0,1) + '.' +'{{ app.user.lastname }}';
+		{% endif %}
+	</script>
+	<script src='{{ asset('bundles/app/js/jquery-ui.custom.js') }}'></script>
+	<script src='{{ asset('bundles/app/js/socket.io.js') }}'></script>
+	<script src='{{ asset('bundles/app/js/chatClient.js') }}'></script>
 	{{ render(controller('AppBundle:Default:getSearchContent')) }}
 {% endblock javascripts %}

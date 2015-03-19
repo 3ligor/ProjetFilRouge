@@ -2,95 +2,123 @@
 {% block title %}{{ parent() }} - Bienvenue{% endblock title %}
 
 {% block content %}
-	<div class="row">
-		<div class="col-sm-12 box">
-			<h4>MES PROJETS</h4>
-			<table class="table">
-				{% for project in projects %}
-					{% if project.status == 4 %}
-						<tr>
+	{% if app.user.active == 0 %}
+		<div class='page-header'><h1>PFR</h1></div>
+		<div class="row">
+			<div class="col-md-4">
 
-							<td class="col-sm-1 text-center">
-								{% for userProject in project.userProjects %}
-									{% if userProject.user.email == app.user.email  %}
-										{% if userProject.status == 4 %}
-											<span class="glyphicon glyphicon-star">
-										{% else %}
-											<span class="glyphicon glyphicon-user">
-										{% endif %}
-									{% endif %}
-								{% endfor %}
+			</div>
+			<div class="col-md-4">
+				<form action="{{ path('first_login') }}" method="post">
+					<div class="form-group">
+						<label for="password">Nouveau Mot de passe : </label>
+						<input class="form-control" type="password" id="password" name="password" />
+					</div>
+					<div class="form-group">
+						<label for='confirlpassword'>Confirmer le Mot de passe : </label>
+						<input class="form-control" type="password" id="confirmpassword" name="confirmpassword" />
+					</div>
+					<div class="form-group">
+						<label for='confirlpassword'>Vous acceptez les CGU : </label>
+						<input class="form-control" type="checkbox" id="cgu" name="cgu" />
+					</div>					
+					<hr>
+					<div class="text-center"><button type="submit" class="btn btn-success" >Confirmer</button></div>
+				</form>
+			</div>
+			<div class="col-md-4">
 
-								</span>
-							</td>
-							<td class="col-sm-2"><div class="progress">
-									<div class="progress-bar 
-										 {% if project.getProgress.term <= 33 %}}
-											 progress-bar-danger
-										 {% elseif project.getProgress.term <= 67%}
-											 progress-bar-warning
-										 {% else %}
-											 progress-bar-success
-										 {% endif %}" 
-										 role="progressbar" 
-										 aria-valuenow="{{ project.getProgress.term }}" 
-										 aria-valuemin="0" 
-										 aria-valuemax="100" 
-										 style="width: {{ project.getProgress.term }}%;">
-										<strong>{{ project.getProgress.term }}%</strong>
+			</div>
+		</div>	
+	{% else %}
+		<div class="row">
+			<div class="col-sm-12 box">
+				<h4>MES PROJETS</h4>
+				<table class="table">
+					{% for project in projects %}
+						{% if project.status == 4 %}
+							<tr>
+								<td class="col-sm-1 text-center">
+									{% for userProject in project.userProjects %}
+										{% if userProject.user.email == app.user.email  %}
+											{% if userProject.status == 4 %}
+												<span class="glyphicon glyphicon-star">
+												{% else %}
+													<span class="glyphicon glyphicon-user">
+													{% endif %}
+												{% endif %}
+											{% endfor %}
+
+										</span>
+								</td>
+								<td class="col-sm-2"><div class="progress">
+										<div class="progress-bar 
+											 {% if project.getProgress.term <= 33 %}}
+												 progress-bar-danger
+											 {% elseif project.getProgress.term <= 67%}
+												 progress-bar-warning
+											 {% else %}
+												 progress-bar-success
+											 {% endif %}" 
+											 role="progressbar" 
+											 aria-valuenow="{{ project.getProgress.term }}" 
+											 aria-valuemin="0" 
+											 aria-valuemax="100" 
+											 style="width: {{ project.getProgress.term }}%;">
+											<strong>{{ project.getProgress.term }}%</strong>
+										</div>
 									</div>
-								</div>
-							</td>
-							<td class="col-sm-9"><a href='{{ path('project_detail', { id: project.id }) }}'>{{ project.title }}</a></td>
-						<tr>
+								</td>
+								<td class="col-sm-9"><a href='{{ path('project_detail', { id: project.id }) }}'>{{ project.title }}</a></td>
+							<tr>
+							{% endif %}
+						{% endfor %}
+				</table>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-6 box">
+				<h4>LES NOUVEAUX PROJETS</h4>
+
+				<table class="table">
+					{% for project in fiveProject|slice(0,5) %}
+						{% if fiveProject|length > 0 %}
+							<tr>
+								<td class="text-center">
+									<strong>
+										{{ project.startDate|date('d-m-Y')}}
+									</strong>
+								</td>
+								<td>
+									<a href="{{ path('project_detail', { id: project.id }) }}">
+										{{ project.title }}
+									</a>
+								</td>
+							</tr>
 						{% endif %}
 					{% endfor %}
-			</table>
+				</table>
+			</div>
+			<div class="col-sm-6 box">
+				<h4>IL NE MANQUE PLUS QUE VOUS</h4>
+				<table class="table">
+					{% for project in fiveProject|slice(0,5) %}
+						{% set lastPlaces = project.maxMembers - ( project.userProjects | length + 1) %}
+						{% if lastPlaces > 0 %}
+							<tr>
+								<td class="text-center"><span class="glyphicon glyphicon-user"></span> {{ lastPlaces }}</td>
+								<td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
+							</tr>
+						{% else %}
+							<tr>
+								<td class="text-center"><span class="glyphicon glyphicon-user"></span></td>
+								<td>{{ 'Aucun projet ne nécessite de nouveaux colaborateurs'}}</td>
+							</tr>
+						{% endif %}
+					{% endfor %}
+				</table>
+			</div>
 		</div>
-	</div>
-	<br>
-	<div class="row">
-		<div class="col-sm-6 box">
-			<h4>LES NOUVEAUX PROJETS</h4>
-
-			<table class="table">
-				{% for project in fiveProject|slice(0,5) %}
-					{% if fiveProject|length > 0 %}
-						<tr>
-							<td class="text-center">
-								<strong>
-									{{ project.startDate|date('d-m-Y')}}
-								</strong>
-							</td>
-							<td>
-								<a href="{{ path('project_detail', { id: project.id }) }}">
-									{{ project.title }}
-								</a>
-							</td>
-						</tr>
-					{% endif %}
-				{% endfor %}
-			</table>
-		</div>
-		<div class="col-sm-6 box">
-			<h4>IL NE MANQUE PLUS QUE VOUS</h4>
-			<table class="table">
-				{% for project in fiveProject|slice(0,5) %}
-					{% set lastPlaces = project.maxMembers - ( project.userProjects | length + 1) %}
-					{% if lastPlaces > 0 %}
-						<tr>
-							<td class="text-center"><span class="glyphicon glyphicon-user"></span> {{ lastPlaces }}</td>
-							<td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
-						</tr>
-					{% else %}
-						<tr>
-							<td class="text-center"><span class="glyphicon glyphicon-user"></span></td>
-							<td>{{ 'Aucun projet ne nécessite de nouveaux colaborateurs'}}</td>
-						</tr>
-					{% endif %}
-				{% endfor %}
-			</table>
-		</div>
-	</div>
+	{% endif %}
 {% endblock content %}
-	

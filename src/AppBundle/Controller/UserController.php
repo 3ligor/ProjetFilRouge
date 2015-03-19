@@ -31,17 +31,17 @@ class UserController extends Controller {
 		$repoSkill = $em->getRepository('AppBundle:Skill');
 		$repoProjet = $em->getRepository('AppBundle:Project');
 		$repoNotif = $em->getRepository('AppBundle:Notification');
-		
+
 		$skills = $repoSkill->getSkillsWithChilds();
 		$user = $repoUser->findOneUserEager($id);
 		$projects = $repoProjet->findProjectUserEager($id);
 		$notifications = $repoNotif->findUserNotifications($id);
 		$inviteList = $repoProjet->findProjectsUserIsNotIn($id);
-		
+
 		return $this->render('AppBundle:User:profil.html.twig', array(
 					'user' => $user,
 					'skills' => $skills,
-					'projects'=> $projects,
+					'projects' => $projects,
 					'notifications' => $notifications,
 					'inviteList' => $inviteList
 		));
@@ -91,20 +91,20 @@ class UserController extends Controller {
 
 		$repoSkill = $em->getRepository('AppBundle:Skill');
 		$skill = $repoSkill->find($req->request->get('skillId'));
-		
+
 		$repoUserSkill = $em->getRepository('AppBundle:UserSkill');
 		$userSkill = $repoUserSkill->find($req->request->get('userSkillId'));
-				
-		$value = $req->request->get('skillValue'); 
 
-		if($value > 0){
-			if($skill->existInUser($user)){
+		$value = $req->request->get('skillValue');
+
+		if ($value > 0) {
+			if ($skill->existInUser($user)) {
 				$userSkill->setValue($value);
 				$response = new Response(json_encode(array(
 							'status' => 'update',
 				)));
-			} else{
-				if( $skill->getParent()->existInUser($user) ){
+			} else {
+				if ($skill->getParent()->existInUser($user)) {
 
 					$newSkill = new UserSkill();
 					$newSkill->setUser($user)->setSkill($skill)->setValue($value);
@@ -129,35 +129,54 @@ class UserController extends Controller {
 			}
 		} else {
 			$cpt = 0;
-			foreach( $skill->getParent()->getChilds() as $child) {
-				if($child->existInUser($user)){
+			foreach ($skill->getParent()->getChilds() as $child) {
+				if ($child->existInUser($user)) {
 					$cpt ++;
 				}
 			}
-			
-			if($cpt >= 2){
+
+			if ($cpt >= 2) {
 				$em->remove($userSkill);
-				
+
 				$response = new Response(json_encode(array(
 							'status' => $userSkill->getUser()->getFirstname(),
 				)));
-				
 			} else {
 				$skillId = $skill->getParent()->getId();
 				$userId = $req->request->get('userId');
-				
+
 				$repoUserParentSkill = $em->getRepository('AppBundle:UserSkill');
-				$userParentSkill = $repoUserParentSkill->getUserSkillBySkillAndUser($skillId, $userId);	
-				
+				$userParentSkill = $repoUserParentSkill->getUserSkillBySkillAndUser($skillId, $userId);
+
 				$em->remove($userSkill);
 				$em->remove($userParentSkill);
-				
+
 				$response = new Response(json_encode(array(
 							'status' => $userParentSkill->getId(),
 				)));
 			}
 		}
 		$em->flush();
+		$response->headers->set('Content-Type', 'application/json');
+		return $response;
+	}
+
+	public function notifAction(Request $req) {
+		$em = $this->getDoctrine()->getManager();
+		$repoN = $em->getRepository('AppBundle:Notification');
+		$notif = $repoN->find($req->request->get('notifId'));
+
+		if ($req->request->get('type') === 'read') {
+			$notif->setStatus(false);
+		} elseif ($req->request->get('type') === 'delete') {
+			$em->remove($notif);
+		}
+		$em->flush();
+
+		$response = new Response(json_encode(array(
+					'status' => 'OK',
+					'id' => $req->request->get('notifId')
+		)));
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;
 	}

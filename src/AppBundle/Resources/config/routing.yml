@@ -17,3 +17,7 @@ admin:
 search: 
     path: /search
     defaults: { _controller: AppBundle:Default:search }
+    
+first_login:
+    path: /firstLogin
+    defaults: { _controller: AppBundle:Default:firstLogin }

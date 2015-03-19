@@ -11,13 +11,17 @@ user_profile:
         id: \d+
         
 user_update:
-    path: /update/{id}
+    path: /{id}/update
     defaults: { _controller: AppBundle:User:updateProfil, id: -1 }
 
 user_updateskill:
-    path: /updateSkill/{id}
+    path: /{id}/updateSkill
     defaults: { _controller: AppBundle:User:updateSkillProfil, id: -1 }
     
 user_addSkillUser:
     path: /editSkill
     defaults: { _controller: AppBundle:User:addSkillUser }
+    
+user_notif:
+    path: /notif
+    defaults: { _controller: AppBundle:User:notif }

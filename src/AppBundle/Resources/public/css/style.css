@@ -13,17 +13,30 @@ hr {
 h4 {
 	font-style: bold;
 	color: #FFC90E;
-	padding: 15px;
+	padding-bottom: 15px;
 }
 
 a {
 	color: #000;
 }
 
+select{
+	margin-bottom: 10px;
+}
+.navbar-inverse{
+	background-color: #77777;
+	border-color: #E2E2E2;
+}
+
 .list-group-item.active {
 	color: #FFF;
 	background-color: #FFC90E;
-	border-color: #FFF;
+	border-color: #FFC90E;
+}
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover{
+	background-color: #FFC90E;
+	border-color: #FFC90E;
 }
 
 .table>tbody>tr>td {
@@ -45,7 +58,7 @@ a {
 }
 
 .box {
-	padding: 5px;
+	padding: 15px;
 	background-color: #FFF;
 }
 
@@ -115,7 +128,7 @@ div#userContainer, div#messageContainer {
 }
 
 .smallTD {
-	width: 15%;
+	width: 25%;
 }
 
 #chatBtn {

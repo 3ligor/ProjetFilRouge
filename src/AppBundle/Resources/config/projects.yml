@@ -42,3 +42,9 @@ project_userleave:
     requirements:
         projectId: \d+
         userId: \d+
+        
+project_close:
+    path: /{projectId}/close
+    defaults: { _controller: AppBundle:Project:close, projectId: -1 }
+    requirements:
+        projectId: \d+

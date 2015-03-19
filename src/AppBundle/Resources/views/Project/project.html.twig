@@ -4,57 +4,57 @@
 {% endblock %}
 {% block content %}
 	{% if project.getTotalStageVolume %}
-	<div class='row'>
-		<div class='col-xs-12'>
-			<div class='panel panel-default'>
-				<div class='panel-body'>
-					<div class='progress'>
-						{% set firstFalse = false %}
-						{% for stage in project.stages %}
-							{% if stage.status %}
-								<div class="progress-bar progress-bar-success" 
-									 style="width: {{ stage.getProjectRelativeVolume }}%" 
-									 data-toggle="tooltip" 
-									 data-placement="top"
-									 title='{{ stage.title }}'>
-									<strong>{{ loop.index }}</strong>
-								</div>
-							{% else %}
-								{% if firstFalse == false %}
-									<div class="progress-bar progress-bar-warning" 
-										 style="width: {{ stage.getProjectRelativeVolume }}%"
+		<div class='row'>
+			<div class='col-xs-12'>
+				<div class='panel panel-default'>
+					<div class='panel-body'>
+						<div class='progress'>
+							{% set firstFalse = false %}
+							{% for stage in project.stages %}
+								{% if stage.status %}
+									<div class="progress-bar progress-bar-success" 
+										 style="width: {{ stage.getProjectRelativeVolume }}%" 
 										 data-toggle="tooltip" 
 										 data-placement="top"
 										 title='{{ stage.title }}'>
 										<strong>{{ loop.index }}</strong>
 									</div>
 								{% else %}
-									<div class="progress-bar progress-bar-danger" 
-										 style="width: {{ stage.getProjectRelativeVolume }}%"
-										 data-toggle="tooltip" 
-										 data-placement="top"
-										 title='{{ stage.title }}'>
-										<strong>{{ loop.index }}</strong>
-									</div>
+									{% if firstFalse == false %}
+										<div class="progress-bar progress-bar-warning" 
+											 style="width: {{ stage.getProjectRelativeVolume }}%"
+											 data-toggle="tooltip" 
+											 data-placement="top"
+											 title='{{ stage.title }}'>
+											<strong>{{ loop.index }}</strong>
+										</div>
+									{% else %}
+										<div class="progress-bar progress-bar-danger" 
+											 style="width: {{ stage.getProjectRelativeVolume }}%"
+											 data-toggle="tooltip" 
+											 data-placement="top"
+											 title='{{ stage.title }}'>
+											<strong>{{ loop.index }}</strong>
+										</div>
+									{% endif %}
+									{% set firstFalse = true %}
 								{% endif %}
-								{% set firstFalse = true %}
-							{% endif %}
-						{% endfor %}
-					</div>
-					<div class='col-xs-4 text-left'>
-						<span class="label label-success">Terminé : {{ project.getProgress.term }}%</span>
-					</div>
-					<div class='col-xs-4 text-center'>
-						<span class="label label-warning">En cours : {{ project.getProgress.current }}%</span>
-					</div>
-					<div class='col-xs-4 text-right'>
-						<span class="label label-danger">En attente : {{ project.getProgress.left }}%</span>
+							{% endfor %}
+						</div>
+						<div class='col-xs-4 text-left'>
+							<span class="label label-success">Terminé : {{ project.getProgress.term }}%</span>
+						</div>
+						<div class='col-xs-4 text-center'>
+							<span class="label label-warning">En cours : {{ project.getProgress.current }}%</span>
+						</div>
+						<div class='col-xs-4 text-right'>
+							<span class="label label-danger">En attente : {{ project.getProgress.left }}%</span>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-					{% endif %}
+	{% endif %}
 	<div class='row'>
 		<div class='col-sm-3'>
 			<div class='panel panel-default'>
@@ -118,19 +118,19 @@
 					</div>
 					{{ project.longDescription }}
 				</div>
-				{% if app.user.statusInProject(project) != 4 %}
-					<div class='panel-footer'>
-						{% if app.user.statusInProject(project) == 3 %}
-							<a href='{{ path('project_userleave', {userId: app.user.id, projectId: project.id}) }}' type="button" class="btn btn-danger btn-block"><strong>Abandonner le projet</strong></a>
-						{% elseif app.user.statusInProject(project) == 2 %}
-							<a href='{{ path('project_userleave', {userId: app.user.id, projectId: project.id}) }}' type="button" class="btn btn-warning btn-block"><strong>Annuler la candidature</strong></a>
-						{% elseif app.user.statusInProject(project) == 1 %}
-							<a href='{{ path('project_userleave', {userId: app.user.id, projectId: project.id}) }}' type="button" class="btn btn-warning btn-block"><strong>Refuser l'invitation</strong></a>
-						{% else %}
-							<a href='{{ path('project_userjoin', {type: 'p',userId: app.user.id, projectId: project.id}) }}' type="button" class="btn btn-primary btn-block"><strong>Rejoindre le projet</strong></a>
-						{% endif %}
-					</div>
-				{% endif %}
+				<div class='panel-footer'>
+					{% if app.user.statusInProject(project) == 4 and project.status == 4 %}
+						<a href='{{ path('project_close', {userId: app.user.id, projectId: project.id}) }}' type="button" class="btn btn-danger btn-block"><strong>Terminer le projet</strong></a>
+					{% elseif app.user.statusInProject(project) == 3 %}
+						<a href='{{ path('project_userleave', {userId: app.user.id, projectId: project.id}) }}' type="button" class="btn btn-danger btn-block"><strong>Abandonner le projet</strong></a>
+					{% elseif app.user.statusInProject(project) == 2 %}
+						<a href='{{ path('project_userleave', {userId: app.user.id, projectId: project.id}) }}' type="button" class="btn btn-warning btn-block"><strong>Annuler la candidature</strong></a>
+					{% elseif app.user.statusInProject(project) == 1 %}
+						<a href='{{ path('project_userleave', {userId: app.user.id, projectId: project.id}) }}' type="button" class="btn btn-warning btn-block"><strong>Refuser l'invitation</strong></a>
+					{% elseif app.user.statusInProject(project) == false %}
+						<a href='{{ path('project_userjoin', {type: 'p',userId: app.user.id, projectId: project.id}) }}' type="button" class="btn btn-primary btn-block"><strong>Rejoindre le projet</strong></a>
+					{% endif %}
+				</div>
 			</div>
 		</div>	
 	</div>

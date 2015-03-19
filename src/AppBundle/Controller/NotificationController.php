@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 class NotificationController extends Controller {
 
 	public function sendNotificationAction($recipients, $message, $type, $em) {
-		
 		foreach ($recipients as $recipient) {
 			$notification = new Notification();
 			$notification->setUser($recipient)

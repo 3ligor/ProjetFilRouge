@@ -14,7 +14,7 @@
 					<th class="text-center">Lancement</th>
 					<th class="text-center">Fin</th>
 					<th class="text-center">Nombre</th>
-					
+
 					</thead>
 
 					{% set cpt = 0 %}
@@ -29,34 +29,36 @@
 								</td>
 								<td class="text-left"><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.title }}</a></td>
 								<td class="text-center">
-									<div class="progress">
-										<div class="progress-bar 
-											 {% if project.getProgress.term <= 33 %}}
-												 progress-bar-danger
-											 {% elseif project.getProgress.term <= 67%}
-												 progress-bar-warning
-											 {% else %}
-												 progress-bar-success
-											 {% endif %}" 
-											 role="progressbar" 
-											 aria-valuenow="{{ project.getProgress.term }}" 
-											 aria-valuemin="0" 
-											 aria-valuemax="100" 
-											 style="width: {{ project.getProgress.term }}%;">
-											<strong>{{ project.getProgress.term }}%</strong>
-										</div>
+									{% if project.getTotalStageVolume %}
+										<div class="progress">
+											<div class="progress-bar 
+												 {% if project.getProgress.term <= 33 %}}
+													 progress-bar-danger
+												 {% elseif project.getProgress.term <= 67%}
+													 progress-bar-warning
+												 {% else %}
+													 progress-bar-success
+												 {% endif %}" 
+												 role="progressbar" 
+												 aria-valuenow="{{ project.getProgress.term }}" 
+												 aria-valuemin="0" 
+												 aria-valuemax="100" 
+												 style="width: {{ project.getProgress.term }}%;">
+												<strong>{{ project.getProgress.term }}%</strong>
+											</div>
+										{% endif %}
 									</div>
 								</td>
 								<td class="text-center">{{ project.startDate.format('d-m-Y') }}</td>
 								<td class="text-center">{{ project.endDate.format('d-m-Y') }}</td>
 								<td class="text-center">{{ project.userProjects | length }} <span class="glyphicon glyphicon-user"></span></td>
-								
+
 							</tr>
 
 						{% endif %}
 					{% endfor %}
 					{% if cpt == 0 %}
-							<tr><td colspan=7"> Vous avez aucun projet en attente</td></tr>
+						<tr><td colspan=7"> Vous n'avez aucun projet en attente</td></tr>
 					{% endif %}
 				</table>
 			</div>
@@ -70,7 +72,7 @@
 					<th class="text-center">Lancement</th>
 					<th class="text-center">Fin</th>
 					<th class="text-center">Nombre</th>
-				
+
 					</thead>
 					{% set cptt = 0 %}
 					{% for project in projects %}
@@ -106,12 +108,12 @@
 								<td class="text-center">{{ project.startDate.format('d-m-Y') }}</td>
 								<td class="text-center">{{ project.endDate.format('d-m-Y') }}</td>
 								<td class="text-center">{{ project.userProjects | length }} <span class="glyphicon glyphicon-user"></span></td>
-							
+
 							</tr>
 						{% endif %}	
 					{% endfor %}
 					{% if cptt == 0 %}
-							<tr><td colspan=7"> Vous avez aucun projet en cours</td></tr>
+						<tr><td colspan=7"> Vous n'avez aucun projet en cours</td></tr>
 					{% endif %}
 				</table>
 			</div>
@@ -126,7 +128,7 @@
 					<th class="text-center">Lancement</th>
 					<th class="text-center">Fin</th>
 					<th class="text-center">Nombre</th>
-				
+
 					</thead>
 					{% set cpttt = 0 %}
 					{% for project in projects %}
@@ -161,14 +163,14 @@
 								<td class="text-center">{{ project.startDate.format('d-m-Y') }}</td>
 								<td class="text-center">{{ project.endDate.format('d-m-Y') }}</td>
 								<td class="text-center">{{ project.userProjects | length }} <span class="glyphicon glyphicon-user"></span></td>
-							
+
 							</tr>
 
 						{% endif %}
 
 					{% endfor %}
 					{% if cpttt == 0 %}
-							<tr><td colspan=7"> Vous avez aucun projet archivés</td></tr>
+						<tr><td colspan=7"> Vous n'avez aucun projet archivés</td></tr>
 					{% endif %}
 					</tr>
 				</table>

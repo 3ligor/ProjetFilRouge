@@ -19,7 +19,9 @@
 				<dt>Nom</dt>
 				<dd>{{ user.lastname }}</dd>
 				<dt>Pseudo</dt>
-				<dd><div>{{ user.pseudo }}</div></dd>
+				<dd>{{ form_widget(userform.pseudo) }}
+					{{ form_widget(userform.pseudo) }}
+				</dd>
 				<dt>Année de Naissance</dt>
 				<dd>{{ user.birthdate|date("Y") }} 
 					{{ form_widget(userform.publicBirthdate) }} 
@@ -45,54 +47,13 @@
 				<dt>Disponibilité</dt>
 				<dd>	{{ form_widget(userform.available)}}</dd>
 			</dl>
+			<div class="row">
+				{{ form_widget(userform.Modifier) }} 
+			</div>
 			{{ form_end(userform) }}
-        </div>
-        <div class="col-sm-4 col-xs-6">
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingOne">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Notification 1
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="panel-body">
-							Skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, 
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingTwo">
-                        <h4 class="panel-title">
-                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Notification 2
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                        <div class="panel-body">
-							Skateboard et. Nihil anim keffiyeh helvetica, nth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingThree">
-                        <h4 class="panel-title">
-                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Notification 3
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                        <div class="panel-body">
-							Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </div>	
+		<div class="col-sm-4 col-xs-12"></div>
+		
     </div>
     <hr>
     <div class="row">
