@@ -5,10 +5,12 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Promo;
 use AppBundle\Entity\Skill;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Image;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+
 
 class AdminController extends Controller {
 
@@ -76,7 +78,8 @@ class AdminController extends Controller {
 	public function importAction(Request $req) {
 		$form = $this->createFormBuilder()
 				->add('submitFile', 'file')
-				->add('Valider', 'submit')
+				->add('Valider', 'submit',array(
+					'attr' => array('class' => 'btn btn-primary')))
 				->getForm();
 
 		$form->handleRequest($req);
@@ -110,6 +113,8 @@ class AdminController extends Controller {
 					continue;
 				} else {
 					$user = new User();
+					$image = new Image();
+					
 				}
 				
 				// On cherche si la promo existe déjà, sinon on la crée
@@ -132,7 +137,12 @@ class AdminController extends Controller {
 						->setActive(false)
 						->setAvailable(true);
 				
+				
+				
 				// Puis les champs depuis le fichier chargé
+				$image->setUrl('{{asset("bundles/app/img/mignon-hitman.png")}}')
+						->setAlt('Default image');
+				$user->setImage($image);
 				$user->addPromo($promo);
 				$user->setLastname($data[4]);
 				$user->setFirstname($data[5]);
@@ -140,8 +150,9 @@ class AdminController extends Controller {
 				$user->setTel($data[9]);
 				$user->setEmail($data[10]);
 				$user->setBirthdate($this->createDateTimeFromString($data[11]));
-				$user->setPassword($data[12]);
+				$em->persist($image);
 				$em->persist($user);
+				
 				
 				// On flush & clear toutes les 10 lignes du fichier CSV afin de surcharger la mémoire.
 				if ($row % 10 === 0) {
